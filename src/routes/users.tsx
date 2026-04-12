@@ -113,7 +113,7 @@ app.get('/:username', (c) => {
               id="tab-songs"
               class="flex-1 py-3 text-sm font-semibold text-gray-500 hover:text-brand-600"
             >
-              <i class="fas fa-music mr-2"></i>ここロザシソング ({songs.length})
+              <i class="fas fa-music mr-2"></i>ココロザシソング ({songs.length})
             </button>
           )}
         </div>
@@ -143,7 +143,7 @@ app.get('/:username', (c) => {
                       <button
                         id={`play-btn-${vj.id}`}
                         class="w-9 h-9 rounded-full flex items-center justify-center text-white flex-shrink-0"
-                        style="background: linear-gradient(135deg, #d4821e, #e86c28)"
+                        style="background: linear-gradient(135deg, #3085c7, #eba528)"
                         onclick={`initAudioPlayer('${vj.id}', '')`}
                       >
                         <i class="fas fa-play text-xs"></i>
@@ -200,7 +200,7 @@ app.get('/:username', (c) => {
           ) : (
             <div class="text-center py-12 text-gray-400">
               <i class="fas fa-music text-4xl mb-3 block opacity-30"></i>
-              <p>ここロザシソングはまだありません</p>
+              <p>ココロザシソングはまだありません</p>
             </div>
           )}
         </div>

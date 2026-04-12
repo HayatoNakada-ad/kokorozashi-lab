@@ -19,7 +19,7 @@ app.get('/about', (c) => {
     { num: 4, icon: 'fa-guitar', title: '楽曲制作', desc: 'プロの音楽家があなたのために楽曲を制作します。' },
     { num: 5, icon: 'fa-microphone', title: '歌唱・収録', desc: 'あなた自身が歌い、レコーディングします。' },
     { num: 6, icon: 'fa-compact-disc', title: '完成・納品', desc: 'マスタリングを経て楽曲が完成。データで納品します。' },
-    { num: 7, icon: 'fa-globe', title: 'サイト公開（任意）', desc: 'ここロザシラボで作品として公開できます。' },
+    { num: 7, icon: 'fa-globe', title: 'サイト公開（任意）', desc: 'ココロザシラボで作品として公開できます。' },
   ]
 
   const plans = [
@@ -51,7 +51,7 @@ app.get('/about', (c) => {
   ]
 
   return c.html(
-    <Layout title="ここロザシソングとは" currentUser={currentUser} unreadNotifications={unread}>
+    <Layout title="ココロザシソングとは" currentUser={currentUser} unreadNotifications={unread}>
       {/* Hero */}
       <section class="relative overflow-hidden py-20 md:py-28" style="background: linear-gradient(135deg, #1e1b4b 0%, #312e81 40%, #6366f1 80%, #8b5cf6 100%)">
         <div class="absolute inset-0 opacity-20">
@@ -83,7 +83,7 @@ app.get('/about', (c) => {
         <div class="max-w-4xl mx-auto px-4">
           <div class="text-center mb-12">
             <p class="text-brand-500 font-semibold text-sm mb-2">ABOUT</p>
-            <h2 class="text-2xl md:text-3xl font-bold text-gray-800">ここロザシソングとは</h2>
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-800">ココロザシソングとは</h2>
           </div>
           <div class="grid md:grid-cols-2 gap-8 items-center">
             <div class="space-y-4">
@@ -105,7 +105,7 @@ app.get('/about', (c) => {
               ))}
             </div>
             <div class="rounded-2xl overflow-hidden">
-              <img src="https://picsum.photos/seed/songabout/600/400" alt="ここロザシソング" class="w-full object-cover" />
+              <img src="https://picsum.photos/seed/songabout/600/400" alt="ココロザシソング" class="w-full object-cover" />
             </div>
           </div>
         </div>
@@ -212,7 +212,7 @@ app.get('/about', (c) => {
             {steps.map((step, i) => (
               <div class="flex items-start gap-4 bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
                 <div class="flex-shrink-0">
-                  <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-white" style="background: linear-gradient(135deg, #d4821e, #e86c28)">
+                  <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-white" style="background: linear-gradient(135deg, #3085c7, #eba528)">
                     <i class={`fas ${step.icon}`}></i>
                   </div>
                 </div>
@@ -337,7 +337,7 @@ app.get('/create', (c) => {
   const unread = dummyNotifications.filter(n => !n.is_read).length
 
   return c.html(
-    <Layout title="ここロザシソングを作る" currentUser={currentUser} unreadNotifications={unread}>
+    <Layout title="ココロザシソングを作る" currentUser={currentUser} unreadNotifications={unread}>
       <div class="max-w-3xl mx-auto px-4 py-12">
         <div class="text-center mb-10">
           <p class="text-brand-500 font-semibold text-sm mb-2">KOKOROZASHI SONG</p>
@@ -383,11 +383,11 @@ app.get('/showcase', (c) => {
   const unread = dummyNotifications.filter(n => !n.is_read).length
 
   return c.html(
-    <Layout title="ここロザシソング公開事例" currentUser={currentUser} unreadNotifications={unread}>
+    <Layout title="ココロザシソング公開事例" currentUser={currentUser} unreadNotifications={unread}>
       <div class="max-w-5xl mx-auto px-4 py-8">
         <div class="mb-8">
           <h1 class="text-2xl font-bold text-gray-800 mb-2">
-            <i class="fas fa-music mr-2 text-purple-500"></i>ここロザシソング
+            <i class="fas fa-music mr-2 text-purple-500"></i>ココロザシソング
           </h1>
           <p class="text-gray-500">制作された楽曲の一覧</p>
         </div>
@@ -465,7 +465,7 @@ app.get('/detail/:id', (c) => {
     <Layout title={song.title} currentUser={currentUser} unreadNotifications={unread}>
       <div class="max-w-3xl mx-auto px-4 py-8">
         <a href="/songs/showcase" class="flex items-center gap-2 text-sm text-gray-500 hover:text-brand-600 mb-6">
-          <i class="fas fa-arrow-left"></i>ここロザシソング一覧
+          <i class="fas fa-arrow-left"></i>ココロザシソング一覧
         </a>
 
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
@@ -490,7 +490,7 @@ app.get('/detail/:id', (c) => {
                 <p class="text-xs text-gray-400">{formatDate(song.created_at)}</p>
                 <div class="flex items-center gap-2 mt-3">
                   <span class="bg-purple-100 text-purple-600 text-xs font-semibold px-3 py-1 rounded-full">
-                    <i class="fas fa-music mr-1"></i>ここロザシソング
+                    <i class="fas fa-music mr-1"></i>ココロザシソング
                   </span>
                 </div>
               </div>
@@ -598,7 +598,7 @@ app.get('/order', (c) => {
     : { name: 'スタンダード', price: '¥88,000' }
 
   return c.html(
-    <Layout title="ここロザシソング申込" currentUser={currentUser} unreadNotifications={unread}>
+    <Layout title="ココロザシソング申込" currentUser={currentUser} unreadNotifications={unread}>
       <div class="max-w-xl mx-auto px-4 py-12">
         {/* Progress */}
         <div class="flex items-center gap-2 mb-8 text-xs">
@@ -664,10 +664,10 @@ app.get('/order/terms', (c) => {
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
           <h1 class="text-xl font-bold text-gray-800 mb-4">利用規約の確認</h1>
           <div class="h-60 overflow-y-auto border border-gray-200 rounded-xl p-4 text-sm text-gray-600 mb-5 leading-relaxed">
-            <h3 class="font-bold mb-2">ここロザシソング利用規約</h3>
-            <p class="mb-3">本規約は、ここロザシラボが提供するここロザシソングサービス（以下「本サービス」）の利用条件を定めるものです。</p>
+            <h3 class="font-bold mb-2">ココロザシソング利用規約</h3>
+            <p class="mb-3">本規約は、ココロザシラボが提供するココロザシソングサービス（以下「本サービス」）の利用条件を定めるものです。</p>
             <p class="mb-3">第1条（サービス内容）本サービスは、利用者の想いや志をヒアリングし、プロの音楽家が楽曲を制作するサービスです。</p>
-            <p class="mb-3">第2条（著作権）制作された楽曲の著作権は利用者に帰属します。ただし、サービス紹介等の目的でここロザシラボが使用することに同意いただく場合があります。</p>
+            <p class="mb-3">第2条（著作権）制作された楽曲の著作権は利用者に帰属します。ただし、サービス紹介等の目的でココロザシラボが使用することに同意いただく場合があります。</p>
             <p class="mb-3">第3条（キャンセル）ヒアリング完了後のキャンセルはお受けできません。</p>
             <p>第4条（個人情報）取得した個人情報はプライバシーポリシーに基づき適切に管理します。</p>
           </div>
@@ -697,7 +697,7 @@ app.get('/order/complete', (c) => {
         <p class="text-sm text-gray-400 mb-8">確認メールをお送りしましたのでご確認ください。</p>
         <div class="flex flex-col gap-3">
           <a href="/" class="btn-primary py-3 rounded-xl font-medium">ホームへ</a>
-          <a href="/songs/about" class="btn-outline py-3 rounded-xl font-medium">ここロザシソングについて</a>
+          <a href="/songs/about" class="btn-outline py-3 rounded-xl font-medium">ココロザシソングについて</a>
         </div>
       </div>
     </Layout>
@@ -726,7 +726,7 @@ app.get('/:id', (c) => {
   return c.html(
     <Layout title={song.title} currentUser={currentUser} unreadNotifications={unread}>
       <div class="max-w-3xl mx-auto px-4 py-8">
-        <a href="/songs/showcase" class="flex items-center gap-2 text-sm text-gray-500 hover:text-brand-600 mb-6"><i class="fas fa-arrow-left"></i>ここロザシソング一覧</a>
+        <a href="/songs/showcase" class="flex items-center gap-2 text-sm text-gray-500 hover:text-brand-600 mb-6"><i class="fas fa-arrow-left"></i>ココロザシソング一覧</a>
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
           <div class="p-6 md:p-8">
             <div class="flex gap-5 mb-6">
@@ -740,7 +740,7 @@ app.get('/:id', (c) => {
                 </div>
                 <p class="text-xs text-gray-400">{formatDate(song.created_at)}</p>
                 <div class="flex items-center gap-2 mt-3">
-                  <span class="bg-purple-100 text-purple-600 text-xs font-semibold px-3 py-1 rounded-full"><i class="fas fa-music mr-1"></i>ここロザシソング</span>
+                  <span class="bg-purple-100 text-purple-600 text-xs font-semibold px-3 py-1 rounded-full"><i class="fas fa-music mr-1"></i>ココロザシソング</span>
                 </div>
               </div>
             </div>

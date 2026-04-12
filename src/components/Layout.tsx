@@ -26,28 +26,28 @@ export const Layout: FC<{ children?: any; title?: string; description?: string; 
               extend: {
                 colors: {
                   brand: {
-                    50: '#fdf8f0',
-                    100: '#faefd8',
-                    200: '#f4daa9',
-                    300: '#edbe72',
-                    400: '#e59e3b',
-                    500: '#d4821e',
-                    600: '#b96814',
-                    700: '#9a4e12',
-                    800: '#7d3f15',
-                    900: '#673515',
+                    50: '#eef5fc',
+                    100: '#d5e8f7',
+                    200: '#acd1ef',
+                    300: '#74b2e3',
+                    400: '#4896d6',
+                    500: '#3085c7',
+                    600: '#2469a3',
+                    700: '#1e5282',
+                    800: '#1a4167',
+                    900: '#163654',
                   },
                   warm: {
-                    50: '#fdf6f0',
-                    100: '#fdebd8',
-                    200: '#fad3b0',
-                    300: '#f6b57e',
-                    400: '#f08c4b',
-                    500: '#e86c28',
-                    600: '#d4521c',
-                    700: '#b04019',
-                    800: '#8c351b',
-                    900: '#722e1a',
+                    50: '#fef8ec',
+                    100: '#fdefd0',
+                    200: '#fbdda0',
+                    300: '#f8c464',
+                    400: '#f4a92e',
+                    500: '#eba528',
+                    600: '#cc8a1a',
+                    700: '#a86d14',
+                    800: '#875615',
+                    900: '#6e4714',
                   }
                 },
                 fontFamily: {
@@ -60,28 +60,28 @@ export const Layout: FC<{ children?: any; title?: string; description?: string; 
         <style dangerouslySetInnerHTML={{ __html: `
           body { font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif; }
           .logo-text { 
-            background: linear-gradient(135deg, #d4821e, #e86c28);
+            background: linear-gradient(135deg, #3085c7, #2469a3);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
           }
           .btn-primary {
-            background: linear-gradient(135deg, #d4821e, #e86c28);
+            background: linear-gradient(135deg, #3085c7, #2469a3);
             color: white;
             transition: all 0.2s;
           }
           .btn-primary:hover {
-            background: linear-gradient(135deg, #b96814, #d4521c);
+            background: linear-gradient(135deg, #2469a3, #1e5282);
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(212,130,30,0.4);
+            box-shadow: 0 4px 12px rgba(48,133,199,0.4);
           }
           .btn-outline {
-            border: 2px solid #d4821e;
-            color: #d4821e;
+            border: 2px solid #3085c7;
+            color: #3085c7;
             transition: all 0.2s;
           }
           .btn-outline:hover {
-            background: #d4821e;
+            background: #3085c7;
             color: white;
           }
           .card-hover {
@@ -92,14 +92,14 @@ export const Layout: FC<{ children?: any; title?: string; description?: string; 
             box-shadow: 0 8px 24px rgba(0,0,0,0.1);
           }
           .audio-player-bar {
-            background: linear-gradient(90deg, #d4821e, #e86c28);
+            background: linear-gradient(90deg, #3085c7, #eba528);
             height: 4px;
             border-radius: 2px;
           }
           .tag-badge {
-            background: #fdf8f0;
-            color: #b96814;
-            border: 1px solid #f4daa9;
+            background: #eef5fc;
+            color: #2469a3;
+            border: 1px solid #acd1ef;
           }
           .reaction-btn {
             transition: all 0.15s;
@@ -140,7 +140,7 @@ export const Layout: FC<{ children?: any; title?: string; description?: string; 
             display: inline-block;
             width: 3px;
             height: 12px;
-            background: #d4821e;
+            background: #3085c7;
             border-radius: 2px;
             animation: wave 1s ease-in-out infinite;
           }
@@ -174,7 +174,7 @@ export const Layout: FC<{ children?: any; title?: string; description?: string; 
             <div class="flex items-center justify-between h-16">
               {/* Logo */}
               <a href="/" class="flex items-center gap-2 flex-shrink-0">
-                <div class="w-8 h-8 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, #d4821e, #e86c28)">
+                <div class="w-8 h-8 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, #3085c7, #eba528)">
                   <i class="fas fa-microphone text-white text-sm"></i>
                 </div>
                 <span class="logo-text text-xl font-bold tracking-tight">ココロザシラボ</span>
@@ -328,10 +328,10 @@ export const Layout: FC<{ children?: any; title?: string; description?: string; 
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
               <div class="md:col-span-2">
                 <div class="flex items-center gap-2 mb-4">
-                  <div class="w-8 h-8 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, #d4821e, #e86c28)">
+                  <div class="w-8 h-8 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, #3085c7, #eba528)">
                     <i class="fas fa-microphone text-white text-sm"></i>
                   </div>
-                  <span class="text-white text-lg font-bold">ここロザシラボ</span>
+                  <span class="text-white text-lg font-bold">ココロザシラボ</span>
                 </div>
                 <p class="text-sm leading-relaxed">
                   声と歌で想いを発信するコミュニティサイト。<br />
@@ -354,8 +354,8 @@ export const Layout: FC<{ children?: any; title?: string; description?: string; 
                 <ul class="space-y-2 text-sm">
                   <li><a href="/about" class="hover:text-white transition-colors">初めての方へ</a></li>
                   <li><a href="/voice-journals" class="hover:text-white transition-colors">ボイスジャーナル</a></li>
-                  <li><a href="/songs/about" class="hover:text-white transition-colors">ここロザシソングとは</a></li>
-                  <li><a href="/songs/create" class="hover:text-white transition-colors">ここロザシソングを作る</a></li>
+                  <li><a href="/songs/about" class="hover:text-white transition-colors">ココロザシソングとは</a></li>
+                  <li><a href="/songs/create" class="hover:text-white transition-colors">ココロザシソングを作る</a></li>
                   <li><a href="/columns" class="hover:text-white transition-colors">コラム</a></li>
                   <li><a href="/news" class="hover:text-white transition-colors">お知らせ</a></li>
                 </ul>
@@ -371,7 +371,7 @@ export const Layout: FC<{ children?: any; title?: string; description?: string; 
               </div>
             </div>
             <div class="border-t border-gray-700 pt-6 text-xs text-center">
-              <p>&copy; 2025 ここロザシラボ. All rights reserved.</p>
+              <p>&copy; 2025 ココロザシラボ. All rights reserved.</p>
             </div>
           </div>
         </footer>

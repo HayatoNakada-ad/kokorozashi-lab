@@ -73,7 +73,7 @@ app.get('/', (c) => {
                         <button
                           id={`play-btn-${vj.id}`}
                           class="w-10 h-10 rounded-full flex items-center justify-center text-white shadow-sm flex-shrink-0"
-                          style="background: linear-gradient(135deg, #d4821e, #e86c28)"
+                          style="background: linear-gradient(135deg, #3085c7, #eba528)"
                           onclick={`initAudioPlayer('${vj.id}', '')`}
                         >
                           <i class="fas fa-play text-sm"></i>
@@ -204,7 +204,7 @@ app.get('/detail/:id', (c) => {
                 <button
                   id={`play-btn-${vj.id}`}
                   class="w-14 h-14 rounded-full flex items-center justify-center text-white shadow-lg flex-shrink-0"
-                  style="background: linear-gradient(135deg, #d4821e, #e86c28)"
+                  style="background: linear-gradient(135deg, #3085c7, #eba528)"
                   onclick={`initAudioPlayer('${vj.id}', '')`}
                 >
                   <i class="fas fa-play text-lg"></i>
@@ -340,7 +340,7 @@ app.get('/create', (c) => {
         {/* Progress */}
         <div class="flex items-center gap-2 mb-8">
           <div class="flex items-center gap-2">
-            <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold text-white" style="background: #d4821e">1</div>
+            <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold text-white" style="background: #3085c7">1</div>
             <span class="text-sm font-semibold text-brand-600">録音</span>
           </div>
           <div class="flex-1 h-0.5 bg-gray-200"></div>
@@ -368,7 +368,7 @@ app.get('/create', (c) => {
                   <button
                     onclick="startRecording()"
                     class="w-20 h-20 rounded-full flex items-center justify-center text-white shadow-lg"
-                    style="background: linear-gradient(135deg, #d4821e, #e86c28)"
+                    style="background: linear-gradient(135deg, #3085c7, #eba528)"
                     id="mainRecordBtn"
                   >
                     <i class="fas fa-microphone text-3xl"></i>
@@ -405,7 +405,7 @@ app.get('/create', (c) => {
                       id="play-btn-preview"
                       onclick="playPreview()"
                       class="w-10 h-10 rounded-full flex items-center justify-center text-white"
-                      style="background: linear-gradient(135deg, #d4821e, #e86c28)"
+                      style="background: linear-gradient(135deg, #3085c7, #eba528)"
                     >
                       <i class="fas fa-play text-sm"></i>
                     </button>
@@ -669,7 +669,7 @@ app.get('/create/complete', (c) => {
   return c.html(
     <Layout title="投稿完了" currentUser={currentUser} unreadNotifications={unread}>
       <div class="max-w-lg mx-auto px-4 py-16 text-center">
-        <div class="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6" style="background: linear-gradient(135deg, #d4821e, #e86c28)">
+        <div class="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6" style="background: linear-gradient(135deg, #3085c7, #eba528)">
           <i class="fas fa-check text-white text-3xl"></i>
         </div>
         <h1 class="text-2xl font-bold text-gray-800 mb-2">投稿しました！</h1>

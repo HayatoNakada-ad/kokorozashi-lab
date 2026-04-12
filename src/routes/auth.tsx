@@ -11,10 +11,10 @@ app.get('/', (c) => {
           {/* Logo */}
           <div class="text-center mb-8">
             <a href="/" class="inline-flex items-center gap-2 mb-4">
-              <div class="w-10 h-10 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, #d4821e, #e86c28)">
+              <div class="w-10 h-10 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, #3085c7, #eba528)">
                 <i class="fas fa-microphone text-white"></i>
               </div>
-              <span class="logo-text text-2xl font-bold">ここロザシラボ</span>
+              <span class="logo-text text-2xl font-bold">ココロザシラボ</span>
             </a>
             <h1 class="text-xl font-bold text-gray-800">ログイン</h1>
             <p class="text-sm text-gray-500 mt-1">アカウントにサインインしてください</p>
@@ -116,10 +116,10 @@ app.get('/', (c) => {
         <div class="w-full max-w-md">
           <div class="text-center mb-8">
             <a href="/" class="inline-flex items-center gap-2 mb-4">
-              <div class="w-10 h-10 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, #d4821e, #e86c28)">
+              <div class="w-10 h-10 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, #3085c7, #eba528)">
                 <i class="fas fa-microphone text-white"></i>
               </div>
-              <span class="logo-text text-2xl font-bold">ここロザシラボ</span>
+              <span class="logo-text text-2xl font-bold">ココロザシラボ</span>
             </a>
             <h1 class="text-xl font-bold text-gray-800">アカウント作成</h1>
             <p class="text-sm text-gray-500 mt-1">声と想いのコミュニティへようこそ</p>
@@ -207,8 +207,8 @@ app.get('/terms', (c) => {
           <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
             <h1 class="text-xl font-bold text-gray-800 mb-4">利用規約の確認</h1>
             <div class="h-64 overflow-y-auto border border-gray-200 rounded-xl p-4 text-sm text-gray-600 mb-5 leading-relaxed">
-              <h3 class="font-bold mb-2">ここロザシラボ 利用規約</h3>
-              <p class="mb-3">第1条（目的）本規約は、ここロザシラボ（以下「当サービス」）の利用条件を定めるものです。</p>
+              <h3 class="font-bold mb-2">ココロザシラボ 利用規約</h3>
+              <p class="mb-3">第1条（目的）本規約は、ココロザシラボ（以下「当サービス」）の利用条件を定めるものです。</p>
               <p class="mb-3">第2条（利用登録）登録申請者が本規約に同意の上、当社の定める方法によって利用登録を申請した場合に、利用登録が完了するものとします。</p>
               <p class="mb-3">第3条（禁止事項）法令または公序良俗に違反する行為、犯罪行為に関連する行為、当社または第三者の知的財産権を侵害する行為を禁止します。</p>
               <p class="mb-3">第4条（コンテンツの権利）ユーザーが投稿した音声・テキストの著作権はユーザーに帰属します。ただし、当サービスはサービス運営に必要な範囲でこれを利用できるものとします。</p>
@@ -243,11 +243,11 @@ app.get('/complete', (c) => {
     <Layout title="登録完了">
       <div class="min-h-screen bg-gray-50 flex items-center justify-center px-4">
         <div class="w-full max-w-md text-center">
-          <div class="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6" style="background: linear-gradient(135deg, #d4821e, #e86c28)">
+          <div class="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6" style="background: linear-gradient(135deg, #3085c7, #eba528)">
             <i class="fas fa-check text-white text-3xl"></i>
           </div>
           <h1 class="text-2xl font-bold text-gray-800 mb-2">登録完了！</h1>
-          <p class="text-gray-500 mb-2">ここロザシラボへようこそ！</p>
+          <p class="text-gray-500 mb-2">ココロザシラボへようこそ！</p>
           <p class="text-sm text-gray-400 mb-8">確認メールをお送りしました。メール内のリンクをクリックして本登録を完了してください。</p>
           <a href="/" class="btn-primary px-8 py-3 rounded-full font-medium inline-block">
             ホームへ

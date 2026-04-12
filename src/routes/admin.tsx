@@ -12,7 +12,7 @@ const AdminLayout = ({ children, title }: { children?: any; title: string }) => 
     <head>
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>{title} | 管理画面 - ここロザシラボ</title>
+      <title>{title} | 管理画面 - ココロザシラボ</title>
       <script src="https://cdn.tailwindcss.com"></script>
       <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet" />
       <style>{`
@@ -24,7 +24,7 @@ const AdminLayout = ({ children, title }: { children?: any; title: string }) => 
       {/* Sidebar */}
       <aside class="admin-sidebar bg-gray-900 text-gray-300 min-h-screen flex flex-col flex-shrink-0">
         <div class="p-4 border-b border-gray-700">
-          <a href="/" class="text-white font-bold text-sm">ここロザシラボ</a>
+          <a href="/" class="text-white font-bold text-sm">ココロザシラボ</a>
           <p class="text-xs text-gray-500 mt-0.5">管理画面</p>
         </div>
         <nav class="flex-1 p-3 space-y-1">
@@ -32,7 +32,7 @@ const AdminLayout = ({ children, title }: { children?: any; title: string }) => 
             { href: '/admin', icon: 'fa-home', label: 'ダッシュボード' },
             { href: '/admin/users', icon: 'fa-users', label: 'ユーザー管理' },
             { href: '/admin/voice-journals', icon: 'fa-microphone', label: 'ボイスジャーナル' },
-            { href: '/admin/songs', icon: 'fa-music', label: 'ここロザシソング' },
+            { href: '/admin/songs', icon: 'fa-music', label: 'ココロザシソング' },
             { href: '/admin/comments', icon: 'fa-comments', label: 'コメント管理' },
             { href: '/admin/topics', icon: 'fa-lightbulb', label: 'お題管理' },
             { href: '/admin/columns', icon: 'fa-book-open', label: 'コラム管理' },
@@ -74,7 +74,7 @@ app.get('/', (c) => {
   const stats = [
     { label: 'ユーザー数', value: dummyUsers.length, icon: 'fa-users', color: 'blue' },
     { label: 'ボイスジャーナル', value: dummyVoiceJournals.length, icon: 'fa-microphone', color: 'orange' },
-    { label: 'ここロザシソング', value: dummySongs.length, icon: 'fa-music', color: 'purple' },
+    { label: 'ココロザシソング', value: dummySongs.length, icon: 'fa-music', color: 'purple' },
     { label: '申込件数', value: 5, icon: 'fa-shopping-cart', color: 'green' },
   ]
 
@@ -265,10 +265,10 @@ app.get('/voice-journals', (c) => {
 // Songs
 app.get('/songs', (c) => {
   return c.html(
-    <AdminLayout title="ここロザシソング管理">
+    <AdminLayout title="ココロザシソング管理">
       <div class="bg-white rounded-xl border border-gray-200">
         <div class="p-4 border-b border-gray-100">
-          <h2 class="font-semibold text-gray-800">ここロザシソング一覧 ({dummySongs.length}件)</h2>
+          <h2 class="font-semibold text-gray-800">ココロザシソング一覧 ({dummySongs.length}件)</h2>
         </div>
         <div class="divide-y divide-gray-50">
           {dummySongs.map(song => (

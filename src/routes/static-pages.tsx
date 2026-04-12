@@ -13,10 +13,10 @@ app.get('/about', (c) => {
       {/* Hero */}
       <section class="bg-white py-16 border-b border-gray-100">
         <div class="max-w-4xl mx-auto px-4 text-center">
-          <div class="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6" style="background: linear-gradient(135deg, #d4821e, #e86c28)">
+          <div class="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6" style="background: linear-gradient(135deg, #3085c7, #eba528)">
             <i class="fas fa-microphone text-white text-2xl"></i>
           </div>
-          <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">ここロザシラボへようこそ</h1>
+          <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">ココロザシラボへようこそ</h1>
           <p class="text-lg text-gray-600 max-w-xl mx-auto leading-relaxed">
             声と歌で「志」を発信し、同じ想いを持つ人と繋がる<br />コミュニティプラットフォームです。
           </p>
@@ -28,7 +28,7 @@ app.get('/about', (c) => {
         <div class="grid md:grid-cols-3 gap-6 mb-16">
           {[
             { icon: '🎙️', title: 'ボイスジャーナル', desc: 'ブラウザで録音してそのまま投稿。声で日記を書くように、想いをシェアしましょう。', link: '/voice-journals', linkText: 'みんなの投稿を見る' },
-            { icon: '🎵', title: 'ここロザシソング', desc: 'あなたの志をヒアリングして、プロが楽曲化。本人歌唱の作品として永遠に残せます。', link: '/songs/about', linkText: 'サービスを詳しく見る' },
+            { icon: '🎵', title: 'ココロザシソング', desc: 'あなたの志をヒアリングして、プロが楽曲化。本人歌唱の作品として永遠に残せます。', link: '/songs/about', linkText: 'サービスを詳しく見る' },
             { icon: '👥', title: 'コミュニティ', desc: 'フォローして、コメントやリアクションで繋がろう。声と想いが人と人をつなぎます。', link: '/signup', linkText: '登録して始める' },
           ].map(f => (
             <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 text-center card-hover">
@@ -131,7 +131,7 @@ app.get('/search', (c) => {
             type="text"
             value={q}
             id="searchInput"
-            placeholder="ユーザー、ボイスジャーナル、ここロザシソングを検索"
+            placeholder="ユーザー、ボイスジャーナル、ココロザシソングを検索"
             class="w-full pl-12 pr-4 py-4 text-base border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand-300 focus:border-transparent shadow-sm"
             onkeydown="if(event.key==='Enter'){window.location='/search?q='+this.value+'&tab=all'}"
           />
@@ -153,7 +153,7 @@ app.get('/search', (c) => {
                 { key: 'all', label: 'すべて', count: filteredUsers.length + filteredVJs.length + filteredSongs.length },
                 { key: 'users', label: 'ユーザー', count: filteredUsers.length },
                 { key: 'voice-journals', label: 'ボイスジャーナル', count: filteredVJs.length },
-                { key: 'songs', label: 'ここロザシソング', count: filteredSongs.length },
+                { key: 'songs', label: 'ココロザシソング', count: filteredSongs.length },
               ].map(t => (
                 <a
                   href={`/search?q=${q}&tab=${t.key}`}
@@ -187,7 +187,7 @@ app.get('/search', (c) => {
                   {tab === 'all' && <h2 class="font-bold text-gray-700 mb-3 text-sm mt-6">ボイスジャーナル</h2>}
                   {filteredVJs.map((vj: any) => (
                     <a href={`/voice-journal/${vj.id}`} class="flex items-start gap-3 bg-white rounded-xl border border-gray-100 p-4 hover:bg-brand-50 transition-colors">
-                      <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style="background: linear-gradient(135deg, #d4821e, #e86c28)">
+                      <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style="background: linear-gradient(135deg, #3085c7, #eba528)">
                         <i class="fas fa-microphone text-white text-sm"></i>
                       </div>
                       <div>
@@ -202,7 +202,7 @@ app.get('/search', (c) => {
 
               {(tab === 'all' || tab === 'songs') && filteredSongs.length > 0 && (
                 <div>
-                  {tab === 'all' && <h2 class="font-bold text-gray-700 mb-3 text-sm mt-6">ここロザシソング</h2>}
+                  {tab === 'all' && <h2 class="font-bold text-gray-700 mb-3 text-sm mt-6">ココロザシソング</h2>}
                   {filteredSongs.map((s: any) => (
                     <a href={`/songs/${s.id}`} class="flex items-center gap-3 bg-white rounded-xl border border-gray-100 p-4 hover:bg-brand-50 transition-colors">
                       <img src={s.jacket_image_url} alt={s.title} class="w-12 h-12 rounded-xl object-cover flex-shrink-0" />
@@ -245,7 +245,7 @@ app.get('/terms', (c) => {
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8 prose prose-gray max-w-none text-sm leading-relaxed text-gray-700 space-y-6">
           <section>
             <h2 class="text-lg font-bold text-gray-800 mb-3">第1条（目的）</h2>
-            <p>本規約は、ここロザシラボ（以下「当サービス」）の利用条件を定めるものです。登録ユーザーの皆さまには、本規約に従って当サービスをご利用いただきます。</p>
+            <p>本規約は、ココロザシラボ（以下「当サービス」）の利用条件を定めるものです。登録ユーザーの皆さまには、本規約に従って当サービスをご利用いただきます。</p>
           </section>
           <section>
             <h2 class="text-lg font-bold text-gray-800 mb-3">第2条（利用登録）</h2>
@@ -326,7 +326,7 @@ app.get('/law', (c) => {
         <h1 class="text-2xl font-bold text-gray-800 mb-8">特定商取引法に基づく表記</h1>
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
           {[
-            { label: '販売業者', value: 'ここロザシラボ株式会社' },
+            { label: '販売業者', value: 'ココロザシラボ株式会社' },
             { label: '代表者', value: '代表取締役 山田太郎' },
             { label: '所在地', value: '東京都渋谷区〇〇1-2-3' },
             { label: '電話番号', value: 'お問い合わせフォームよりご連絡ください' },
@@ -382,7 +382,7 @@ app.get('/contact', (c) => {
               <label class="block text-sm font-semibold text-gray-700 mb-1.5">お問い合わせ種別</label>
               <select class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-300 bg-white">
                 <option>サービスについて</option>
-                <option>ここロザシソングについて</option>
+                <option>ココロザシソングについて</option>
                 <option>アカウントについて</option>
                 <option>不具合・バグ報告</option>
                 <option>その他</option>

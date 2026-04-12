@@ -21,7 +21,7 @@ app.get('/', (c) => {
             <div class="flex" id="bannerSlider" style="transition: transform 0.4s ease;">
               {dummyBanners.map((banner, i) => (
                 <a href={banner.link_url} class="flex-shrink-0 w-full block relative" style="min-width:100%">
-                  <div class="aspect-[3/1] md:aspect-[4/1] rounded-2xl overflow-hidden relative" style={`background: linear-gradient(135deg, ${i === 0 ? '#d4821e, #e86c28' : i === 1 ? '#6366f1, #8b5cf6' : '#10b981, #059669'})`}>
+                  <div class="aspect-[3/1] md:aspect-[4/1] rounded-2xl overflow-hidden relative" style={`background: linear-gradient(135deg, ${i === 0 ? '#3085c7, #eba528' : i === 1 ? '#6366f1, #8b5cf6' : '#10b981, #059669'})`}>
                     <div class="absolute inset-0 flex items-center px-8 md:px-16">
                       <div class="text-white">
                         <span class="text-xs font-semibold bg-white/20 rounded-full px-3 py-1 mb-3 inline-block">
@@ -89,7 +89,7 @@ app.get('/', (c) => {
                         {item.type === 'voice_journal' ? (
                           <span><i class="fas fa-microphone mr-1 text-brand-400"></i>ボイスジャーナルを投稿しました</span>
                         ) : (
-                          <span><i class="fas fa-music mr-1 text-purple-400"></i>ここロザシソングを公開しました</span>
+                          <span><i class="fas fa-music mr-1 text-purple-400"></i>ココロザシソングを公開しました</span>
                         )}
                       </p>
                     </div>
@@ -108,7 +108,7 @@ app.get('/', (c) => {
                             <button
                               id={`play-btn-${vj.id}`}
                               class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 text-white shadow-sm"
-                              style="background: linear-gradient(135deg, #d4821e, #e86c28)"
+                              style="background: linear-gradient(135deg, #3085c7, #eba528)"
                               onclick={`initAudioPlayer('${vj.id}', '')`}
                             >
                               <i class="fas fa-play text-sm"></i>
@@ -242,7 +242,7 @@ app.get('/', (c) => {
             <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="font-bold text-gray-800">
-                  <i class="fas fa-music mr-2 text-purple-500"></i>ここロザシソング
+                  <i class="fas fa-music mr-2 text-purple-500"></i>ココロザシソング
                 </h3>
                 <a href="/songs/showcase" class="text-xs text-brand-600 hover:underline">すべて</a>
               </div>
@@ -317,7 +317,7 @@ app.get('/', (c) => {
                     <button
                       id={`play-btn-${vj.id}-card`}
                       class="w-8 h-8 rounded-full flex items-center justify-center text-white shadow-sm flex-shrink-0"
-                      style="background: linear-gradient(135deg, #d4821e, #e86c28)"
+                      style="background: linear-gradient(135deg, #3085c7, #eba528)"
                       onclick={`initAudioPlayer('${vj.id}-card', '')`}
                     >
                       <i class="fas fa-play text-xs"></i>
@@ -389,7 +389,7 @@ app.get('/', (c) => {
                 <i class="fab fa-spotify text-white text-2xl"></i>
               </div>
               <div>
-                <h3 class="font-bold text-gray-800">ここロザシラボ Podcast</h3>
+                <h3 class="font-bold text-gray-800">ココロザシラボ Podcast</h3>
                 <p class="text-sm text-gray-500">声と志について語る番組</p>
               </div>
             </div>
@@ -401,9 +401,9 @@ app.get('/', (c) => {
         </section>
 
         {/* Bottom CTA */}
-        <section class="mt-12 rounded-3xl overflow-hidden" style="background: linear-gradient(135deg, #d4821e 0%, #e86c28 50%, #6366f1 100%)">
+        <section class="mt-12 rounded-3xl overflow-hidden" style="background: linear-gradient(135deg, #3085c7 0%, #eba528 50%, #6366f1 100%)">
           <div class="px-8 py-12 text-white text-center">
-            <p class="text-sm font-semibold opacity-80 mb-2">✨ ここロザシソング</p>
+            <p class="text-sm font-semibold opacity-80 mb-2">✨ ココロザシソング</p>
             <h2 class="text-2xl md:text-4xl font-bold mb-4">あなたの志が、歌になる</h2>
             <p class="text-base opacity-90 mb-8 max-w-xl mx-auto">
               思いや志をヒアリングして、プロが楽曲化。<br />

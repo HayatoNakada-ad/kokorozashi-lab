@@ -51,7 +51,7 @@ app.get('/', (c) => {
               {[
                 { href: '/mypage', icon: 'fa-home', label: 'ダッシュボード', active: true },
                 { href: '/mypage/posts/voice-journals', icon: 'fa-microphone', label: 'ボイスジャーナル' },
-                { href: '/mypage/posts/songs', icon: 'fa-music', label: 'ここロザシソング' },
+                { href: '/mypage/posts/songs', icon: 'fa-music', label: 'ココロザシソング' },
                 { href: '/mypage/drafts', icon: 'fa-file-alt', label: '下書き' },
                 { href: '/mypage/following', icon: 'fa-user-plus', label: 'フォロー中' },
                 { href: '/mypage/followers', icon: 'fa-users', label: 'フォロワー' },
@@ -138,7 +138,7 @@ app.get('/', (c) => {
               <div class="space-y-3">
                 {myVJs.slice(0, 3).map(vj => (
                   <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-xl hover:bg-brand-50 transition-colors">
-                    <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style="background: linear-gradient(135deg, #d4821e, #e86c28)">
+                    <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style="background: linear-gradient(135deg, #3085c7, #eba528)">
                       <i class="fas fa-microphone text-white text-sm"></i>
                     </div>
                     <div class="flex-1 min-w-0">
@@ -158,7 +158,7 @@ app.get('/', (c) => {
               <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
                 <div class="flex items-center justify-between mb-4">
                   <h3 class="font-bold text-gray-800">
-                    <i class="fas fa-music mr-2 text-purple-500"></i>ここロザシソング
+                    <i class="fas fa-music mr-2 text-purple-500"></i>ココロザシソング
                   </h3>
                   <a href="/mypage/posts/songs" class="text-xs text-brand-600 hover:underline">すべて見る</a>
                 </div>

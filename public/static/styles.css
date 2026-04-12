@@ -1,4 +1,4 @@
-/* Custom styles for ここロザシラボ */
+/* Custom styles for ココロザシラボ */
 
 /* Smooth scrolling */
 html {
@@ -16,15 +16,15 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #d4821e;
+  background: #3085c7;
   border-radius: 3px;
 }
 
 /* Active reaction button */
 .active-reaction {
-  background: #fdf8f0 !important;
-  border-color: #d4821e !important;
-  color: #d4821e !important;
+  background: #eef5fc !important;
+  border-color: #3085c7 !important;
+  color: #3085c7 !important;
   font-weight: 600;
 }
 
@@ -35,7 +35,7 @@ html {
 
 /* Focus visible improvement */
 *:focus-visible {
-  outline: 2px solid #d4821e;
+  outline: 2px solid #3085c7;
   outline-offset: 2px;
 }
 
