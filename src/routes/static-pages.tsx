@@ -13,7 +13,7 @@ app.get('/about', (c) => {
       {/* Hero */}
       <section class="bg-white py-16 border-b border-gray-100">
         <div class="max-w-4xl mx-auto px-4 text-center">
-          <div class="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6" style="background: linear-gradient(135deg, #3085c7, #eba528)">
+          <div class="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6" style="background: #3085c7">
             <i class="fas fa-microphone text-white text-2xl"></i>
           </div>
           <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">ココロザシラボへようこそ</h1>
@@ -41,7 +41,7 @@ app.get('/about', (c) => {
         </div>
 
         {/* How to Start */}
-        <div class="bg-gradient-to-br from-brand-50 to-warm-50 rounded-3xl p-8 mb-16 border border-brand-100">
+        <div class="bg-brand-50 rounded-3xl p-8 mb-16 border border-brand-100">
           <h2 class="text-2xl font-bold text-gray-800 mb-8 text-center">
             <i class="fas fa-rocket mr-2 text-brand-500"></i>始め方
           </h2>
@@ -187,7 +187,7 @@ app.get('/search', (c) => {
                   {tab === 'all' && <h2 class="font-bold text-gray-700 mb-3 text-sm mt-6">ボイスジャーナル</h2>}
                   {filteredVJs.map((vj: any) => (
                     <a href={`/voice-journal/${vj.id}`} class="flex items-start gap-3 bg-white rounded-xl border border-gray-100 p-4 hover:bg-brand-50 transition-colors">
-                      <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style="background: linear-gradient(135deg, #3085c7, #eba528)">
+                      <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style="background: #3085c7">
                         <i class="fas fa-microphone text-white text-sm"></i>
                       </div>
                       <div>

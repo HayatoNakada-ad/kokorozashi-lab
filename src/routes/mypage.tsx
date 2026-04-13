@@ -79,7 +79,7 @@ app.get('/', (c) => {
           {/* Main Content */}
           <div class="lg:col-span-3 space-y-6">
             {/* Quick Actions */}
-            <div class="bg-gradient-to-br from-brand-50 to-warm-50 rounded-2xl border border-brand-100 p-5">
+            <div class="bg-brand-50 rounded-2xl border border-brand-100 p-5">
               <h3 class="font-bold text-gray-800 mb-4">
                 <i class="fas fa-plus-circle mr-2 text-brand-500"></i>クイックアクション
               </h3>
@@ -138,7 +138,7 @@ app.get('/', (c) => {
               <div class="space-y-3">
                 {myVJs.slice(0, 3).map(vj => (
                   <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-xl hover:bg-brand-50 transition-colors">
-                    <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style="background: linear-gradient(135deg, #3085c7, #eba528)">
+                    <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style="background: #3085c7">
                       <i class="fas fa-microphone text-white text-sm"></i>
                     </div>
                     <div class="flex-1 min-w-0">

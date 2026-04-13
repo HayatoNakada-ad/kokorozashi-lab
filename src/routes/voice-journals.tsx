@@ -73,7 +73,7 @@ app.get('/', (c) => {
                         <button
                           id={`play-btn-${vj.id}`}
                           class="w-10 h-10 rounded-full flex items-center justify-center text-white shadow-sm flex-shrink-0"
-                          style="background: linear-gradient(135deg, #3085c7, #eba528)"
+                          style="background: #3085c7"
                           onclick={`initAudioPlayer('${vj.id}', '')`}
                         >
                           <i class="fas fa-play text-sm"></i>
@@ -204,7 +204,7 @@ app.get('/detail/:id', (c) => {
                 <button
                   id={`play-btn-${vj.id}`}
                   class="w-14 h-14 rounded-full flex items-center justify-center text-white shadow-lg flex-shrink-0"
-                  style="background: linear-gradient(135deg, #3085c7, #eba528)"
+                  style="background: #3085c7"
                   onclick={`initAudioPlayer('${vj.id}', '')`}
                 >
                   <i class="fas fa-play text-lg"></i>
@@ -364,11 +364,11 @@ app.get('/create', (c) => {
             <div class="bg-brand-50 rounded-2xl p-8 text-center mb-6" id="recorderArea">
               {/* Status */}
               <div id="recorderStatus" class="mb-6">
-                <div class="w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-4" style="background: linear-gradient(135deg, #faefd8, #f4daa9)" id="recordBtn">
+                <div class="w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-4" style="background: #eef5fc" id="recordBtn">
                   <button
                     onclick="startRecording()"
                     class="w-20 h-20 rounded-full flex items-center justify-center text-white shadow-lg"
-                    style="background: linear-gradient(135deg, #3085c7, #eba528)"
+                    style="background: #3085c7"
                     id="mainRecordBtn"
                   >
                     <i class="fas fa-microphone text-3xl"></i>
@@ -405,7 +405,7 @@ app.get('/create', (c) => {
                       id="play-btn-preview"
                       onclick="playPreview()"
                       class="w-10 h-10 rounded-full flex items-center justify-center text-white"
-                      style="background: linear-gradient(135deg, #3085c7, #eba528)"
+                      style="background: #3085c7"
                     >
                       <i class="fas fa-play text-sm"></i>
                     </button>
@@ -532,7 +532,7 @@ app.get('/create', (c) => {
             document.getElementById('timerDisplay').classList.remove('hidden');
             document.getElementById('recordingControls').classList.remove('hidden');
             document.getElementById('recordingControls').classList.add('flex');
-            document.getElementById('mainRecordBtn').style.background = 'linear-gradient(135deg, #ef4444, #dc2626)';
+            document.getElementById('mainRecordBtn').style.background = '#ef4444';
             document.getElementById('mainRecordBtn').innerHTML = '<i class="fas fa-stop text-3xl"></i>';
             document.getElementById('mainRecordBtn').onclick = stopRecording;
             
@@ -669,7 +669,7 @@ app.get('/create/complete', (c) => {
   return c.html(
     <Layout title="投稿完了" currentUser={currentUser} unreadNotifications={unread}>
       <div class="max-w-lg mx-auto px-4 py-16 text-center">
-        <div class="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6" style="background: linear-gradient(135deg, #3085c7, #eba528)">
+        <div class="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6" style="background: #3085c7">
           <i class="fas fa-check text-white text-3xl"></i>
         </div>
         <h1 class="text-2xl font-bold text-gray-800 mb-2">投稿しました！</h1>

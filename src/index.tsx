@@ -28,7 +28,7 @@ app.get('/', (c) => {
             <div class="flex" id="bannerSlider" style="transition: transform 0.4s ease;">
               {dummyBanners.map((banner, i) => (
                 <a href={banner.link_url} class="flex-shrink-0 w-full block" style="min-width:100%">
-                  <div class="aspect-[3/1] md:aspect-[4/1] rounded-2xl overflow-hidden relative" style={`background: linear-gradient(135deg, ${i === 0 ? '#3085c7, #eba528' : i === 1 ? '#6366f1, #8b5cf6' : '#10b981, #059669'})`}>
+                  <div class="aspect-[3/1] md:aspect-[4/1] rounded-2xl overflow-hidden relative" style={`background: ${i === 0 ? '#3085c7' : i === 1 ? '#2469a3' : '#1e5282'}`}>
                     <div class="absolute inset-0 flex items-center px-8 md:px-16">
                       <div class="text-white">
                         <span class="text-xs font-semibold bg-white/20 rounded-full px-3 py-1 mb-3 inline-block">
@@ -93,7 +93,7 @@ app.get('/', (c) => {
                         <a href={`/voice-journal/${vj.id}`}><h3 class="font-bold text-gray-800 hover:text-brand-600 line-clamp-2 mb-3">{vj.title}</h3></a>
                         <div class="bg-brand-50 rounded-xl p-3">
                           <div class="flex items-center gap-3">
-                            <button id={`play-btn-${vj.id}`} class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 text-white shadow-sm" style="background: linear-gradient(135deg, #3085c7, #eba528)" onclick={`initAudioPlayer('${vj.id}', '')`}>
+                            <button id={`play-btn-${vj.id}`} class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 text-white shadow-sm" style="background: #3085c7" onclick={`initAudioPlayer('${vj.id}', '')`}>
                               <i class="fas fa-play text-sm"></i>
                             </button>
                             <div class="flex-1">
@@ -139,7 +139,7 @@ app.get('/', (c) => {
 
           {/* Sidebar */}
           <div class="space-y-6">
-            <div class="bg-gradient-to-br from-brand-50 to-warm-50 rounded-2xl border border-brand-100 p-5">
+            <div class="bg-brand-50 rounded-2xl border border-brand-100 p-5">
               <div class="flex items-center gap-2 mb-3"><span class="text-lg">🎙️</span><h3 class="font-bold text-gray-800">今日のお題</h3></div>
               <p class="text-xl font-bold text-brand-700 mb-2">「{activeTopic.title}」</p>
               <p class="text-sm text-gray-600 mb-4">{activeTopic.description}</p>
@@ -170,7 +170,7 @@ app.get('/', (c) => {
                 </a>
               ))}
             </div>
-            <div class="rounded-2xl overflow-hidden" style="background: linear-gradient(135deg, #6366f1, #8b5cf6)">
+            <div class="rounded-2xl overflow-hidden" style="background: #3085c7">
               <div class="p-5 text-white">
                 <p class="text-xs font-semibold opacity-80 mb-1">✨ 期間限定キャンペーン中</p>
                 <h3 class="text-lg font-bold mb-2">あなたの志を歌にしませんか？</h3>
@@ -197,7 +197,7 @@ app.get('/', (c) => {
                   </div>
                   <a href={`/voice-journal/${vj.id}`}><h3 class="font-bold text-gray-800 hover:text-brand-600 line-clamp-2 mb-2 text-sm">{vj.title}</h3></a>
                   <div class="bg-brand-50 rounded-xl p-2.5 flex items-center gap-2">
-                    <button id={`play-btn-${vj.id}-card`} class="w-8 h-8 rounded-full flex items-center justify-center text-white shadow-sm flex-shrink-0" style="background: linear-gradient(135deg, #3085c7, #eba528)" onclick={`initAudioPlayer('${vj.id}-card', '')`}>
+                    <button id={`play-btn-${vj.id}-card`} class="w-8 h-8 rounded-full flex items-center justify-center text-white shadow-sm flex-shrink-0" style="background: #3085c7" onclick={`initAudioPlayer('${vj.id}-card', '')`}>
                       <i class="fas fa-play text-xs"></i>
                     </button>
                     <div class="flex-1">
@@ -258,7 +258,7 @@ app.get('/', (c) => {
         </section>
 
         {/* Bottom CTA */}
-        <section class="mt-12 rounded-3xl overflow-hidden" style="background: linear-gradient(135deg, #3085c7 0%, #eba528 50%, #6366f1 100%)">
+        <section class="mt-12 rounded-3xl overflow-hidden" style="background: #3085c7">
           <div class="px-8 py-12 text-white text-center">
             <p class="text-sm font-semibold opacity-80 mb-2">✨ ココロザシソング</p>
             <h2 class="text-2xl md:text-4xl font-bold mb-4">あなたの志が、歌になる</h2>
@@ -325,7 +325,7 @@ app.get('/voice-journals', (c) => {
                     <p class="text-sm text-gray-500 line-clamp-2 mb-3">{vj.description}</p>
                     <div class="bg-brand-50 rounded-xl p-3">
                       <div class="flex items-center gap-3">
-                        <button id={`play-btn-${vj.id}`} class="w-10 h-10 rounded-full flex items-center justify-center text-white shadow-sm flex-shrink-0" style="background: linear-gradient(135deg, #3085c7, #eba528)" onclick={`initAudioPlayer('${vj.id}', '')`}><i class="fas fa-play text-sm"></i></button>
+                        <button id={`play-btn-${vj.id}`} class="w-10 h-10 rounded-full flex items-center justify-center text-white shadow-sm flex-shrink-0" style="background: #3085c7" onclick={`initAudioPlayer('${vj.id}', '')`}><i class="fas fa-play text-sm"></i></button>
                         <div class="flex-1">
                           <div class="bg-white/60 rounded-full h-1.5"><div id={`progress-${vj.id}`} class="audio-player-bar h-1.5 rounded-full" style="width:0%"></div></div>
                           <div class="flex justify-between text-xs text-gray-400 mt-1.5">
@@ -393,7 +393,7 @@ app.get('/voice-journal/:id', (c) => {
             <h1 class="text-2xl font-bold text-gray-800 mb-3">{vj.title}</h1>
             <div class="bg-brand-50 rounded-2xl p-5 mb-5 audio-card">
               <div class="flex items-center gap-4">
-                <button id={`play-btn-${vj.id}`} class="w-14 h-14 rounded-full flex items-center justify-center text-white shadow-lg flex-shrink-0" style="background: linear-gradient(135deg, #3085c7, #eba528)" onclick={`initAudioPlayer('${vj.id}', '')`}><i class="fas fa-play text-lg"></i></button>
+                <button id={`play-btn-${vj.id}`} class="w-14 h-14 rounded-full flex items-center justify-center text-white shadow-lg flex-shrink-0" style="background: #3085c7" onclick={`initAudioPlayer('${vj.id}', '')`}><i class="fas fa-play text-lg"></i></button>
                 <div class="flex-1">
                   <div class="bg-white/60 rounded-full h-2 mb-2"><div id={`progress-${vj.id}`} class="audio-player-bar h-2 rounded-full" style="width:0%"></div></div>
                   <div class="flex justify-between text-sm text-gray-500">
@@ -479,8 +479,8 @@ function handleVJCreate(c: any) {
             <p class="text-sm text-gray-500 mb-8">最大2分間、声で日記を投稿できます</p>
             <div class="bg-brand-50 rounded-2xl p-8 text-center mb-6">
               <div id="recorderStatus" class="mb-6">
-                <div class="w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-4" style="background: linear-gradient(135deg, #faefd8, #f4daa9)">
-                  <button onclick="startRecording()" class="w-20 h-20 rounded-full flex items-center justify-center text-white shadow-lg" style="background: linear-gradient(135deg, #3085c7, #eba528)" id="mainRecordBtn">
+                <div class="w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-4" style="background: #eef5fc">
+                  <button onclick="startRecording()" class="w-20 h-20 rounded-full flex items-center justify-center text-white shadow-lg" style="background: #3085c7" id="mainRecordBtn">
                     <i class="fas fa-microphone text-3xl"></i>
                   </button>
                 </div>
@@ -498,7 +498,7 @@ function handleVJCreate(c: any) {
                 <div class="bg-white rounded-xl p-4 mb-4 text-left">
                   <p class="text-sm font-semibold text-gray-700 mb-2">録音完了！確認してみましょう</p>
                   <div class="flex items-center gap-3">
-                    <button id="play-btn-preview" onclick="playPreview()" class="w-10 h-10 rounded-full flex items-center justify-center text-white" style="background: linear-gradient(135deg, #3085c7, #eba528)"><i class="fas fa-play text-sm"></i></button>
+                    <button id="play-btn-preview" onclick="playPreview()" class="w-10 h-10 rounded-full flex items-center justify-center text-white" style="background: #3085c7"><i class="fas fa-play text-sm"></i></button>
                     <div class="flex-1"><div class="bg-gray-100 rounded-full h-1.5"><div class="audio-player-bar h-1.5 rounded-full" id="previewProgress" style="width:0%"></div></div></div>
                   </div>
                 </div>
@@ -603,7 +603,7 @@ app.get('/voice-journal/create/complete', (c) => {
   return c.html(
     <Layout title="投稿完了" currentUser={currentUser} unreadNotifications={unread}>
       <div class="max-w-lg mx-auto px-4 py-16 text-center">
-        <div class="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6" style="background: linear-gradient(135deg, #3085c7, #eba528)"><i class="fas fa-check text-white text-3xl"></i></div>
+        <div class="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6" style="background: #3085c7"><i class="fas fa-check text-white text-3xl"></i></div>
         <h1 class="text-2xl font-bold text-gray-800 mb-2">投稿しました！</h1>
         <p class="text-gray-500 mb-8">あなたの声が届きました。ありがとうございます 🎉</p>
         <div class="flex flex-col gap-3">
@@ -638,7 +638,7 @@ app.get('/login', (c) => {
         <div class="w-full max-w-md">
           <div class="text-center mb-8">
             <a href="/" class="inline-flex items-center gap-2 mb-4">
-              <div class="w-10 h-10 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, #3085c7, #eba528)"><i class="fas fa-microphone text-white"></i></div>
+              <div class="w-10 h-10 rounded-full flex items-center justify-center" style="background: #3085c7"><i class="fas fa-microphone text-white"></i></div>
               <span class="logo-text text-2xl font-bold">ココロザシラボ</span>
             </a>
             <h1 class="text-xl font-bold text-gray-800">ログイン</h1>
@@ -676,7 +676,7 @@ app.get('/signup', (c) => {
         <div class="w-full max-w-md">
           <div class="text-center mb-8">
             <a href="/" class="inline-flex items-center gap-2 mb-4">
-              <div class="w-10 h-10 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, #3085c7, #eba528)"><i class="fas fa-microphone text-white"></i></div>
+              <div class="w-10 h-10 rounded-full flex items-center justify-center" style="background: #3085c7"><i class="fas fa-microphone text-white"></i></div>
               <span class="logo-text text-2xl font-bold">ココロザシラボ</span>
             </a>
             <h1 class="text-xl font-bold text-gray-800">アカウント作成</h1>
@@ -734,7 +734,7 @@ app.get('/signup/complete', (c) => {
     <Layout title="登録完了">
       <div class="min-h-screen bg-gray-50 flex items-center justify-center px-4">
         <div class="w-full max-w-md text-center">
-          <div class="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6" style="background: linear-gradient(135deg, #3085c7, #eba528)"><i class="fas fa-check text-white text-3xl"></i></div>
+          <div class="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6" style="background: #3085c7"><i class="fas fa-check text-white text-3xl"></i></div>
           <h1 class="text-2xl font-bold text-gray-800 mb-2">登録完了！</h1>
           <p class="text-gray-500 mb-2">ココロザシラボへようこそ！</p>
           <p class="text-sm text-gray-400 mb-8">確認メールをお送りしました。メール内のリンクをクリックして本登録を完了してください。</p>
@@ -772,7 +772,7 @@ app.get('/about', (c) => {
     <Layout title="初めての方へ" currentUser={currentUser} unreadNotifications={unread}>
       <section class="bg-white py-16 border-b border-gray-100">
         <div class="max-w-4xl mx-auto px-4 text-center">
-          <div class="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6" style="background: linear-gradient(135deg, #3085c7, #eba528)"><i class="fas fa-microphone text-white text-2xl"></i></div>
+          <div class="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6" style="background: #3085c7"><i class="fas fa-microphone text-white text-2xl"></i></div>
           <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">ココロザシラボへようこそ</h1>
           <p class="text-lg text-gray-600 max-w-xl mx-auto leading-relaxed">声と歌で「志」を発信し、同じ想いを持つ人と繋がるコミュニティプラットフォームです。</p>
         </div>
@@ -788,7 +788,7 @@ app.get('/about', (c) => {
             </div>
           ))}
         </div>
-        <div class="bg-gradient-to-br from-brand-50 to-warm-50 rounded-3xl p-8 mb-16 border border-brand-100">
+        <div class="bg-brand-50 rounded-3xl p-8 mb-16 border border-brand-100">
           <h2 class="text-2xl font-bold text-gray-800 mb-8 text-center"><i class="fas fa-rocket mr-2 text-brand-500"></i>始め方</h2>
           <div class="grid md:grid-cols-3 gap-6">
             {[{n:'01',t:'アカウントを作る',d:'メールアドレスまたはGoogleで無料登録'},{n:'02',t:'録音して投稿する',d:'ブラウザで録音して2分以内の声日記を投稿'},{n:'03',t:'繋がろう',d:'フォローして、コメントやリアクションで交流'}].map(s => (
@@ -858,7 +858,7 @@ app.get('/search', (c) => {
               ))}
               {(tab==='all'||tab==='voice-journals') && filteredVJs.map(vj => (
                 <a href={`/voice-journal/${vj.id}`} class="flex items-start gap-3 bg-white rounded-xl border border-gray-100 p-4 hover:bg-brand-50 transition-colors">
-                  <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style="background: linear-gradient(135deg, #3085c7, #eba528)"><i class="fas fa-microphone text-white text-sm"></i></div>
+                  <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style="background: #3085c7"><i class="fas fa-microphone text-white text-sm"></i></div>
                   <div><p class="font-bold text-gray-800">{vj.title}</p><p class="text-xs text-gray-400">{vj.user?.display_name}</p></div>
                 </a>
               ))}

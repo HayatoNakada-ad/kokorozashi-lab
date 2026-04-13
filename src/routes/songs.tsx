@@ -53,9 +53,9 @@ app.get('/about', (c) => {
   return c.html(
     <Layout title="ココロザシソングとは" currentUser={currentUser} unreadNotifications={unread}>
       {/* Hero */}
-      <section class="relative overflow-hidden py-20 md:py-28" style="background: linear-gradient(135deg, #1e1b4b 0%, #312e81 40%, #6366f1 80%, #8b5cf6 100%)">
+      <section class="relative overflow-hidden py-20 md:py-28" style="background: #1e5282">
         <div class="absolute inset-0 opacity-20">
-          <div class="absolute inset-0" style="background-image: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(255,255,255,0.1) 0%, transparent 50%)"></div>
+          <div class="absolute inset-0" style=""></div>
         </div>
         <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
           <p class="text-purple-200 text-sm font-semibold mb-4 tracking-wider">✨ KOKOROZASHI SONG</p>
@@ -212,7 +212,7 @@ app.get('/about', (c) => {
             {steps.map((step, i) => (
               <div class="flex items-start gap-4 bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
                 <div class="flex-shrink-0">
-                  <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-white" style="background: linear-gradient(135deg, #3085c7, #eba528)">
+                  <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-white" style="background: #3085c7">
                     <i class={`fas ${step.icon}`}></i>
                   </div>
                 </div>
@@ -304,7 +304,7 @@ app.get('/about', (c) => {
       </section>
 
       {/* CTA */}
-      <section class="py-20" style="background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #6366f1 100%)">
+      <section class="py-20" style="background: #1e5282">
         <div class="max-w-2xl mx-auto px-4 text-center">
           <p class="text-purple-200 text-sm font-semibold mb-4">あなたの番です</p>
           <h2 class="text-2xl md:text-4xl font-bold text-white mb-4">想いを、歌に変えよう</h2>
@@ -417,7 +417,7 @@ app.get('/showcase', (c) => {
                 </a>
                 <p class="text-xs text-gray-500 line-clamp-2 mb-3">{song.description}</p>
                 <div class="bg-gray-100 rounded-full h-1 mb-2">
-                  <div id={`progress-${song.id}`} class="h-1 rounded-full" style="width:0%;background:linear-gradient(90deg,#6366f1,#8b5cf6)"></div>
+                  <div id={`progress-${song.id}`} class="h-1 rounded-full" style="width:0%;background:#3085c7"></div>
                 </div>
                 <div class="flex items-center justify-between text-xs text-gray-400">
                   <span id={`current-time-${song.id}`}>0:00</span>
@@ -497,19 +497,19 @@ app.get('/detail/:id', (c) => {
             </div>
 
             {/* Player */}
-            <div class="rounded-2xl p-5 mb-5 audio-card" style="background: linear-gradient(135deg, #f3f0ff, #e8e2ff)">
+            <div class="rounded-2xl p-5 mb-5 audio-card" style="background: #eef5fc">
               <div class="flex items-center gap-4">
                 <button
                   id={`play-btn-${song.id}`}
                   class="w-14 h-14 rounded-full flex items-center justify-center text-white shadow-lg flex-shrink-0"
-                  style="background: linear-gradient(135deg, #6366f1, #8b5cf6)"
+                  style="background: #3085c7"
                   onclick={`initAudioPlayer('${song.id}', '')`}
                 >
                   <i class="fas fa-play text-lg ml-1"></i>
                 </button>
                 <div class="flex-1">
                   <div class="bg-white/60 rounded-full h-2 mb-2">
-                    <div id={`progress-${song.id}`} class="h-2 rounded-full" style="width:0%;background:linear-gradient(90deg,#6366f1,#8b5cf6)"></div>
+                    <div id={`progress-${song.id}`} class="h-2 rounded-full" style="width:0%;background:#3085c7"></div>
                   </div>
                   <div class="flex justify-between text-sm text-purple-500">
                     <span id={`current-time-${song.id}`}>0:00</span>
@@ -562,7 +562,7 @@ app.get('/detail/:id', (c) => {
                 <div class="flex-1">
                   <textarea placeholder="コメントを入力..." rows={3} class="w-full text-sm text-gray-700 focus:outline-none resize-none"></textarea>
                   <div class="flex justify-end mt-2">
-                    <button class="px-5 py-2 rounded-full text-sm font-medium text-white" style="background: linear-gradient(135deg, #6366f1, #8b5cf6)">コメントする</button>
+                    <button class="px-5 py-2 rounded-full text-sm font-medium text-white" style="background: #3085c7">コメントする</button>
                   </div>
                 </div>
               </div>
@@ -689,7 +689,7 @@ app.get('/order/complete', (c) => {
   return c.html(
     <Layout title="申込完了" currentUser={currentUser} unreadNotifications={unread}>
       <div class="max-w-lg mx-auto px-4 py-16 text-center">
-        <div class="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6" style="background: linear-gradient(135deg, #6366f1, #8b5cf6)">
+        <div class="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6" style="background: #3085c7">
           <i class="fas fa-check text-white text-3xl"></i>
         </div>
         <h1 class="text-2xl font-bold text-gray-800 mb-2">申込が完了しました！</h1>
@@ -744,11 +744,11 @@ app.get('/:id', (c) => {
                 </div>
               </div>
             </div>
-            <div class="rounded-2xl p-5 mb-5 audio-card" style="background: linear-gradient(135deg, #f3f0ff, #e8e2ff)">
+            <div class="rounded-2xl p-5 mb-5 audio-card" style="background: #eef5fc">
               <div class="flex items-center gap-4">
-                <button id={`play-btn-${song.id}`} class="w-14 h-14 rounded-full flex items-center justify-center text-white shadow-lg flex-shrink-0" style="background: linear-gradient(135deg, #6366f1, #8b5cf6)" onclick={`initAudioPlayer('${song.id}', '')`}><i class="fas fa-play text-lg ml-1"></i></button>
+                <button id={`play-btn-${song.id}`} class="w-14 h-14 rounded-full flex items-center justify-center text-white shadow-lg flex-shrink-0" style="background: #3085c7" onclick={`initAudioPlayer('${song.id}', '')`}><i class="fas fa-play text-lg ml-1"></i></button>
                 <div class="flex-1">
-                  <div class="bg-white/60 rounded-full h-2 mb-2"><div id={`progress-${song.id}`} class="h-2 rounded-full" style="width:0%;background:linear-gradient(90deg,#6366f1,#8b5cf6)"></div></div>
+                  <div class="bg-white/60 rounded-full h-2 mb-2"><div id={`progress-${song.id}`} class="h-2 rounded-full" style="width:0%;background:#3085c7"></div></div>
                   <div class="flex justify-between text-sm text-purple-500"><span id={`current-time-${song.id}`}>0:00</span><span>--:--</span></div>
                 </div>
               </div>
@@ -770,7 +770,7 @@ app.get('/:id', (c) => {
             <div class="bg-white rounded-xl border border-gray-200 p-4 mb-5">
               <div class="flex gap-3">
                 <img src={currentUser.avatar_url} alt="" class="w-9 h-9 rounded-full flex-shrink-0" />
-                <div class="flex-1"><textarea placeholder="コメントを入力..." rows={3} class="w-full text-sm text-gray-700 focus:outline-none resize-none"></textarea><div class="flex justify-end mt-2"><button class="px-5 py-2 rounded-full text-sm font-medium text-white" style="background: linear-gradient(135deg, #6366f1, #8b5cf6)">コメントする</button></div></div>
+                <div class="flex-1"><textarea placeholder="コメントを入力..." rows={3} class="w-full text-sm text-gray-700 focus:outline-none resize-none"></textarea><div class="flex justify-end mt-2"><button class="px-5 py-2 rounded-full text-sm font-medium text-white" style="background: #3085c7">コメントする</button></div></div>
               </div>
             </div>
             <div class="space-y-4">

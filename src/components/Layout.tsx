@@ -60,20 +60,17 @@ export const Layout: FC<{ children?: any; title?: string; description?: string; 
         <style dangerouslySetInnerHTML={{ __html: `
           body { font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif; }
           .logo-text { 
-            background: linear-gradient(135deg, #3085c7, #2469a3);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: #3085c7;
           }
           .btn-primary {
-            background: linear-gradient(135deg, #3085c7, #2469a3);
+            background: #3085c7;
             color: white;
             transition: all 0.2s;
           }
           .btn-primary:hover {
-            background: linear-gradient(135deg, #2469a3, #1e5282);
+            background: #2469a3;
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(48,133,199,0.4);
+            box-shadow: 0 4px 12px rgba(48,133,199,0.3);
           }
           .btn-outline {
             border: 2px solid #3085c7;
@@ -92,7 +89,7 @@ export const Layout: FC<{ children?: any; title?: string; description?: string; 
             box-shadow: 0 8px 24px rgba(0,0,0,0.1);
           }
           .audio-player-bar {
-            background: linear-gradient(90deg, #3085c7, #eba528);
+            background: #3085c7;
             height: 4px;
             border-radius: 2px;
           }
@@ -174,7 +171,7 @@ export const Layout: FC<{ children?: any; title?: string; description?: string; 
             <div class="flex items-center justify-between h-16">
               {/* Logo */}
               <a href="/" class="flex items-center gap-2 flex-shrink-0">
-                <div class="w-8 h-8 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, #3085c7, #eba528)">
+                <div class="w-8 h-8 rounded-full flex items-center justify-center" style="background: #3085c7">
                   <i class="fas fa-microphone text-white text-sm"></i>
                 </div>
                 <span class="logo-text text-xl font-bold tracking-tight">ココロザシラボ</span>
@@ -328,7 +325,7 @@ export const Layout: FC<{ children?: any; title?: string; description?: string; 
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
               <div class="md:col-span-2">
                 <div class="flex items-center gap-2 mb-4">
-                  <div class="w-8 h-8 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, #3085c7, #eba528)">
+                  <div class="w-8 h-8 rounded-full flex items-center justify-center" style="background: #3085c7">
                     <i class="fas fa-microphone text-white text-sm"></i>
                   </div>
                   <span class="text-white text-lg font-bold">ココロザシラボ</span>

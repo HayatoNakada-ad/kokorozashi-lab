@@ -11,7 +11,7 @@ app.get('/', (c) => {
           {/* Logo */}
           <div class="text-center mb-8">
             <a href="/" class="inline-flex items-center gap-2 mb-4">
-              <div class="w-10 h-10 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, #3085c7, #eba528)">
+              <div class="w-10 h-10 rounded-full flex items-center justify-center" style="background: #3085c7">
                 <i class="fas fa-microphone text-white"></i>
               </div>
               <span class="logo-text text-2xl font-bold">ココロザシラボ</span>
@@ -116,7 +116,7 @@ app.get('/', (c) => {
         <div class="w-full max-w-md">
           <div class="text-center mb-8">
             <a href="/" class="inline-flex items-center gap-2 mb-4">
-              <div class="w-10 h-10 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, #3085c7, #eba528)">
+              <div class="w-10 h-10 rounded-full flex items-center justify-center" style="background: #3085c7">
                 <i class="fas fa-microphone text-white"></i>
               </div>
               <span class="logo-text text-2xl font-bold">ココロザシラボ</span>
@@ -243,7 +243,7 @@ app.get('/complete', (c) => {
     <Layout title="登録完了">
       <div class="min-h-screen bg-gray-50 flex items-center justify-center px-4">
         <div class="w-full max-w-md text-center">
-          <div class="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6" style="background: linear-gradient(135deg, #3085c7, #eba528)">
+          <div class="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6" style="background: #3085c7">
             <i class="fas fa-check text-white text-3xl"></i>
           </div>
           <h1 class="text-2xl font-bold text-gray-800 mb-2">登録完了！</h1>

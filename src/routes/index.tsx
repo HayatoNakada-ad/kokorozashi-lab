@@ -21,7 +21,7 @@ app.get('/', (c) => {
             <div class="flex" id="bannerSlider" style="transition: transform 0.4s ease;">
               {dummyBanners.map((banner, i) => (
                 <a href={banner.link_url} class="flex-shrink-0 w-full block relative" style="min-width:100%">
-                  <div class="aspect-[3/1] md:aspect-[4/1] rounded-2xl overflow-hidden relative" style={`background: linear-gradient(135deg, ${i === 0 ? '#3085c7, #eba528' : i === 1 ? '#6366f1, #8b5cf6' : '#10b981, #059669'})`}>
+                  <div class="aspect-[3/1] md:aspect-[4/1] rounded-2xl overflow-hidden relative" style={`background: ${i === 0 ? '#3085c7' : i === 1 ? '#2469a3' : '#1e5282'}`}>
                     <div class="absolute inset-0 flex items-center px-8 md:px-16">
                       <div class="text-white">
                         <span class="text-xs font-semibold bg-white/20 rounded-full px-3 py-1 mb-3 inline-block">
@@ -108,7 +108,7 @@ app.get('/', (c) => {
                             <button
                               id={`play-btn-${vj.id}`}
                               class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 text-white shadow-sm"
-                              style="background: linear-gradient(135deg, #3085c7, #eba528)"
+                              style="background: #3085c7"
                               onclick={`initAudioPlayer('${vj.id}', '')`}
                             >
                               <i class="fas fa-play text-sm"></i>
@@ -155,14 +155,14 @@ app.get('/', (c) => {
                               <button
                                 id={`play-btn-${song.id}`}
                                 class="w-8 h-8 rounded-full flex items-center justify-center text-white shadow-sm"
-                                style="background: linear-gradient(135deg, #6366f1, #8b5cf6)"
+                                style="background: #3085c7"
                                 onclick={`initAudioPlayer('${song.id}', '')`}
                               >
                                 <i class="fas fa-play text-xs"></i>
                               </button>
                               <div class="flex-1">
                                 <div class="bg-gray-200 rounded-full h-1 cursor-pointer">
-                                  <div id={`progress-${song.id}`} class="h-1 rounded-full" style="width:0%;background:linear-gradient(90deg,#6366f1,#8b5cf6)"></div>
+                                  <div id={`progress-${song.id}`} class="h-1 rounded-full" style="width:0%;background:#3085c7"></div>
                                 </div>
                               </div>
                             </div>
@@ -210,7 +210,7 @@ app.get('/', (c) => {
           {/* Sidebar */}
           <div class="space-y-6">
             {/* Today's Topic */}
-            <div class="bg-gradient-to-br from-brand-50 to-warm-50 rounded-2xl border border-brand-100 p-5">
+            <div class="bg-brand-50 rounded-2xl border border-brand-100 p-5">
               <div class="flex items-center gap-2 mb-3">
                 <span class="text-lg">🎙️</span>
                 <h3 class="font-bold text-gray-800">今日のお題</h3>
@@ -275,7 +275,7 @@ app.get('/', (c) => {
             </div>
 
             {/* Song CTA */}
-            <div class="rounded-2xl overflow-hidden" style="background: linear-gradient(135deg, #6366f1, #8b5cf6)">
+            <div class="rounded-2xl overflow-hidden" style="background: #3085c7">
               <div class="p-5 text-white">
                 <p class="text-xs font-semibold opacity-80 mb-1">✨ 期間限定キャンペーン中</p>
                 <h3 class="text-lg font-bold mb-2">あなたの志を<br />歌にしませんか？</h3>
@@ -317,7 +317,7 @@ app.get('/', (c) => {
                     <button
                       id={`play-btn-${vj.id}-card`}
                       class="w-8 h-8 rounded-full flex items-center justify-center text-white shadow-sm flex-shrink-0"
-                      style="background: linear-gradient(135deg, #3085c7, #eba528)"
+                      style="background: #3085c7"
                       onclick={`initAudioPlayer('${vj.id}-card', '')`}
                     >
                       <i class="fas fa-play text-xs"></i>
@@ -401,7 +401,7 @@ app.get('/', (c) => {
         </section>
 
         {/* Bottom CTA */}
-        <section class="mt-12 rounded-3xl overflow-hidden" style="background: linear-gradient(135deg, #3085c7 0%, #eba528 50%, #6366f1 100%)">
+        <section class="mt-12 rounded-3xl overflow-hidden" style="background: #3085c7">
           <div class="px-8 py-12 text-white text-center">
             <p class="text-sm font-semibold opacity-80 mb-2">✨ ココロザシソング</p>
             <h2 class="text-2xl md:text-4xl font-bold mb-4">あなたの志が、歌になる</h2>

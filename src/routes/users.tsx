@@ -36,7 +36,7 @@ app.get('/:username', (c) => {
         {/* Profile Header */}
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mb-6">
           {/* Cover */}
-          <div class="h-32 md:h-40 bg-gradient-to-br from-brand-400 to-warm-500"></div>
+          <div class="h-32 md:h-40 bg-brand-500"></div>
           <div class="px-6 pb-6">
             <div class="flex items-end gap-4 -mt-12 mb-4">
               <img
@@ -143,7 +143,7 @@ app.get('/:username', (c) => {
                       <button
                         id={`play-btn-${vj.id}`}
                         class="w-9 h-9 rounded-full flex items-center justify-center text-white flex-shrink-0"
-                        style="background: linear-gradient(135deg, #3085c7, #eba528)"
+                        style="background: #3085c7"
                         onclick={`initAudioPlayer('${vj.id}', '')`}
                       >
                         <i class="fas fa-play text-xs"></i>
