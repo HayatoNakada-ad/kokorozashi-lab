@@ -1,16 +1,18 @@
 import type { FC } from 'hono/jsx'
-import { dummyNotifications } from '../data/dummy'
+import { dummyNotifications, dummyHashtags, dummyNews, dummyTopics, formatDate } from '../data/dummy'
 
-export const Layout: FC<{ children?: any; title?: string; description?: string; currentUser?: any; unreadNotifications?: number; notifications?: any[] }> = ({
+export const Layout: FC<{ children?: any; title?: string; description?: string; currentUser?: any; unreadNotifications?: number; notifications?: any[]; currentPath?: string; sidebar?: any }> = ({
   children,
   title = 'ココロザシラボ',
   description = '声と歌で想いを発信するコミュニティサイト',
   currentUser,
   unreadNotifications = 0,
   notifications,
+  currentPath = '/',
+  sidebar,
 }) => {
   // notificationsが渡されない場合はdummyを使用（SSRでpropの配列渡しに問題があるため）
-  const notifData = (notifications && notifications.length > 0) ? notifications : dummyNotifications
+  const notifData = dummyNotifications
   const isLoggedIn = !!currentUser
 
   return (
@@ -124,6 +126,11 @@ export const Layout: FC<{ children?: any; title?: string; description?: string; 
           .reaction-btn:hover {
             transform: scale(1.1);
           }
+          .reaction-btn.active-reaction {
+            background: #eef5fc !important;
+            border-color: #74b2e3 !important;
+            color: #2469a3 !important;
+          }
           .dropdown-menu {
             display: none;
             position: absolute;
@@ -144,6 +151,7 @@ export const Layout: FC<{ children?: any; title?: string; description?: string; 
           @media (max-width: 768px) {
             .mobile-hidden { display: none; }
             .mobile-menu { display: block; }
+            .sidebar-col { display: none; }
           }
           @media (min-width: 769px) {
             .mobile-menu { display: none; }
@@ -182,6 +190,54 @@ export const Layout: FC<{ children?: any; title?: string; description?: string; 
             -webkit-box-orient: vertical;
             overflow: hidden;
           }
+
+          /* ── 2カラムレイアウト ── */
+          .page-layout {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 24px 16px;
+          }
+          .page-layout-inner {
+            display: flex;
+            gap: 32px;
+            align-items: flex-start;
+          }
+          .sidebar-col {
+            width: 220px;
+            flex-shrink: 0;
+            position: sticky;
+            top: 80px;
+          }
+          .content-col {
+            flex: 1;
+            min-width: 0;
+          }
+          @media (max-width: 900px) {
+            .sidebar-col {
+              display: none;
+            }
+          }
+
+          /* toast */
+          .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(8px);
+            background: #1e293b;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 999px;
+            font-size: 14px;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.25s;
+            z-index: 9999;
+          }
+          .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+          }
         `}} />
       </head>
       <body class="bg-gray-50 min-h-screen flex flex-col">
@@ -200,10 +256,7 @@ export const Layout: FC<{ children?: any; title?: string; description?: string; 
               {/* Desktop Nav */}
               <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-gray-600">
                 <a href="/about" class="hover:text-brand-600 transition-colors">初めての方へ</a>
-
-                {/* ココロザシソング リンク */}
-                <a href="/songs/about" class="hover:text-brand-600 transition-colors">ココロザシソング</a>
-
+                <a href="/songs/about" class="hover:text-brand-600 transition-colors">ここロザシソング</a>
                 <a href="/columns" class="hover:text-brand-600 transition-colors">コラム</a>
               </nav>
 
@@ -234,22 +287,22 @@ export const Layout: FC<{ children?: any; title?: string; description?: string; 
 
                 {isLoggedIn ? (
                   <>
-                    {/* Notification - YouTube風フローティングパネル */}
+                    {/* Notification Bell */}
                     <div class="relative" id="notifDropdown">
                       <button
-                        onclick="toggleNotifPanel()"
+                        id="notifBell"
                         class="relative p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors flex items-center justify-center w-10 h-10"
                         aria-label="通知"
                       >
                         <i class="fas fa-bell text-xl"></i>
                         {unreadNotifications > 0 && (
-                          <span class="absolute top-0.5 right-0.5 min-w-[18px] h-[18px] bg-red-500 text-white text-[11px] font-bold rounded-full flex items-center justify-center px-1 leading-none">
+                          <span id="notifBadge" class="absolute top-0.5 right-0.5 min-w-[18px] h-[18px] bg-red-500 text-white text-[11px] font-bold rounded-full flex items-center justify-center px-1 leading-none">
                             {unreadNotifications > 99 ? '99+' : unreadNotifications}
                           </span>
                         )}
                       </button>
 
-                      {/* フローティング通知パネル - JS動的レンダリング */}
+                      {/* フローティング通知パネル */}
                       <div
                         id="notifPanel"
                         class="hidden absolute right-0 top-12 w-[360px] max-w-[90vw] bg-white rounded-2xl shadow-2xl border border-gray-100 z-50 overflow-hidden"
@@ -258,9 +311,9 @@ export const Layout: FC<{ children?: any; title?: string; description?: string; 
                         {/* パネルヘッダー */}
                         <div class="flex items-center justify-between px-4 py-3 border-b border-gray-100 sticky top-0 bg-white z-10">
                           <h3 class="font-bold text-gray-900 text-base">通知</h3>
-                          <a href="/mypage/notifications" class="text-xs text-brand-600 hover:underline font-medium">すべて見る</a>
+                          <button onclick="markAllRead()" class="text-xs text-brand-600 hover:underline font-medium">すべて既読にする</button>
                         </div>
-                          {/* 通知リストをSSRで直接描画 */}
+                        {/* 通知リストをSSRで直接描画 */}
                         <div id="notifList" class="overflow-y-auto" style="max-height: 400px;">
                           {notifData && notifData.length > 0 ? (
                             <>
@@ -275,20 +328,21 @@ export const Layout: FC<{ children?: any; title?: string; description?: string; 
                                 return (
                                   <a
                                     href={n.link || '/mypage/notifications'}
+                                    class={`notif-item flex items-start gap-3 px-4 py-3 border-b border-gray-50 hover:bg-gray-50 transition-colors ${!n.is_read ? 'bg-blue-50/40' : ''}`}
+                                    data-read={n.is_read ? 'true' : 'false'}
                                     onclick="closeNotifPanel()"
-                                    style={`display:flex;align-items:flex-start;gap:12px;padding:12px 16px;border-bottom:1px solid #f9fafb;text-decoration:none;${!n.is_read ? 'background:#eef5fc;' : ''}`}
                                   >
-                                    <div style="position:relative;flex-shrink:0">
-                                      <div style={`width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:${bg}`}>
+                                    <div class="relative flex-shrink-0">
+                                      <div class="w-10 h-10 rounded-full flex items-center justify-center" style={`background:${bg}`}>
                                         <i class={`fas ${icon} text-sm`} style={`color:${color}`}></i>
                                       </div>
                                       {!n.is_read && (
-                                        <span style="position:absolute;left:-4px;top:50%;transform:translateY(-50%);width:8px;height:8px;background:#3085c7;border-radius:50%;display:block"></span>
+                                        <span class="absolute -left-1 top-1/2 -translate-y-1/2 w-2 h-2 bg-brand-500 rounded-full block"></span>
                                       )}
                                     </div>
-                                    <div style="flex:1;min-width:0">
-                                      <p style={`font-size:14px;line-height:1.4;color:${!n.is_read ? '#0f172a' : '#374151'};font-weight:${!n.is_read ? '600' : '400'};margin:0 0 2px`}>{n.message}</p>
-                                      <p style="font-size:12px;color:#9ca3af;margin:0">{dateStr}</p>
+                                    <div class="flex-1 min-w-0">
+                                      <p class={`text-sm leading-snug mb-0.5 ${!n.is_read ? 'font-semibold text-gray-900' : 'text-gray-700'}`}>{n.message}</p>
+                                      <p class="text-xs text-gray-400">{dateStr}</p>
                                     </div>
                                   </a>
                                 )
@@ -300,6 +354,9 @@ export const Layout: FC<{ children?: any; title?: string; description?: string; 
                               <p class="text-sm">通知はありません</p>
                             </div>
                           )}
+                        </div>
+                        <div class="px-4 py-2 border-t border-gray-100 text-center">
+                          <a href="/mypage/notifications" class="text-xs text-brand-600 hover:underline font-medium">すべての通知を見る</a>
                         </div>
                       </div>
                     </div>
@@ -368,8 +425,16 @@ export const Layout: FC<{ children?: any; title?: string; description?: string; 
                 <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
               </div>
               <a href="/about" class="block py-2 text-sm text-gray-700 hover:text-brand-600">初めての方へ</a>
-              <a href="/songs/about" class="block py-2 text-sm text-gray-700 hover:text-brand-600">ココロザシソング</a>
+              <a href="/songs/about" class="block py-2 text-sm text-gray-700 hover:text-brand-600">ここロザシソング</a>
               <a href="/columns" class="block py-2 text-sm text-gray-700 hover:text-brand-600">コラム</a>
+              {/* モバイル用サイドナビ */}
+              <div class="border-t border-gray-100 pt-2 mt-2">
+                <a href="/" class="block py-2 text-sm text-gray-700 hover:text-brand-600"><i class="fas fa-th-large mr-2 text-gray-400"></i>すべて</a>
+                <a href="/following-feed" class="block py-2 text-sm text-gray-700 hover:text-brand-600"><i class="fas fa-rss mr-2 text-gray-400"></i>フォロー中</a>
+                <a href="/voice-journals" class="block py-2 text-sm text-gray-700 hover:text-brand-600"><i class="fas fa-microphone mr-2 text-gray-400"></i>新着ボイスジャーナル</a>
+                <a href="/songs" class="block py-2 text-sm text-gray-700 hover:text-brand-600"><i class="fas fa-music mr-2 text-gray-400"></i>新着ソング</a>
+                <a href="/news" class="block py-2 text-sm text-gray-700 hover:text-brand-600"><i class="fas fa-bell mr-2 text-gray-400"></i>お知らせ</a>
+              </div>
               <a href="/voice-journal/create" class="block btn-primary text-center py-2 rounded-full text-sm font-medium mt-2">
                 <i class="fas fa-microphone mr-2"></i>ボイスジャーナルを作る
               </a>
@@ -379,7 +444,24 @@ export const Layout: FC<{ children?: any; title?: string; description?: string; 
 
         {/* Main */}
         <main class="flex-1">
-          {children}
+          {sidebar ? (
+            /* 2カラムレイアウト（サイドバーあり） */
+            <div class="page-layout">
+              <div class="page-layout-inner">
+                {/* 左サイドバー */}
+                <aside class="sidebar-col">
+                  {sidebar}
+                </aside>
+                {/* メインコンテンツ */}
+                <div class="content-col">
+                  {children}
+                </div>
+              </div>
+            </div>
+          ) : (
+            /* 通常レイアウト（サイドバーなし） */
+            children
+          )}
         </main>
 
         {/* Footer */}
@@ -391,7 +473,7 @@ export const Layout: FC<{ children?: any; title?: string; description?: string; 
                   <div class="w-8 h-8 rounded-full flex items-center justify-center" style="background: #3085c7">
                     <i class="fas fa-microphone text-white text-sm"></i>
                   </div>
-                  <span class="text-white text-lg font-bold">ココロザシラボ</span>
+                  <span class="text-white text-lg font-bold">ここロザシラボ</span>
                 </div>
                 <p class="text-sm leading-relaxed">
                   声と歌で想いを発信するコミュニティサイト。<br />
@@ -414,7 +496,7 @@ export const Layout: FC<{ children?: any; title?: string; description?: string; 
                 <ul class="space-y-2 text-sm">
                   <li><a href="/about" class="hover:text-white transition-colors">初めての方へ</a></li>
                   <li><a href="/voice-journals" class="hover:text-white transition-colors">ボイスジャーナル</a></li>
-                  <li><a href="/songs/about" class="hover:text-white transition-colors">ココロザシソング</a></li>
+                  <li><a href="/songs/about" class="hover:text-white transition-colors">ここロザシソング</a></li>
                   <li><a href="/columns" class="hover:text-white transition-colors">コラム</a></li>
                   <li><a href="/news" class="hover:text-white transition-colors">お知らせ</a></li>
                 </ul>
@@ -430,19 +512,27 @@ export const Layout: FC<{ children?: any; title?: string; description?: string; 
               </div>
             </div>
             <div class="border-t border-gray-700 pt-6 text-xs text-center">
-              <p>&copy; 2025 ココロザシラボ. All rights reserved.</p>
+              <p>&copy; 2025 ここロザシラボ. All rights reserved.</p>
             </div>
           </div>
         </footer>
 
+        <div id="toast" class="toast"></div>
+
         <script dangerouslySetInnerHTML={{ __html: `
+          function showToast(msg){
+            const t=document.getElementById('toast');
+            if(!t)return;
+            t.textContent=msg;t.classList.add('show');
+            setTimeout(()=>t.classList.remove('show'),2000);
+          }
+
           function toggleDropdown(id) {
             const el = document.getElementById(id);
             el.classList.toggle('active');
             document.querySelectorAll('.dropdown').forEach(d => {
               if (d.id !== id) d.classList.remove('active');
             });
-            // 通知パネルを閉じる
             closeNotifPanel();
           }
 
@@ -451,10 +541,21 @@ export const Layout: FC<{ children?: any; title?: string; description?: string; 
             menu.classList.toggle('hidden');
           }
 
+          // 通知ベルボタンにクリックイベントを付与（SSR後にJSで設定）
+          document.addEventListener('DOMContentLoaded', function() {
+            const bell = document.getElementById('notifBell');
+            if (bell) {
+              bell.addEventListener('click', function(e) {
+                e.stopPropagation();
+                toggleNotifPanel();
+              });
+            }
+          });
+
           function toggleNotifPanel() {
             const panel = document.getElementById('notifPanel');
+            if (!panel) return;
             const isHidden = panel.classList.contains('hidden');
-            // 他のドロップダウンを閉じる
             document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active'));
             if (isHidden) {
               panel.classList.remove('hidden');
@@ -468,11 +569,23 @@ export const Layout: FC<{ children?: any; title?: string; description?: string; 
             if (panel) panel.classList.add('hidden');
           }
 
+          function markAllRead() {
+            document.querySelectorAll('.notif-item').forEach(el => {
+              el.classList.remove('bg-blue-50/40');
+              const dot = el.querySelector('.bg-brand-500');
+              if (dot) dot.remove();
+              const msg = el.querySelector('p');
+              if (msg) { msg.classList.remove('font-semibold', 'text-gray-900'); msg.classList.add('text-gray-700'); }
+            });
+            const badge = document.getElementById('notifBadge');
+            if (badge) badge.remove();
+            showToast('すべて既読にしました');
+          }
+
           document.addEventListener('click', function(e) {
             if (!e.target.closest('.dropdown')) {
               document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active'));
             }
-            // 通知パネル外クリックで閉じる
             if (!e.target.closest('#notifDropdown')) {
               closeNotifPanel();
             }
@@ -493,7 +606,6 @@ export const Layout: FC<{ children?: any; title?: string; description?: string; 
             btn.addEventListener('click', function() {
               if (!audio) {
                 if (!audioUrl) {
-                  // Demo: create a simple oscillator tone
                   simulatePlay(btn, progress, currentTime, playerId);
                   return;
                 }
@@ -531,7 +643,7 @@ export const Layout: FC<{ children?: any; title?: string; description?: string; 
           function simulatePlay(btn, progress, currentTimeEl, id) {
             let time = 0;
             const total = 90;
-            btn.innerHTML = '<i class="fas fa-pause"></i>';
+            btn.innerHTML = '<i class="fas fa-pause text-xs"></i>';
             btn.closest('.audio-card')?.classList.add('playing');
             
             const interval = setInterval(function() {
@@ -540,7 +652,7 @@ export const Layout: FC<{ children?: any; title?: string; description?: string; 
               if (currentTimeEl) currentTimeEl.textContent = formatTime(time);
               if (time >= total) {
                 clearInterval(interval);
-                btn.innerHTML = '<i class="fas fa-play"></i>';
+                btn.innerHTML = '<i class="fas fa-play text-xs"></i>';
                 btn.closest('.audio-card')?.classList.remove('playing');
                 if (progress) progress.style.width = '0%';
                 if (currentTimeEl) currentTimeEl.textContent = '0:00';
@@ -549,8 +661,8 @@ export const Layout: FC<{ children?: any; title?: string; description?: string; 
             
             btn.dataset.interval = interval;
             btn.onclick = function() {
-              clearInterval(interval);
-              btn.innerHTML = '<i class="fas fa-play"></i>';
+              clearInterval(parseInt(btn.dataset.interval || '0'));
+              btn.innerHTML = '<i class="fas fa-play text-xs"></i>';
               btn.closest('.audio-card')?.classList.remove('playing');
               if (progress) progress.style.width = '0%';
               btn.onclick = null;
@@ -569,7 +681,7 @@ export const Layout: FC<{ children?: any; title?: string; description?: string; 
             const countEl = btn.querySelector('.reaction-count');
             if (countEl) {
               const count = parseInt(countEl.textContent || '0');
-              countEl.textContent = btn.classList.contains('active-reaction') ? count + 1 : count - 1;
+              countEl.textContent = btn.classList.contains('active-reaction') ? count + 1 : Math.max(0, count - 1);
             }
           }
 

@@ -549,3 +549,19 @@ export const reactionLabels: Record<string, { emoji: string; label: string }> = 
   awesome: { emoji: '✨', label: 'すごい' },
   cry: { emoji: '😢', label: '泣いた' },
 }
+
+// ==================== Popular Hashtags ====================
+export const dummyHashtags: { tag: string; count: number }[] = [
+  { tag: '日常', count: 142 },
+  { tag: '志', count: 128 },
+  { tag: '音楽', count: 97 },
+  { tag: '気づき', count: 89 },
+  { tag: '教育', count: 76 },
+  { tag: '朝活', count: 68 },
+  { tag: '感謝', count: 61 },
+  { tag: '保育', count: 54 },
+  { tag: '未来', count: 48 },
+  { tag: '地域', count: 43 },
+  { tag: 'コミュニティ', count: 39 },
+  { tag: '子ども', count: 35 },
+]
