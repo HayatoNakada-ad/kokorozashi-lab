@@ -198,24 +198,8 @@ export const Layout: FC<{ children?: any; title?: string; description?: string; 
               <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-gray-600">
                 <a href="/about" class="hover:text-brand-600 transition-colors">初めての方へ</a>
 
-                {/* ココロザシソング dropdown */}
-                <div class="dropdown relative" id="songDropdown">
-                  <button
-                    onclick="toggleDropdown('songDropdown')"
-                    class="flex items-center gap-1 hover:text-brand-600 transition-colors"
-                  >
-                    ココロザシソング
-                    <i class="fas fa-chevron-down text-xs"></i>
-                  </button>
-                  <div class="dropdown-menu bg-white rounded-xl shadow-lg border border-gray-100 w-48 py-2">
-                    <a href="/songs/about" class="block px-4 py-2 hover:bg-brand-50 hover:text-brand-700 text-sm transition-colors">
-                      <i class="fas fa-info-circle mr-2 text-brand-500"></i>ココロザシソングとは
-                    </a>
-                    <a href="/songs/create" class="block px-4 py-2 hover:bg-brand-50 hover:text-brand-700 text-sm transition-colors">
-                      <i class="fas fa-music mr-2 text-brand-500"></i>作る
-                    </a>
-                  </div>
-                </div>
+                {/* ココロザシソング リンク */}
+                <a href="/songs/about" class="hover:text-brand-600 transition-colors">ココロザシソング</a>
 
                 <a href="/columns" class="hover:text-brand-600 transition-colors">コラム</a>
               </nav>
@@ -384,8 +368,7 @@ export const Layout: FC<{ children?: any; title?: string; description?: string; 
                 <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
               </div>
               <a href="/about" class="block py-2 text-sm text-gray-700 hover:text-brand-600">初めての方へ</a>
-              <a href="/songs/about" class="block py-2 text-sm text-gray-700 hover:text-brand-600">ココロザシソングとは</a>
-              <a href="/songs/create" class="block py-2 text-sm text-gray-700 hover:text-brand-600">ココロザシソングを作る</a>
+              <a href="/songs/about" class="block py-2 text-sm text-gray-700 hover:text-brand-600">ココロザシソング</a>
               <a href="/columns" class="block py-2 text-sm text-gray-700 hover:text-brand-600">コラム</a>
               <a href="/voice-journal/create" class="block btn-primary text-center py-2 rounded-full text-sm font-medium mt-2">
                 <i class="fas fa-microphone mr-2"></i>ボイスジャーナルを作る
@@ -431,8 +414,7 @@ export const Layout: FC<{ children?: any; title?: string; description?: string; 
                 <ul class="space-y-2 text-sm">
                   <li><a href="/about" class="hover:text-white transition-colors">初めての方へ</a></li>
                   <li><a href="/voice-journals" class="hover:text-white transition-colors">ボイスジャーナル</a></li>
-                  <li><a href="/songs/about" class="hover:text-white transition-colors">ココロザシソングとは</a></li>
-                  <li><a href="/songs/create" class="hover:text-white transition-colors">ココロザシソングを作る</a></li>
+                  <li><a href="/songs/about" class="hover:text-white transition-colors">ココロザシソング</a></li>
                   <li><a href="/columns" class="hover:text-white transition-colors">コラム</a></li>
                   <li><a href="/news" class="hover:text-white transition-colors">お知らせ</a></li>
                 </ul>

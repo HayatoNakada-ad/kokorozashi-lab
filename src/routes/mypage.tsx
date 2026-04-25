@@ -94,23 +94,13 @@ app.get('/', (c) => {
             {/* ── ソング会員専用バナー（メインエリア最上部）── */}
             {currentUser.can_post_kokorozashi_song && (
               <div class="rounded-2xl overflow-hidden border border-amber-200" style="background:#eba528">
-                <div class="px-6 py-5 flex items-center justify-between">
-                  <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center flex-shrink-0">
-                      <i class="fas fa-music text-white text-xl"></i>
-                    </div>
-                    <div>
-                      <p class="text-white/70 text-xs font-semibold tracking-widest uppercase mb-0.5">Member</p>
-                      <p class="text-white font-black text-lg leading-tight">ココロザシソング</p>
-                    </div>
+                <div class="px-6 py-5 flex items-center gap-4">
+                  <div class="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-music text-white text-xl"></i>
                   </div>
-                  <div class="flex gap-2">
-                    <a href="/mypage/posts/songs" class="bg-white text-[#eba528] text-xs font-bold px-4 py-2 rounded-full hover:bg-amber-50 transition-colors">
-                      楽曲を管理
-                    </a>
-                    <a href="/songs/create" class="bg-white/20 text-white text-xs font-bold px-4 py-2 rounded-full hover:bg-white/30 transition-colors border border-white/40">
-                      新規注文
-                    </a>
+                  <div>
+                    <p class="text-white/70 text-xs font-semibold tracking-widest uppercase mb-0.5">Member</p>
+                    <p class="text-white font-black text-lg leading-tight">ココロザシソング</p>
                   </div>
                 </div>
               </div>
@@ -192,13 +182,32 @@ app.get('/', (c) => {
                   <h3 class="section-heading">ココロザシソング</h3>
                   <a href="/mypage/posts/songs" class="text-xs text-brand-600 hover:underline">すべて見る</a>
                 </div>
-                <div class="space-y-3">
+                <div class="space-y-4">
                   {mySongs.map(song => (
-                    <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-xl hover:bg-purple-50 transition-colors">
-                      <img src={song.jacket_image_url} alt={song.title} class="w-10 h-10 rounded-xl object-cover flex-shrink-0" />
+                    <div class="flex items-start gap-3 p-3 bg-gray-50 rounded-xl" id={`song-card-${song.id}`}>
+                      {/* サムネイル */}
+                      <a href={`/songs/${song.id}`} class="flex-shrink-0">
+                        <img src={song.jacket_image_url} alt={song.title} class="w-16 h-16 rounded-xl object-cover" />
+                      </a>
                       <div class="flex-1 min-w-0">
-                        <a href={`/songs/${song.id}`} class="text-sm font-semibold text-gray-800 hover:text-brand-600 truncate block">{song.title}</a>
-                        <p class="text-xs text-gray-400">{formatDate(song.created_at)}</p>
+                        <a href={`/songs/${song.id}`} class="font-bold text-gray-800 hover:text-brand-600 block truncate mb-1">{song.title}</a>
+                        <p class="text-xs text-gray-400 mb-2">{formatDate(song.created_at)}</p>
+                        {/* ミニプレイヤー */}
+                        <div class="flex items-center gap-2">
+                          <button
+                            id={`play-btn-my-${song.id}`}
+                            class="w-8 h-8 rounded-full flex items-center justify-center text-white flex-shrink-0 shadow-sm"
+                            style="background:#eba528"
+                            onclick={`toggleSongPlay('my-${song.id}')`}
+                          >
+                            <i class="fas fa-play text-xs"></i>
+                          </button>
+                          <div class="flex-1">
+                            <div class="bg-amber-100 rounded-full h-1.5">
+                              <div id={`progress-my-${song.id}`} class="h-1.5 rounded-full" style="width:0%; background:#eba528"></div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -208,6 +217,45 @@ app.get('/', (c) => {
           </div>
         </div>
       </div>
+      <script dangerouslySetInnerHTML={{ __html: `
+        var songAudios = {};
+        function toggleSongPlay(id) {
+          var btn = document.getElementById('play-btn-' + id);
+          var progress = document.getElementById('progress-' + id);
+          if (!btn) return;
+          // Stop others
+          Object.keys(songAudios).forEach(function(k) {
+            if (k !== id && songAudios[k]) {
+              songAudios[k].pause();
+              var ob = document.getElementById('play-btn-' + k);
+              if (ob) ob.innerHTML = '<i class="fas fa-play text-xs"></i>';
+              var op = document.getElementById('progress-' + k);
+              if (op) op.style.width = '0%';
+            }
+          });
+          if (!songAudios[id]) {
+            // Demo: use a public sample audio
+            songAudios[id] = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3');
+            songAudios[id].ontimeupdate = function() {
+              if (progress && songAudios[id].duration) {
+                progress.style.width = (songAudios[id].currentTime / songAudios[id].duration * 100) + '%';
+              }
+            };
+            songAudios[id].onended = function() {
+              btn.innerHTML = '<i class="fas fa-play text-xs"></i>';
+              if (progress) progress.style.width = '0%';
+              delete songAudios[id];
+            };
+          }
+          if (songAudios[id].paused) {
+            songAudios[id].play();
+            btn.innerHTML = '<i class="fas fa-pause text-xs"></i>';
+          } else {
+            songAudios[id].pause();
+            btn.innerHTML = '<i class="fas fa-play text-xs"></i>';
+          }
+        }
+      `}} />
     </Layout>
   )
 })
