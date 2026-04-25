@@ -60,9 +60,7 @@ app.get('/', (c) => {
           <div class="lg:col-span-2 space-y-6">
             {/* Feed Header */}
             <div class="flex items-center justify-between">
-              <h2 class="text-lg font-bold text-gray-800">
-                <i class="fas fa-rss mr-2 text-brand-500"></i>フォロー中の投稿
-              </h2>
+              <h2 class="section-heading">フォロー中の投稿</h2>
               <a href="/voice-journals" class="text-sm text-brand-600 hover:underline">すべて見る</a>
             </div>
 
@@ -229,7 +227,7 @@ app.get('/', (c) => {
             {/* Quick Post */}
             <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
               <h3 class="font-bold text-gray-800 mb-3">
-                <i class="fas fa-plus-circle mr-2 text-brand-500"></i>今の気持ちを声に
+                今の気持ちを声に
               </h3>
               <p class="text-sm text-gray-500 mb-4">思ったことをそのまま声で記録しよう</p>
               <a href="/voice-journal/create" class="btn-primary w-full py-3 rounded-xl text-sm font-medium flex items-center justify-center gap-2">
@@ -242,7 +240,7 @@ app.get('/', (c) => {
             <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="font-bold text-gray-800">
-                  <i class="fas fa-music mr-2 text-purple-500"></i>ココロザシソング
+                  ココロザシソング
                 </h3>
                 <a href="/songs/showcase" class="text-xs text-brand-600 hover:underline">すべて</a>
               </div>
@@ -262,7 +260,7 @@ app.get('/', (c) => {
             <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="font-bold text-gray-800">
-                  <i class="fas fa-book-open mr-2 text-green-500"></i>コラム
+                  コラム
                 </h3>
                 <a href="/columns" class="text-xs text-brand-600 hover:underline">すべて</a>
               </div>
@@ -291,9 +289,7 @@ app.get('/', (c) => {
         {/* New Voice Journals Section */}
         <section class="mt-12">
           <div class="flex items-center justify-between mb-6">
-            <h2 class="text-xl font-bold text-gray-800">
-              <i class="fas fa-microphone mr-2 text-brand-500"></i>新着ボイスジャーナル
-            </h2>
+            <h2 class="section-heading">新着ボイスジャーナル</h2>
             <a href="/voice-journals" class="text-sm text-brand-600 hover:underline">すべて見る</a>
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -356,9 +352,7 @@ app.get('/', (c) => {
         {/* Columns Section */}
         <section class="mt-12">
           <div class="flex items-center justify-between mb-6">
-            <h2 class="text-xl font-bold text-gray-800">
-              <i class="fas fa-book-open mr-2 text-green-500"></i>コラム
-            </h2>
+            <h2 class="section-heading">コラム</h2>
             <a href="/columns" class="text-sm text-brand-600 hover:underline">すべて見る</a>
           </div>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -379,9 +373,7 @@ app.get('/', (c) => {
         {/* Podcast Section */}
         <section class="mt-12">
           <div class="flex items-center justify-between mb-6">
-            <h2 class="text-xl font-bold text-gray-800">
-              <i class="fab fa-spotify mr-2 text-green-500"></i>Podcast
-            </h2>
+            <h2 class="section-heading">Podcast</h2>
           </div>
           <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
             <div class="flex items-center gap-4 mb-4">

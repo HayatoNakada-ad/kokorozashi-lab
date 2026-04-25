@@ -98,6 +98,22 @@ export const Layout: FC<{ children?: any; title?: string; description?: string; 
             color: #2469a3;
             border: 1px solid #acd1ef;
           }
+          /* ── セクション見出し（ジャンプ率強調）── */
+          .section-heading {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: #111827;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+          }
+          .section-heading-sub {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #9ca3af;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 0.25rem;
+          }
           .reaction-btn {
             transition: all 0.15s;
           }
@@ -230,12 +246,12 @@ export const Layout: FC<{ children?: any; title?: string; description?: string; 
 
                 {isLoggedIn ? (
                   <>
-                    {/* Notification */}
-                    <a href="/mypage/notifications" class="relative p-2 text-gray-500 hover:text-brand-600 transition-colors">
-                      <i class="fas fa-bell text-lg"></i>
+                    {/* Notification - YouTube風 */}
+                    <a href="/mypage/notifications" class="relative p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors flex items-center justify-center w-10 h-10">
+                      <i class="fas fa-bell text-xl"></i>
                       {unreadNotifications > 0 && (
-                        <span class="absolute -top-0.5 -right-0.5 w-4 h-4 bg-red-500 text-white text-xs rounded-full flex items-center justify-center font-bold">
-                          {unreadNotifications > 9 ? '9+' : unreadNotifications}
+                        <span class="absolute top-0.5 right-0.5 min-w-[18px] h-[18px] bg-red-500 text-white text-[11px] font-bold rounded-full flex items-center justify-center px-1 leading-none">
+                          {unreadNotifications > 99 ? '99+' : unreadNotifications}
                         </span>
                       )}
                     </a>

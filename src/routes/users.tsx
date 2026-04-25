@@ -35,25 +35,40 @@ app.get('/:username', (c) => {
       <div class="max-w-4xl mx-auto px-4 py-8">
         {/* Profile Header */}
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mb-6">
+
+          {/* ── ココロザシソング会員バナー（最上部・最目立つ位置） ── */}
+          {user.can_post_kokorozashi_song && (
+            <div class="bg-[#eba528] px-6 py-3 flex items-center gap-3">
+              <i class="fas fa-music text-white text-sm"></i>
+              <span class="text-white text-sm font-bold tracking-wide">ココロザシソング</span>
+              <span class="text-white/80 text-xs ml-1">このユーザーはココロザシソングを制作しています</span>
+              <a href="#songs-section" class="ml-auto text-white/90 text-xs font-semibold border border-white/50 px-3 py-1 rounded-full hover:bg-white/20 transition-colors">
+                楽曲を見る
+              </a>
+            </div>
+          )}
+
           {/* Cover */}
           <div class="h-32 md:h-40 bg-brand-500"></div>
           <div class="px-6 pb-6">
             <div class="flex items-end gap-4 -mt-12 mb-4">
-              <img
-                src={user.avatar_url}
-                alt={user.display_name}
-                class="w-20 h-20 md:w-24 md:h-24 rounded-2xl border-4 border-white object-cover shadow-md"
-              />
+              <div class="relative">
+                <img
+                  src={user.avatar_url}
+                  alt={user.display_name}
+                  class="w-20 h-20 md:w-24 md:h-24 rounded-2xl border-4 border-white object-cover shadow-md"
+                />
+                {user.can_post_kokorozashi_song && (
+                  <span class="absolute -bottom-2 -right-2 w-7 h-7 bg-[#eba528] rounded-full flex items-center justify-center shadow-md border-2 border-white" title="ココロザシソング会員">
+                    <i class="fas fa-music text-white text-xs"></i>
+                  </span>
+                )}
+              </div>
               <div class="flex-1 min-w-0 pt-12">
-                <div class="flex items-center gap-2">
+                <div class="flex items-center gap-2 flex-wrap">
                   <h1 class="text-xl font-bold text-gray-800">{user.display_name}</h1>
                   {user.is_verified && (
                     <i class="fas fa-check-circle text-brand-500" title="認証済みユーザー"></i>
-                  )}
-                  {user.can_post_kokorozashi_song && (
-                    <span class="bg-purple-100 text-purple-600 text-xs font-semibold px-2 py-0.5 rounded-full">
-                      <i class="fas fa-music mr-1"></i>Song
-                    </span>
                   )}
                 </div>
                 <p class="text-sm text-gray-400">@{user.username}</p>
@@ -99,7 +114,7 @@ app.get('/:username', (c) => {
         </div>
 
         {/* Tabs */}
-        <div class="flex border-b border-gray-200 mb-6" id="profileTabs">
+        <div class="flex border-b border-gray-200 mb-6" id="profileTabs" id="songs-section">
           <button
             onclick="switchTab('vj')"
             id="tab-vj"

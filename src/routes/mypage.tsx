@@ -80,9 +80,7 @@ app.get('/', (c) => {
           <div class="lg:col-span-3 space-y-6">
             {/* Quick Actions */}
             <div class="bg-brand-50 rounded-2xl border border-brand-100 p-5">
-              <h3 class="font-bold text-gray-800 mb-4">
-                <i class="fas fa-plus-circle mr-2 text-brand-500"></i>クイックアクション
-              </h3>
+              <h3 class="section-heading mb-4">クイックアクション</h3>
               <div class="grid grid-cols-2 gap-3">
                 <a href="/voice-journal/create" class="btn-primary py-3 rounded-xl text-sm font-medium flex items-center justify-center gap-2">
                   <i class="fas fa-microphone"></i>ボイスジャーナルを投稿
@@ -96,9 +94,7 @@ app.get('/', (c) => {
             {/* Notifications */}
             <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
               <div class="flex items-center justify-between mb-4">
-                <h3 class="font-bold text-gray-800">
-                  <i class="fas fa-bell mr-2 text-brand-500"></i>最新の通知
-                </h3>
+                <h3 class="section-heading">最新の通知</h3>
                 <a href="/mypage/notifications" class="text-xs text-brand-600 hover:underline">すべて見る</a>
               </div>
               <div class="space-y-3">
@@ -130,9 +126,7 @@ app.get('/', (c) => {
             {/* Recent VJs */}
             <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
               <div class="flex items-center justify-between mb-4">
-                <h3 class="font-bold text-gray-800">
-                  <i class="fas fa-microphone mr-2 text-brand-500"></i>最近の投稿
-                </h3>
+                <h3 class="section-heading">最近の投稿</h3>
                 <a href="/mypage/posts/voice-journals" class="text-xs text-brand-600 hover:underline">すべて見る</a>
               </div>
               <div class="space-y-3">
@@ -157,9 +151,7 @@ app.get('/', (c) => {
             {mySongs.length > 0 && (
               <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
                 <div class="flex items-center justify-between mb-4">
-                  <h3 class="font-bold text-gray-800">
-                    <i class="fas fa-music mr-2 text-purple-500"></i>ココロザシソング
-                  </h3>
+                  <h3 class="section-heading">ココロザシソング</h3>
                   <a href="/mypage/posts/songs" class="text-xs text-brand-600 hover:underline">すべて見る</a>
                 </div>
                 <div class="space-y-3">
@@ -190,9 +182,7 @@ app.get('/notifications', (c) => {
     <Layout title="通知" currentUser={currentUser} unreadNotifications={unread}>
       <div class="max-w-2xl mx-auto px-4 py-8">
         <div class="flex items-center justify-between mb-6">
-          <h1 class="text-xl font-bold text-gray-800">
-            <i class="fas fa-bell mr-2 text-brand-500"></i>通知
-          </h1>
+          <h1 class="section-heading">通知</h1>
           <button class="text-xs text-brand-600 hover:underline">すべて既読にする</button>
         </div>
 
@@ -234,9 +224,7 @@ app.get('/posts/voice-journals', (c) => {
     <Layout title="ボイスジャーナル一覧" currentUser={currentUser} unreadNotifications={unread}>
       <div class="max-w-3xl mx-auto px-4 py-8">
         <div class="flex items-center justify-between mb-6">
-          <h1 class="text-xl font-bold text-gray-800">
-            <i class="fas fa-microphone mr-2 text-brand-500"></i>ボイスジャーナル
-          </h1>
+          <h1 class="section-heading">ボイスジャーナル</h1>
           <a href="/voice-journal/create" class="btn-primary px-4 py-2 rounded-full text-sm font-medium">
             <i class="fas fa-plus mr-2"></i>投稿する
           </a>
@@ -285,9 +273,7 @@ app.get('/drafts', (c) => {
   return c.html(
     <Layout title="下書き" currentUser={currentUser} unreadNotifications={unread}>
       <div class="max-w-3xl mx-auto px-4 py-8">
-        <h1 class="text-xl font-bold text-gray-800 mb-6">
-          <i class="fas fa-file-alt mr-2 text-gray-500"></i>下書き
-        </h1>
+        <h1 class="section-heading mb-6">下書き</h1>
         {drafts.length > 0 ? (
           <div class="space-y-4">
             {drafts.map(vj => (
@@ -320,9 +306,7 @@ app.get('/following', (c) => {
   return c.html(
     <Layout title="フォロー中" currentUser={currentUser} unreadNotifications={unread}>
       <div class="max-w-2xl mx-auto px-4 py-8">
-        <h1 class="text-xl font-bold text-gray-800 mb-6">
-          <i class="fas fa-user-plus mr-2 text-brand-500"></i>フォロー中
-        </h1>
+        <h1 class="section-heading mb-6">フォロー中</h1>
         <div class="space-y-3">
           {[...dummyNotifications].filter(n => n.type === 'follow').length > 0 ? null : null}
           {['u2', 'u3', 'u4'].map(uid => {
@@ -359,9 +343,7 @@ app.get('/followers', (c) => {
   return c.html(
     <Layout title="フォロワー" currentUser={currentUser} unreadNotifications={unread}>
       <div class="max-w-2xl mx-auto px-4 py-8">
-        <h1 class="text-xl font-bold text-gray-800 mb-6">
-          <i class="fas fa-users mr-2 text-brand-500"></i>フォロワー
-        </h1>
+        <h1 class="section-heading mb-6">フォロワー</h1>
         <div class="space-y-3">
           {['u2', 'u3', 'u4', 'u5'].map(uid => {
             const names: Record<string, { name: string; username: string }> = {
@@ -403,9 +385,7 @@ app.get('/edit', (c) => {
   return c.html(
     <Layout title="プロフィール編集" currentUser={currentUser} unreadNotifications={unread}>
       <div class="max-w-xl mx-auto px-4 py-8">
-        <h1 class="text-xl font-bold text-gray-800 mb-6">
-          <i class="fas fa-edit mr-2 text-brand-500"></i>プロフィール編集
-        </h1>
+        <h1 class="section-heading mb-6">プロフィール編集</h1>
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
           <div class="flex items-center gap-4 mb-6">
             <img src={currentUser.avatar_url} alt="" class="w-20 h-20 rounded-2xl border-2 border-brand-200" />
