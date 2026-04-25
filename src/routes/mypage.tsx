@@ -21,7 +21,15 @@ app.get('/', (c) => {
           {/* Sidebar */}
           <div class="lg:col-span-1">
             {/* Profile Card */}
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 mb-4">
+            <div class={`bg-white rounded-2xl shadow-sm overflow-hidden mb-4 ${currentUser.can_post_kokorozashi_song ? 'border-2 border-[#eba528]' : 'border border-gray-100'}`}>
+              {/* ソング会員：カード上部にゴールドバー */}
+              {currentUser.can_post_kokorozashi_song && (
+                <div class="bg-[#eba528] px-4 py-2 flex items-center gap-2">
+                  <i class="fas fa-music text-white text-xs"></i>
+                  <span class="text-white text-xs font-bold">ここロザシソング会員</span>
+                </div>
+              )}
+              <div class="p-5">
               <div class="text-center mb-4">
                 <img src={currentUser.avatar_url} alt={currentUser.display_name} class="w-16 h-16 rounded-2xl mx-auto mb-3 border-2 border-brand-200" />
                 <h2 class="font-bold text-gray-800">{currentUser.display_name}</h2>
@@ -44,6 +52,7 @@ app.get('/', (c) => {
               <a href="/mypage/edit" class="block w-full text-center btn-outline py-2 rounded-xl text-sm font-medium">
                 プロフィール編集
               </a>
+              </div>{/* end p-5 */}
             </div>
 
             {/* Nav */}

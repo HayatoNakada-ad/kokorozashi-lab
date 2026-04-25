@@ -36,34 +36,25 @@ app.get('/:username', (c) => {
         {/* Profile Header */}
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mb-6">
 
-          {/* ── ココロザシソング会員バナー（最上部・最目立つ位置） ── */}
-          {user.can_post_kokorozashi_song && (
-            <div class="bg-[#eba528] px-6 py-3 flex items-center gap-3">
-              <i class="fas fa-music text-white text-sm"></i>
-              <span class="text-white text-sm font-bold tracking-wide">ココロザシソング</span>
-              <span class="text-white/80 text-xs ml-1">このユーザーはココロザシソングを制作しています</span>
-              <a href="#songs-section" class="ml-auto text-white/90 text-xs font-semibold border border-white/50 px-3 py-1 rounded-full hover:bg-white/20 transition-colors">
-                楽曲を見る
-              </a>
-            </div>
-          )}
+          {/* Cover：ソング会員はゴールド、通常はブランドブルー */}
+          <div
+            class="h-32 md:h-40"
+            style={user.can_post_kokorozashi_song
+              ? 'background: #eba528'
+              : 'background: #3085c7'}
+          ></div>
 
-          {/* Cover */}
-          <div class="h-32 md:h-40 bg-brand-500"></div>
           <div class="px-6 pb-6">
             <div class="flex items-end gap-4 -mt-12 mb-4">
+              {/* アバター */}
               <div class="relative">
                 <img
                   src={user.avatar_url}
                   alt={user.display_name}
                   class="w-20 h-20 md:w-24 md:h-24 rounded-2xl border-4 border-white object-cover shadow-md"
                 />
-                {user.can_post_kokorozashi_song && (
-                  <span class="absolute -bottom-2 -right-2 w-7 h-7 bg-[#eba528] rounded-full flex items-center justify-center shadow-md border-2 border-white" title="ココロザシソング会員">
-                    <i class="fas fa-music text-white text-xs"></i>
-                  </span>
-                )}
               </div>
+
               <div class="flex-1 min-w-0 pt-12">
                 <div class="flex items-center gap-2 flex-wrap">
                   <h1 class="text-xl font-bold text-gray-800">{user.display_name}</h1>
@@ -73,10 +64,11 @@ app.get('/:username', (c) => {
                 </div>
                 <p class="text-sm text-gray-400">@{user.username}</p>
               </div>
+
               <div class="pt-12">
                 {isOwnPage ? (
                   <a href="/mypage/edit" class="btn-outline px-4 py-2 rounded-full text-sm font-medium">
-                    <i class="fas fa-edit mr-2"></i>プロフィール編集
+                    プロフィール編集
                   </a>
                 ) : (
                   <button
@@ -89,6 +81,16 @@ app.get('/:username', (c) => {
                 )}
               </div>
             </div>
+
+            {/* ── ソング会員バッジ（名前の下・目立つ位置） ── */}
+            {user.can_post_kokorozashi_song && (
+              <div class="flex items-center gap-2 mb-4">
+                <span class="inline-flex items-center gap-1.5 bg-[#eba528] text-white text-xs font-bold px-3 py-1.5 rounded-full">
+                  <i class="fas fa-music text-[10px]"></i>
+                  ココロザシソング会員
+                </span>
+              </div>
+            )}
 
             {/* Bio */}
             {user.bio && (
@@ -113,6 +115,31 @@ app.get('/:username', (c) => {
           </div>
         </div>
 
+        {/* ── ソング会員：楽曲ショーケース（タブより上・最優先表示） ── */}
+        {user.can_post_kokorozashi_song && songs.length > 0 && (
+          <div class="bg-white rounded-2xl shadow-sm border-2 border-[#eba528] overflow-hidden mb-6" id="songs-section">
+            <div class="bg-[#eba528] px-5 py-3 flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <i class="fas fa-music text-white"></i>
+                <span class="text-white font-bold text-sm">ここロザシソング楽曲</span>
+              </div>
+              <span class="text-white/80 text-xs">{songs.length}曲</span>
+            </div>
+            <div class="p-4 space-y-3">
+              {songs.map(song => (
+                <a href={`/songs/${song.id}`} class="flex items-center gap-3 p-3 rounded-xl hover:bg-amber-50 transition-colors group">
+                  <img src={song.jacket_image_url} alt={song.title} class="w-12 h-12 rounded-xl object-cover flex-shrink-0 shadow-sm" />
+                  <div class="flex-1 min-w-0">
+                    <p class="font-bold text-gray-800 group-hover:text-[#eba528] transition-colors truncate">{song.title}</p>
+                    <p class="text-xs text-gray-400 mt-0.5">{song.description?.slice(0, 40)}...</p>
+                  </div>
+                  <i class="fas fa-play text-gray-300 group-hover:text-[#eba528] transition-colors flex-shrink-0"></i>
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Tabs */}
         <div class="flex border-b border-gray-200 mb-6" id="profileTabs" id="songs-section">
           <button
@@ -120,7 +147,7 @@ app.get('/:username', (c) => {
             id="tab-vj"
             class="flex-1 py-3 text-sm font-semibold text-brand-600 border-b-2 border-brand-500"
           >
-            <i class="fas fa-microphone mr-2"></i>ボイスジャーナル ({voiceJournals.length})
+ボイスジャーナル ({voiceJournals.length})
           </button>
           {songs.length > 0 && (
             <button
@@ -128,7 +155,7 @@ app.get('/:username', (c) => {
               id="tab-songs"
               class="flex-1 py-3 text-sm font-semibold text-gray-500 hover:text-brand-600"
             >
-              <i class="fas fa-music mr-2"></i>ココロザシソング ({songs.length})
+ココロザシソング ({songs.length})
             </button>
           )}
         </div>
