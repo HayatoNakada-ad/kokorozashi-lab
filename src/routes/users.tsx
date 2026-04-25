@@ -121,7 +121,7 @@ app.get('/:username', (c) => {
             <div class="bg-[#eba528] px-5 py-3 flex items-center justify-between">
               <div class="flex items-center gap-2">
                 <i class="fas fa-music text-white"></i>
-                <span class="text-white font-bold text-sm">ここロザシソング楽曲</span>
+                <span class="text-white font-bold text-sm">ココロザシソング</span>
               </div>
               <span class="text-white/80 text-xs">{songs.length}曲</span>
             </div>

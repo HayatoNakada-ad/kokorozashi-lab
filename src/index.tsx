@@ -150,7 +150,7 @@ app.get('/', (c) => {
               <a href="/voice-journal/create" class="btn-primary w-full py-3 rounded-xl text-sm font-medium flex items-center justify-center gap-2"><i class="fas fa-microphone"></i>録音して投稿する</a>
             </div>
             <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
-              <div class="flex items-center justify-between mb-4"><h3 class="font-bold text-gray-800"><i class="fas fa-music mr-2 text-purple-500"></i>ココロザシソング</h3><a href="/songs/showcase" class="text-xs text-brand-600 hover:underline">すべて</a></div>
+              <div class="flex items-center justify-between mb-4"><h3 class="section-heading">ココロザシソング</h3><a href="/songs/showcase" class="text-xs text-brand-600 hover:underline">すべて</a></div>
               {dummySongs.slice(0, 3).map(song => (
                 <a href={`/songs/${song.id}`} class="flex items-center gap-3 py-2.5 border-b border-gray-50 hover:bg-gray-50 -mx-2 px-2 rounded-lg transition-colors last:border-0">
                   <img src={song.jacket_image_url} alt={song.title} class="w-10 h-10 rounded-lg object-cover flex-shrink-0" />

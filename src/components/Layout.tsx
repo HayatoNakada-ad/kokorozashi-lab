@@ -101,19 +101,19 @@ export const Layout: FC<{ children?: any; title?: string; description?: string; 
           }
           /* ── セクション見出し（ジャンプ率強調）── */
           .section-heading {
-            font-size: 1.35rem;
-            font-weight: 800;
-            color: #111827;
-            letter-spacing: -0.02em;
-            line-height: 1.2;
+            font-size: 1.4rem !important;
+            font-weight: 900 !important;
+            color: #0f172a !important;
+            letter-spacing: -0.03em !important;
+            line-height: 1.15 !important;
           }
           .section-heading-sub {
-            font-size: 0.75rem;
-            font-weight: 500;
-            color: #9ca3af;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            margin-bottom: 0.25rem;
+            font-size: 0.7rem !important;
+            font-weight: 500 !important;
+            color: #94a3b8 !important;
+            letter-spacing: 0.08em !important;
+            text-transform: uppercase !important;
+            margin-bottom: 0.2rem !important;
           }
           .reaction-btn {
             transition: all 0.15s;

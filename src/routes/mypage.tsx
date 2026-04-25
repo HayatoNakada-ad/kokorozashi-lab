@@ -21,19 +21,22 @@ app.get('/', (c) => {
           {/* Sidebar */}
           <div class="lg:col-span-1">
             {/* Profile Card */}
-            <div class={`bg-white rounded-2xl shadow-sm overflow-hidden mb-4 ${currentUser.can_post_kokorozashi_song ? 'border-2 border-[#eba528]' : 'border border-gray-100'}`}>
-              {/* ソング会員：カード上部にゴールドバー */}
-              {currentUser.can_post_kokorozashi_song && (
-                <div class="bg-[#eba528] px-4 py-2 flex items-center gap-2">
-                  <i class="fas fa-music text-white text-xs"></i>
-                  <span class="text-white text-xs font-bold">ここロザシソング会員</span>
-                </div>
-              )}
+            <div class="bg-white rounded-2xl shadow-sm overflow-hidden mb-4 border border-gray-100">
               <div class="p-5">
               <div class="text-center mb-4">
-                <img src={currentUser.avatar_url} alt={currentUser.display_name} class="w-16 h-16 rounded-2xl mx-auto mb-3 border-2 border-brand-200" />
+                <div class="relative inline-block">
+                  <img src={currentUser.avatar_url} alt={currentUser.display_name} class="w-16 h-16 rounded-2xl mx-auto mb-3 border-2 border-brand-200" />
+                  {currentUser.can_post_kokorozashi_song && (
+                    <span class="absolute -bottom-1 -right-1 w-6 h-6 bg-[#eba528] rounded-full flex items-center justify-center border-2 border-white" title="ココロザシソング会員">
+                      <i class="fas fa-music text-white" style="font-size:9px"></i>
+                    </span>
+                  )}
+                </div>
                 <h2 class="font-bold text-gray-800">{currentUser.display_name}</h2>
-                <p class="text-xs text-gray-400">@{currentUser.username}</p>
+                {currentUser.can_post_kokorozashi_song && (
+                  <span class="inline-block mt-1 text-[11px] font-bold text-[#eba528] bg-amber-50 px-2 py-0.5 rounded-full">ココロザシソング会員</span>
+                )}
+                <p class="text-xs text-gray-400 mt-1">@{currentUser.username}</p>
               </div>
               <div class="flex justify-around text-center py-3 border-t border-b border-gray-100 mb-4">
                 <div>
@@ -87,6 +90,32 @@ app.get('/', (c) => {
 
           {/* Main Content */}
           <div class="lg:col-span-3 space-y-6">
+
+            {/* ── ソング会員専用バナー（メインエリア最上部）── */}
+            {currentUser.can_post_kokorozashi_song && (
+              <div class="rounded-2xl overflow-hidden border border-amber-200" style="background:#eba528">
+                <div class="px-6 py-5 flex items-center justify-between">
+                  <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center flex-shrink-0">
+                      <i class="fas fa-music text-white text-xl"></i>
+                    </div>
+                    <div>
+                      <p class="text-white/70 text-xs font-semibold tracking-widest uppercase mb-0.5">Member</p>
+                      <p class="text-white font-black text-lg leading-tight">ココロザシソング</p>
+                    </div>
+                  </div>
+                  <div class="flex gap-2">
+                    <a href="/mypage/posts/songs" class="bg-white text-[#eba528] text-xs font-bold px-4 py-2 rounded-full hover:bg-amber-50 transition-colors">
+                      楽曲を管理
+                    </a>
+                    <a href="/songs/create" class="bg-white/20 text-white text-xs font-bold px-4 py-2 rounded-full hover:bg-white/30 transition-colors border border-white/40">
+                      新規注文
+                    </a>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* Quick Actions */}
             <div class="bg-brand-50 rounded-2xl border border-brand-100 p-5">
               <h3 class="section-heading mb-4">クイックアクション</h3>
