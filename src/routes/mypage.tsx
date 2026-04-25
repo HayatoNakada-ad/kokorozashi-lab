@@ -15,7 +15,7 @@ app.get('/', (c) => {
   const mySongs = getSongsByUser(currentUser.id)
 
   return c.html(
-    <Layout title="マイページ" currentUser={currentUser} unreadNotifications={unread}>
+    <Layout title="マイページ" currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
       <div class="max-w-5xl mx-auto px-4 py-8">
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Sidebar */}
@@ -179,7 +179,7 @@ app.get('/notifications', (c) => {
   const unread = dummyNotifications.filter(n => !n.is_read).length
 
   return c.html(
-    <Layout title="通知" currentUser={currentUser} unreadNotifications={unread}>
+    <Layout title="通知" currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
       <div class="max-w-2xl mx-auto px-4 py-8">
         <div class="flex items-center justify-between mb-6">
           <h1 class="section-heading">通知</h1>
@@ -221,7 +221,7 @@ app.get('/posts/voice-journals', (c) => {
   const myVJs = getVoiceJournalsByUser(currentUser.id)
 
   return c.html(
-    <Layout title="ボイスジャーナル一覧" currentUser={currentUser} unreadNotifications={unread}>
+    <Layout title="ボイスジャーナル一覧" currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
       <div class="max-w-3xl mx-auto px-4 py-8">
         <div class="flex items-center justify-between mb-6">
           <h1 class="section-heading">ボイスジャーナル</h1>
@@ -271,7 +271,7 @@ app.get('/drafts', (c) => {
   const drafts = dummyVoiceJournals.filter(vj => vj.visibility === 'draft')
 
   return c.html(
-    <Layout title="下書き" currentUser={currentUser} unreadNotifications={unread}>
+    <Layout title="下書き" currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
       <div class="max-w-3xl mx-auto px-4 py-8">
         <h1 class="section-heading mb-6">下書き</h1>
         {drafts.length > 0 ? (
@@ -304,7 +304,7 @@ app.get('/following', (c) => {
   const unread = dummyNotifications.filter(n => !n.is_read).length
 
   return c.html(
-    <Layout title="フォロー中" currentUser={currentUser} unreadNotifications={unread}>
+    <Layout title="フォロー中" currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
       <div class="max-w-2xl mx-auto px-4 py-8">
         <h1 class="section-heading mb-6">フォロー中</h1>
         <div class="space-y-3">
@@ -341,7 +341,7 @@ app.get('/followers', (c) => {
   const unread = dummyNotifications.filter(n => !n.is_read).length
 
   return c.html(
-    <Layout title="フォロワー" currentUser={currentUser} unreadNotifications={unread}>
+    <Layout title="フォロワー" currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
       <div class="max-w-2xl mx-auto px-4 py-8">
         <h1 class="section-heading mb-6">フォロワー</h1>
         <div class="space-y-3">
@@ -383,7 +383,7 @@ app.get('/edit', (c) => {
   const unread = dummyNotifications.filter(n => !n.is_read).length
 
   return c.html(
-    <Layout title="プロフィール編集" currentUser={currentUser} unreadNotifications={unread}>
+    <Layout title="プロフィール編集" currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
       <div class="max-w-xl mx-auto px-4 py-8">
         <h1 class="section-heading mb-6">プロフィール編集</h1>
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">

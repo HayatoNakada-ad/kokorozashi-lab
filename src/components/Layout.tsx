@@ -1,11 +1,12 @@
 import type { FC } from 'hono/jsx'
 
-export const Layout: FC<{ children?: any; title?: string; description?: string; currentUser?: any; unreadNotifications?: number }> = ({
+export const Layout: FC<{ children?: any; title?: string; description?: string; currentUser?: any; unreadNotifications?: number; notifications?: any[] }> = ({
   children,
   title = 'ココロザシラボ',
   description = '声と歌で想いを発信するコミュニティサイト',
   currentUser,
   unreadNotifications = 0,
+  notifications = [],
 }) => {
   const isLoggedIn = !!currentUser
 
@@ -246,15 +247,78 @@ export const Layout: FC<{ children?: any; title?: string; description?: string; 
 
                 {isLoggedIn ? (
                   <>
-                    {/* Notification - YouTube風 */}
-                    <a href="/mypage/notifications" class="relative p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors flex items-center justify-center w-10 h-10">
-                      <i class="fas fa-bell text-xl"></i>
-                      {unreadNotifications > 0 && (
-                        <span class="absolute top-0.5 right-0.5 min-w-[18px] h-[18px] bg-red-500 text-white text-[11px] font-bold rounded-full flex items-center justify-center px-1 leading-none">
-                          {unreadNotifications > 99 ? '99+' : unreadNotifications}
-                        </span>
-                      )}
-                    </a>
+                    {/* Notification - YouTube風フローティングパネル */}
+                    <div class="relative" id="notifDropdown">
+                      <button
+                        onclick="toggleNotifPanel()"
+                        class="relative p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors flex items-center justify-center w-10 h-10"
+                        aria-label="通知"
+                      >
+                        <i class="fas fa-bell text-xl"></i>
+                        {unreadNotifications > 0 && (
+                          <span class="absolute top-0.5 right-0.5 min-w-[18px] h-[18px] bg-red-500 text-white text-[11px] font-bold rounded-full flex items-center justify-center px-1 leading-none">
+                            {unreadNotifications > 99 ? '99+' : unreadNotifications}
+                          </span>
+                        )}
+                      </button>
+
+                      {/* フローティング通知パネル */}
+                      <div
+                        id="notifPanel"
+                        class="hidden absolute right-0 top-12 w-[360px] max-w-[90vw] bg-white rounded-2xl shadow-2xl border border-gray-100 z-50 overflow-hidden"
+                        style="max-height: 480px;"
+                      >
+                        {/* パネルヘッダー */}
+                        <div class="flex items-center justify-between px-4 py-3 border-b border-gray-100 sticky top-0 bg-white z-10">
+                          <h3 class="font-bold text-gray-900 text-base">通知</h3>
+                          <a href="/mypage/notifications" class="text-xs text-brand-600 hover:underline font-medium">すべて見る</a>
+                        </div>
+
+                        {/* 通知リスト（スクロール可能） */}
+                        <div class="overflow-y-auto" style="max-height: 400px;">
+                          {notifications.length > 0 ? notifications.slice(0, 10).map((notif: any) => (
+                            <a
+                              href={notif.link || '/mypage/notifications'}
+                              class={`flex items-start gap-3 px-4 py-3 hover:bg-gray-50 transition-colors border-b border-gray-50 last:border-0 ${!notif.is_read ? 'bg-blue-50/40' : ''}`}
+                              onclick="closeNotifPanel()"
+                            >
+                              {/* アバター */}
+                              <div class="relative flex-shrink-0">
+                                <div class={`w-10 h-10 rounded-full flex items-center justify-center ${
+                                  notif.type === 'reaction' ? 'bg-red-100' :
+                                  notif.type === 'comment' ? 'bg-brand-100' :
+                                  notif.type === 'follow' ? 'bg-green-100' : 'bg-gray-100'
+                                }`}>
+                                  <i class={`fas text-sm ${
+                                    notif.type === 'reaction' ? 'fa-heart text-red-500' :
+                                    notif.type === 'comment' ? 'fa-comment text-brand-500' :
+                                    notif.type === 'follow' ? 'fa-user-plus text-green-500' :
+                                    'fa-bell text-gray-500'
+                                  }`}></i>
+                                </div>
+                                {/* 未読ドット */}
+                                {!notif.is_read && (
+                                  <span class="absolute -left-1 top-1/2 -translate-y-1/2 w-2 h-2 bg-brand-500 rounded-full"></span>
+                                )}
+                              </div>
+
+                              {/* テキスト */}
+                              <div class="flex-1 min-w-0">
+                                <p class={`text-sm leading-snug line-clamp-2 ${!notif.is_read ? 'font-semibold text-gray-900' : 'text-gray-700'}`}>
+                                  {notif.message}
+                                </p>
+                                <p class="text-xs text-gray-400 mt-1">{notif.created_at ? new Date(notif.created_at).toLocaleDateString('ja-JP', { month: 'short', day: 'numeric' }) : ''}</p>
+                              </div>
+                            </a>
+                          )) : (
+                            <div class="py-12 text-center text-gray-400">
+                              <i class="fas fa-bell text-3xl mb-3 block opacity-30"></i>
+                              <p class="text-sm">通知はありません</p>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
 
                     {/* User Menu */}
                     <div class="dropdown relative" id="userDropdown">
@@ -396,6 +460,8 @@ export const Layout: FC<{ children?: any; title?: string; description?: string; 
             document.querySelectorAll('.dropdown').forEach(d => {
               if (d.id !== id) d.classList.remove('active');
             });
+            // 通知パネルを閉じる
+            closeNotifPanel();
           }
 
           function toggleMobileMenu() {
@@ -403,9 +469,31 @@ export const Layout: FC<{ children?: any; title?: string; description?: string; 
             menu.classList.toggle('hidden');
           }
 
+          // 通知フローティングパネル
+          function toggleNotifPanel() {
+            const panel = document.getElementById('notifPanel');
+            const isHidden = panel.classList.contains('hidden');
+            // 他のドロップダウンを閉じる
+            document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active'));
+            if (isHidden) {
+              panel.classList.remove('hidden');
+            } else {
+              panel.classList.add('hidden');
+            }
+          }
+
+          function closeNotifPanel() {
+            const panel = document.getElementById('notifPanel');
+            if (panel) panel.classList.add('hidden');
+          }
+
           document.addEventListener('click', function(e) {
             if (!e.target.closest('.dropdown')) {
               document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active'));
+            }
+            // 通知パネル外クリックで閉じる
+            if (!e.target.closest('#notifDropdown')) {
+              closeNotifPanel();
             }
           });
 

@@ -16,7 +16,7 @@ app.get('/:username', (c) => {
 
   if (!user) {
     return c.html(
-      <Layout title="ユーザーが見つかりません" currentUser={currentUser} unreadNotifications={unread}>
+      <Layout title="ユーザーが見つかりません" currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
         <div class="max-w-2xl mx-auto px-4 py-16 text-center">
           <i class="fas fa-user text-6xl text-gray-200 mb-4 block"></i>
           <h1 class="text-2xl font-bold text-gray-700 mb-2">ユーザーが見つかりません</h1>
@@ -31,7 +31,7 @@ app.get('/:username', (c) => {
   const isOwnPage = user.id === currentUser.id
 
   return c.html(
-    <Layout title={`${user.display_name}のページ`} currentUser={currentUser} unreadNotifications={unread}>
+    <Layout title={`${user.display_name}のページ`} currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
       <div class="max-w-4xl mx-auto px-4 py-8">
         {/* Profile Header */}
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mb-6">

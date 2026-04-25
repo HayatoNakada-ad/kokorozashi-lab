@@ -17,7 +17,7 @@ app.get('/', (c) => {
     : dummyVoiceJournals
 
   return c.html(
-    <Layout title="ボイスジャーナル一覧" currentUser={currentUser} unreadNotifications={unread}>
+    <Layout title="ボイスジャーナル一覧" currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
       <div class="max-w-4xl mx-auto px-4 py-8">
         {/* Header */}
         <div class="flex items-center justify-between mb-6">
@@ -151,7 +151,7 @@ app.get('/detail/:id', (c) => {
 
   if (!vj) {
     return c.html(
-      <Layout title="見つかりません" currentUser={currentUser} unreadNotifications={unread}>
+      <Layout title="見つかりません" currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
         <div class="max-w-2xl mx-auto px-4 py-16 text-center">
           <i class="fas fa-microphone text-6xl text-gray-200 mb-4 block"></i>
           <h1 class="text-2xl font-bold text-gray-700 mb-2">投稿が見つかりません</h1>
@@ -166,7 +166,7 @@ app.get('/detail/:id', (c) => {
   const comments = getCommentsForTarget('voice_journal', id)
 
   return c.html(
-    <Layout title={vj.title} currentUser={currentUser} unreadNotifications={unread}>
+    <Layout title={vj.title} currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
       <div class="max-w-3xl mx-auto px-4 py-8">
         {/* Back */}
         <a href="/voice-journals" class="flex items-center gap-2 text-sm text-gray-500 hover:text-brand-600 mb-6">
@@ -335,7 +335,7 @@ app.get('/create', (c) => {
   const unread = dummyNotifications.filter(n => !n.is_read).length
 
   return c.html(
-    <Layout title="ボイスジャーナルを作る" currentUser={currentUser} unreadNotifications={unread}>
+    <Layout title="ボイスジャーナルを作る" currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
       <div class="max-w-2xl mx-auto px-4 py-8">
         {/* Progress */}
         <div class="flex items-center gap-2 mb-8">
@@ -667,7 +667,7 @@ app.get('/create/complete', (c) => {
   const unread = dummyNotifications.filter(n => !n.is_read).length
 
   return c.html(
-    <Layout title="投稿完了" currentUser={currentUser} unreadNotifications={unread}>
+    <Layout title="投稿完了" currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
       <div class="max-w-lg mx-auto px-4 py-16 text-center">
         <div class="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6" style="background: #3085c7">
           <i class="fas fa-check text-white text-3xl"></i>

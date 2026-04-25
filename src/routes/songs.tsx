@@ -51,7 +51,7 @@ app.get('/about', (c) => {
   ]
 
   return c.html(
-    <Layout title="ココロザシソングとは" currentUser={currentUser} unreadNotifications={unread}>
+    <Layout title="ココロザシソングとは" currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
       {/* Hero */}
       <section class="relative overflow-hidden py-20 md:py-28" style="background: #1e5282">
         <div class="absolute inset-0 opacity-20">
@@ -337,7 +337,7 @@ app.get('/create', (c) => {
   const unread = dummyNotifications.filter(n => !n.is_read).length
 
   return c.html(
-    <Layout title="ココロザシソングを作る" currentUser={currentUser} unreadNotifications={unread}>
+    <Layout title="ココロザシソングを作る" currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
       <div class="max-w-3xl mx-auto px-4 py-12">
         <div class="text-center mb-10">
           <p class="text-brand-500 font-semibold text-sm mb-2">KOKOROZASHI SONG</p>
@@ -383,7 +383,7 @@ app.get('/showcase', (c) => {
   const unread = dummyNotifications.filter(n => !n.is_read).length
 
   return c.html(
-    <Layout title="ココロザシソング公開事例" currentUser={currentUser} unreadNotifications={unread}>
+    <Layout title="ココロザシソング公開事例" currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
       <div class="max-w-5xl mx-auto px-4 py-8">
         <div class="mb-8">
           <h1 class="text-2xl font-bold text-gray-800 mb-2">
@@ -450,7 +450,7 @@ app.get('/detail/:id', (c) => {
 
   if (!song) {
     return c.html(
-      <Layout title="見つかりません" currentUser={currentUser} unreadNotifications={unread}>
+      <Layout title="見つかりません" currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
         <div class="max-w-2xl mx-auto px-4 py-16 text-center">
           <h1 class="text-2xl font-bold text-gray-700 mb-4">楽曲が見つかりません</h1>
           <a href="/songs/showcase" class="btn-primary px-6 py-2.5 rounded-full text-sm font-medium inline-block">一覧に戻る</a>
@@ -462,7 +462,7 @@ app.get('/detail/:id', (c) => {
   const comments = getCommentsForTarget('song', id)
 
   return c.html(
-    <Layout title={song.title} currentUser={currentUser} unreadNotifications={unread}>
+    <Layout title={song.title} currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
       <div class="max-w-3xl mx-auto px-4 py-8">
         <a href="/songs/showcase" class="flex items-center gap-2 text-sm text-gray-500 hover:text-brand-600 mb-6">
           <i class="fas fa-arrow-left"></i>ココロザシソング一覧
@@ -598,7 +598,7 @@ app.get('/order', (c) => {
     : { name: 'スタンダード', price: '¥88,000' }
 
   return c.html(
-    <Layout title="ココロザシソング申込" currentUser={currentUser} unreadNotifications={unread}>
+    <Layout title="ココロザシソング申込" currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
       <div class="max-w-xl mx-auto px-4 py-12">
         {/* Progress */}
         <div class="flex items-center gap-2 mb-8 text-xs">
@@ -659,7 +659,7 @@ app.get('/order', (c) => {
 app.get('/order/terms', (c) => {
   const unread = dummyNotifications.filter(n => !n.is_read).length
   return c.html(
-    <Layout title="規約確認" currentUser={currentUser} unreadNotifications={unread}>
+    <Layout title="規約確認" currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
       <div class="max-w-xl mx-auto px-4 py-12">
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
           <h1 class="text-xl font-bold text-gray-800 mb-4">利用規約の確認</h1>
@@ -687,7 +687,7 @@ app.get('/order/terms', (c) => {
 app.get('/order/complete', (c) => {
   const unread = dummyNotifications.filter(n => !n.is_read).length
   return c.html(
-    <Layout title="申込完了" currentUser={currentUser} unreadNotifications={unread}>
+    <Layout title="申込完了" currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
       <div class="max-w-lg mx-auto px-4 py-16 text-center">
         <div class="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6" style="background: #3085c7">
           <i class="fas fa-check text-white text-3xl"></i>
@@ -712,7 +712,7 @@ app.get('/:id', (c) => {
 
   if (!song) {
     return c.html(
-      <Layout title="見つかりません" currentUser={currentUser} unreadNotifications={unread}>
+      <Layout title="見つかりません" currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
         <div class="max-w-2xl mx-auto px-4 py-16 text-center">
           <h1 class="text-2xl font-bold text-gray-700 mb-4">楽曲が見つかりません</h1>
           <a href="/songs/showcase" class="btn-primary px-6 py-2.5 rounded-full text-sm font-medium inline-block">一覧に戻る</a>
@@ -724,7 +724,7 @@ app.get('/:id', (c) => {
   const comments = getCommentsForTarget('song', id)
 
   return c.html(
-    <Layout title={song.title} currentUser={currentUser} unreadNotifications={unread}>
+    <Layout title={song.title} currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
       <div class="max-w-3xl mx-auto px-4 py-8">
         <a href="/songs/showcase" class="flex items-center gap-2 text-sm text-gray-500 hover:text-brand-600 mb-6"><i class="fas fa-arrow-left"></i>ココロザシソング一覧</a>
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">

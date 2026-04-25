@@ -13,7 +13,7 @@ app.get('/', (c) => {
   const activeTopic = dummyTopics[0]
 
   return c.html(
-    <Layout title="ホーム" currentUser={currentUser} unreadNotifications={unread}>
+    <Layout title="ホーム" currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
       {/* Hero Banner Carousel */}
       <section class="bg-white border-b border-gray-100">
         <div class="max-w-7xl mx-auto px-4 py-6">

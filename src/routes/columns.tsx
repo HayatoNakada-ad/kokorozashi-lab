@@ -11,7 +11,7 @@ app.get('/', (c) => {
   const unread = dummyNotifications.filter(n => !n.is_read).length
 
   return c.html(
-    <Layout title="コラム" currentUser={currentUser} unreadNotifications={unread}>
+    <Layout title="コラム" currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
       <div class="max-w-5xl mx-auto px-4 py-8">
         <div class="mb-8">
           <h1 class="text-2xl font-bold text-gray-800 mb-2">
@@ -61,7 +61,7 @@ app.get('/:slug', (c) => {
 
   if (!col) {
     return c.html(
-      <Layout title="見つかりません" currentUser={currentUser} unreadNotifications={unread}>
+      <Layout title="見つかりません" currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
         <div class="max-w-2xl mx-auto px-4 py-16 text-center">
           <h1 class="text-2xl font-bold text-gray-700 mb-4">コラムが見つかりません</h1>
           <a href="/columns" class="btn-primary px-6 py-2.5 rounded-full text-sm font-medium inline-block">一覧に戻る</a>
@@ -73,7 +73,7 @@ app.get('/:slug', (c) => {
   const related = dummyColumns.filter(c => c.slug !== slug).slice(0, 2)
 
   return c.html(
-    <Layout title={col.title} currentUser={currentUser} unreadNotifications={unread}>
+    <Layout title={col.title} currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
       <div class="max-w-3xl mx-auto px-4 py-8">
         <a href="/columns" class="flex items-center gap-2 text-sm text-gray-500 hover:text-brand-600 mb-6">
           <i class="fas fa-arrow-left"></i>コラム一覧

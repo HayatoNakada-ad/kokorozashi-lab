@@ -9,7 +9,7 @@ app.get('/about', (c) => {
   const unread = dummyNotifications.filter(n => !n.is_read).length
 
   return c.html(
-    <Layout title="初めての方へ" currentUser={currentUser} unreadNotifications={unread}>
+    <Layout title="初めての方へ" currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
       {/* Hero */}
       <section class="bg-white py-16 border-b border-gray-100">
         <div class="max-w-4xl mx-auto px-4 text-center">
@@ -82,7 +82,7 @@ app.get('/news', (c) => {
   const unread = dummyNotifications.filter(n => !n.is_read).length
 
   return c.html(
-    <Layout title="お知らせ" currentUser={currentUser} unreadNotifications={unread}>
+    <Layout title="お知らせ" currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
       <div class="max-w-3xl mx-auto px-4 py-8">
         <h1 class="text-2xl font-bold text-gray-800 mb-6">
           <i class="fas fa-bullhorn mr-2 text-brand-500"></i>お知らせ
@@ -123,7 +123,7 @@ app.get('/search', (c) => {
   ) : []
 
   return c.html(
-    <Layout title={q ? `「${q}」の検索結果` : '検索'} currentUser={currentUser} unreadNotifications={unread}>
+    <Layout title={q ? `「${q}」の検索結果` : '検索'} currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
       <div class="max-w-4xl mx-auto px-4 py-8">
         {/* Search Box */}
         <div class="relative mb-6">
@@ -238,7 +238,7 @@ app.get('/search', (c) => {
 app.get('/terms', (c) => {
   const unread = dummyNotifications.filter(n => !n.is_read).length
   return c.html(
-    <Layout title="利用規約" currentUser={currentUser} unreadNotifications={unread}>
+    <Layout title="利用規約" currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
       <div class="max-w-3xl mx-auto px-4 py-8">
         <h1 class="text-2xl font-bold text-gray-800 mb-2">利用規約</h1>
         <p class="text-sm text-gray-400 mb-8">最終更新日: 2025年1月1日</p>
@@ -280,7 +280,7 @@ app.get('/terms', (c) => {
 app.get('/privacy', (c) => {
   const unread = dummyNotifications.filter(n => !n.is_read).length
   return c.html(
-    <Layout title="プライバシーポリシー" currentUser={currentUser} unreadNotifications={unread}>
+    <Layout title="プライバシーポリシー" currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
       <div class="max-w-3xl mx-auto px-4 py-8">
         <h1 class="text-2xl font-bold text-gray-800 mb-2">プライバシーポリシー</h1>
         <p class="text-sm text-gray-400 mb-8">最終更新日: 2025年1月1日</p>
@@ -321,7 +321,7 @@ app.get('/privacy', (c) => {
 app.get('/law', (c) => {
   const unread = dummyNotifications.filter(n => !n.is_read).length
   return c.html(
-    <Layout title="特定商取引法に基づく表記" currentUser={currentUser} unreadNotifications={unread}>
+    <Layout title="特定商取引法に基づく表記" currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
       <div class="max-w-3xl mx-auto px-4 py-8">
         <h1 class="text-2xl font-bold text-gray-800 mb-8">特定商取引法に基づく表記</h1>
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
@@ -356,7 +356,7 @@ app.get('/law', (c) => {
 app.get('/contact', (c) => {
   const unread = dummyNotifications.filter(n => !n.is_read).length
   return c.html(
-    <Layout title="お問い合わせ" currentUser={currentUser} unreadNotifications={unread}>
+    <Layout title="お問い合わせ" currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
       <div class="max-w-2xl mx-auto px-4 py-8">
         <div class="text-center mb-8">
           <h1 class="text-2xl font-bold text-gray-800 mb-2">お問い合わせ</h1>
