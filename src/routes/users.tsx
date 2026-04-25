@@ -141,7 +141,7 @@ app.get('/:username', (c) => {
         )}
 
         {/* Tabs */}
-        <div class="flex border-b border-gray-200 mb-6" id="profileTabs" id="songs-section">
+        <div class="flex border-b border-gray-200 mb-6" id="profileTabs">
           <button
             onclick="switchTab('vj')"
             id="tab-vj"
