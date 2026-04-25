@@ -20,7 +20,7 @@ app.get('/', (c) => {
   const activeTopic = dummyTopics[0]
 
   return c.html(
-    <Layout title="ホーム" currentUser={currentUser} unreadNotifications={unread}>
+    <Layout title="ホーム" currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
       {/* Hero Banner Carousel */}
       <section class="bg-white border-b border-gray-100">
         <div class="max-w-7xl mx-auto px-4 py-6">
@@ -59,206 +59,212 @@ app.get('/', (c) => {
 
       <div class="max-w-4xl mx-auto px-4 py-8">
 
-        {/* フォロー中の投稿 */}
+        {/* ── フォロー中（noteスタイル・2-3列グリッド） ── */}
         <section class="mb-10">
-          <div class="flex items-center justify-between mb-5">
-            <h2 class="section-heading">フォロー中の投稿</h2>
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="section-heading">フォロー中</h2>
           </div>
-
-          <div class="space-y-4">
-            {dummyFeed.map(item => {
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            {dummyFeed.slice(0, 6).map(item => {
               const vj = item.type === 'voice_journal' ? item.content as any : null
               const song = item.type === 'song' ? item.content as any : null
+              const topReactions = Object.entries(reactionLabels)
+                .sort((a, b) => ((item.content as any).reactions_count?.[b[0]] || 0) - ((item.content as any).reactions_count?.[a[0]] || 0))
+                .slice(0, 3)
+              const contentId = (vj?.id || song?.id) + '-fh'
+              const href = vj ? `/voice-journal/${vj.id}` : `/songs/${song?.id}`
               return (
-                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden card-hover audio-card">
-                  <div class="flex items-center gap-3 p-4 pb-0">
-                    <a href={`/user/${item.user.username}`}>
-                      <img src={item.user.avatar_url} alt={item.user.display_name} class="w-10 h-10 rounded-full object-cover" />
-                    </a>
-                    <div class="flex-1 min-w-0">
-                      <div class="flex items-center gap-2">
-                        <a href={`/user/${item.user.username}`} class="font-semibold text-sm text-gray-800 hover:text-brand-600">{item.user.display_name}</a>
-                        <span class="text-xs text-gray-400">{formatRelativeDate(item.created_at)}</span>
-                      </div>
-                      <p class="text-xs text-gray-500">
-                        {item.type === 'voice_journal' ? <span><i class="fas fa-microphone mr-1 text-brand-400"></i>ボイスジャーナルを投稿</span> : <span><i class="fas fa-music mr-1 text-[#eba528]"></i>ココロザシソングを公開</span>}
-                      </p>
-                    </div>
-                  </div>
-                  <div class="p-4">
-                    {vj && (
-                      <div>
-                        <a href={`/voice-journal/${vj.id}`}><h3 class="font-bold text-gray-800 hover:text-brand-600 line-clamp-2 mb-3">{vj.title}</h3></a>
-                        <div class="bg-brand-50 rounded-xl p-3">
-                          <div class="flex items-center gap-3">
-                            <button id={`play-btn-${vj.id}`} class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 text-white shadow-sm" style="background: #3085c7" onclick={`initAudioPlayer('${vj.id}', '')`}>
-                              <i class="fas fa-play text-sm"></i>
-                            </button>
-                            <div class="flex-1">
-                              <div class="bg-gray-200 rounded-full h-1.5"><div id={`progress-${vj.id}`} class="audio-player-bar h-1.5 rounded-full" style="width:0%"></div></div>
-                              <div class="flex justify-between text-xs text-gray-400 mt-1">
-                                <span id={`current-time-${vj.id}`}>0:00</span>
-                                <div class="wave-animation"><span></span><span></span><span></span><span></span><span></span></div>
-                                <span>{formatDuration(vj.duration_seconds)}</span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        {vj.tags?.length > 0 && <div class="flex flex-wrap gap-1.5 mt-2">{vj.tags.map((t: string) => <a href={`/voice-journals?tag=${t}`} class="tag-badge text-xs px-2 py-0.5 rounded-full">#{t}</a>)}</div>}
-                      </div>
-                    )}
-                    {song && (
-                      <div class="flex gap-3">
-                        <a href={`/songs/${song.id}`}><img src={song.jacket_image_url} alt={song.title} class="w-16 h-16 rounded-xl object-cover flex-shrink-0" /></a>
-                        <div class="flex-1 min-w-0">
-                          <a href={`/songs/${song.id}`}><h3 class="font-bold text-gray-800 hover:text-brand-600 line-clamp-2 mb-1">{song.title}</h3></a>
-                          <p class="text-xs text-gray-500 line-clamp-2">{song.description}</p>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                  <div class="px-4 pb-4 flex items-center justify-between">
-                    <div class="flex items-center gap-1 flex-wrap">
-                      {Object.entries(reactionLabels).map(([type, info]) => (
-                        <button onclick={`toggleReaction(this, '${type}')`} class="reaction-btn flex items-center gap-1 text-xs text-gray-500 hover:text-brand-600 bg-gray-50 hover:bg-brand-50 px-2 py-1 rounded-full border border-gray-100">
-                          <span>{info.emoji}</span><span class="reaction-count">{(item.content as any).reactions_count?.[type] || 0}</span>
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden card-hover audio-card">
+                  <div class="relative">
+                    {vj ? (
+                      <div class="w-full aspect-square bg-brand-50 flex flex-col items-center justify-center relative overflow-hidden">
+                        <button id={`play-btn-${contentId}`} class="w-10 h-10 rounded-full flex items-center justify-center text-white shadow-md" style="background:#3085c7" onclick={`initAudioPlayer('${contentId}', '')`}>
+                          <i class="fas fa-play text-xs"></i>
                         </button>
-                      ))}
-                    </div>
-                    <a href={item.type === 'voice_journal' ? `/voice-journal/${(item.content as any).id}` : `/songs/${(item.content as any).id}`} class="text-xs text-gray-400 hover:text-brand-600 flex items-center gap-1">
-                      <i class="far fa-comment"></i><span>{(item.content as any).comments_count}</span>
+                        <div id={`progress-${contentId}`} class="absolute bottom-0 left-0 h-1 rounded-full" style="width:0%;background:#3085c7"></div>
+                        <span id={`current-time-${contentId}`} class="absolute bottom-1.5 right-2 text-[10px] text-brand-600">{formatDuration(vj.duration_seconds)}</span>
+                      </div>
+                    ) : song ? (
+                      <div class="relative">
+                        <img src={song.jacket_image_url} alt={song.title} class="w-full aspect-square object-cover" />
+                        <button id={`play-btn-${contentId}`} class="absolute inset-0 w-full h-full flex items-center justify-center bg-black/30 opacity-0 hover:opacity-100 transition-opacity" onclick={`initAudioPlayer('${contentId}', '')`}>
+                          <div class="w-10 h-10 rounded-full flex items-center justify-center text-white" style="background:#3085c7"><i class="fas fa-play text-xs"></i></div>
+                        </button>
+                      </div>
+                    ) : null}
+                    <span class={`absolute top-1.5 left-1.5 text-[10px] font-semibold px-1.5 py-0.5 rounded-full ${vj ? 'bg-brand-500 text-white' : 'text-white'}`} style={song ? 'background:#eba528' : ''}>{vj ? 'VJ' : 'SONG'}</span>
+                  </div>
+                  <div class="p-2.5">
+                    <a href={href}>
+                      <p class="font-bold text-gray-800 hover:text-brand-600 line-clamp-2 text-xs leading-snug mb-1.5">{vj ? vj.title : song?.title}</p>
                     </a>
+                    <div class="flex items-center gap-1 mb-1.5">
+                      <img src={item.user.avatar_url} alt={item.user.display_name} class="w-4 h-4 rounded-full object-cover flex-shrink-0" />
+                      <span class="text-[10px] text-gray-500 truncate">{item.user.display_name}</span>
+                    </div>
+                    <div class="flex items-center gap-0.5">
+                      {topReactions.map(([type, info]) => {
+                        const count = (item.content as any).reactions_count?.[type] || 0
+                        return (
+                          <button onclick={`toggleReaction(this, '${type}')`} class="reaction-btn flex items-center gap-0.5 text-[10px] text-gray-500 bg-gray-50 px-1 py-0.5 rounded-full border border-gray-100">
+                            <span>{info.emoji}</span>
+                            <span class="reaction-count">{count}</span>
+                          </button>
+                        )
+                      })}
+                      <a href={href} class="ml-auto text-[10px] text-gray-400 flex items-center gap-0.5">
+                        <i class="far fa-comment"></i>
+                        <span>{(item.content as any).comments_count}</span>
+                      </a>
+                    </div>
                   </div>
                 </div>
               )
             })}
           </div>
-          <div class="text-center mt-6">
-            <a href="/following-feed" class="btn-outline px-8 py-3 rounded-full text-sm font-medium inline-block">もっと見る</a>
+          <div class="text-center mt-4">
+            <a href="/following-feed" class="btn-outline px-8 py-2.5 rounded-full text-sm font-medium inline-block">もっと見る</a>
           </div>
         </section>
 
-        {/* おすすめ投稿 */}
+        {/* ── おすすめ投稿（noteスタイル・2-3列グリッド） ── */}
         <section class="mb-10">
-          <div class="flex items-center justify-between mb-5">
-            <h2 class="section-heading">おすすめ投稿</h2>
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="section-heading">おすすめ</h2>
           </div>
-          <div class="space-y-4">
-            {dummyVoiceJournals.slice(0, 3).map(vj => (
-              <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden card-hover audio-card">
-                <div class="flex items-center gap-3 p-4 pb-0">
-                  <a href={`/user/${vj.user?.username}`}>
-                    <img src={vj.user?.avatar_url} alt={vj.user?.display_name} class="w-10 h-10 rounded-full object-cover" />
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            {dummyVoiceJournals.filter(v => v.user?.id !== currentUser.id).slice(0, 4).map(vj => (
+              <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden card-hover audio-card">
+                <div class="relative">
+                  <div class="w-full aspect-square bg-brand-50 flex flex-col items-center justify-center relative overflow-hidden">
+                    <button id={`play-btn-rec-${vj.id}-h`} class="w-10 h-10 rounded-full flex items-center justify-center text-white shadow-md" style="background:#3085c7" onclick={`initAudioPlayer('rec-${vj.id}-h', '')`}>
+                      <i class="fas fa-play text-xs"></i>
+                    </button>
+                    <div id={`progress-rec-${vj.id}-h`} class="absolute bottom-0 left-0 h-1 rounded-full" style="width:0%;background:#3085c7"></div>
+                    <span id={`current-time-rec-${vj.id}-h`} class="absolute bottom-1.5 right-2 text-[10px] text-brand-600">{formatDuration(vj.duration_seconds)}</span>
+                  </div>
+                  <span class="absolute top-1.5 left-1.5 text-[10px] font-semibold px-1.5 py-0.5 rounded-full text-white" style="background:#eba528">おすすめ</span>
+                </div>
+                <div class="p-2.5">
+                  <a href={`/voice-journal/${vj.id}`}>
+                    <p class="font-bold text-gray-800 hover:text-brand-600 line-clamp-2 text-xs leading-snug mb-1.5">{vj.title}</p>
                   </a>
-                  <div class="flex-1 min-w-0">
-                    <div class="flex items-center gap-2">
-                      <a href={`/user/${vj.user?.username}`} class="font-semibold text-sm text-gray-800 hover:text-brand-600">{vj.user?.display_name}</a>
-                      <span class="text-xs text-gray-400">{formatRelativeDate(vj.created_at)}</span>
-                    </div>
-                    <p class="text-xs text-brand-500 font-medium"><i class="fas fa-star mr-1 text-[#eba528]"></i>おすすめ</p>
+                  <div class="flex items-center gap-1 mb-1.5">
+                    <img src={vj.user?.avatar_url} alt={vj.user?.display_name} class="w-4 h-4 rounded-full object-cover flex-shrink-0" />
+                    <span class="text-[10px] text-gray-500 truncate">{vj.user?.display_name}</span>
                   </div>
-                </div>
-                <div class="p-4">
-                  <a href={`/voice-journal/${vj.id}`}><h3 class="font-bold text-gray-800 hover:text-brand-600 line-clamp-2 mb-3">{vj.title}</h3></a>
-                  <div class="bg-brand-50 rounded-xl p-3">
-                    <div class="flex items-center gap-3">
-                      <button id={`play-btn-rec-${vj.id}`} class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 text-white shadow-sm" style="background: #3085c7" onclick={`initAudioPlayer('rec-${vj.id}', '')`}>
-                        <i class="fas fa-play text-sm"></i>
-                      </button>
-                      <div class="flex-1">
-                        <div class="bg-gray-200 rounded-full h-1.5"><div id={`progress-rec-${vj.id}`} class="audio-player-bar h-1.5 rounded-full" style="width:0%"></div></div>
-                        <div class="flex justify-between text-xs text-gray-400 mt-1">
-                          <span id={`current-time-rec-${vj.id}`}>0:00</span>
-                          <span>{formatDuration(vj.duration_seconds)}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  {vj.tags?.length > 0 && <div class="flex flex-wrap gap-1.5 mt-2">{vj.tags.map((t: string) => <a href={`/voice-journals?tag=${t}`} class="tag-badge text-xs px-2 py-0.5 rounded-full">#{t}</a>)}</div>}
-                </div>
-                <div class="px-4 pb-4 flex items-center justify-between">
-                  <div class="flex items-center gap-1 flex-wrap">
+                  <div class="flex items-center gap-0.5">
                     {Object.entries(reactionLabels).slice(0, 3).map(([type, info]) => (
-                      <button onclick={`toggleReaction(this, '${type}')`} class="reaction-btn flex items-center gap-1 text-xs text-gray-500 hover:text-brand-600 bg-gray-50 hover:bg-brand-50 px-2 py-1 rounded-full border border-gray-100">
-                        <span>{info.emoji}</span><span class="reaction-count">{vj.reactions_count?.[type as keyof typeof vj.reactions_count] || 0}</span>
+                      <button onclick={`toggleReaction(this, '${type}')`} class="reaction-btn flex items-center gap-0.5 text-[10px] text-gray-500 bg-gray-50 px-1 py-0.5 rounded-full border border-gray-100">
+                        <span>{info.emoji}</span>
+                        <span class="reaction-count">{vj.reactions_count?.[type as keyof typeof vj.reactions_count] || 0}</span>
                       </button>
                     ))}
+                    <a href={`/voice-journal/${vj.id}`} class="ml-auto text-[10px] text-gray-400 flex items-center gap-0.5">
+                      <i class="far fa-comment"></i>
+                      <span>{vj.comments_count}</span>
+                    </a>
                   </div>
-                  <a href={`/voice-journal/${vj.id}`} class="text-xs text-gray-400 hover:text-brand-600 flex items-center gap-1"><i class="far fa-comment"></i><span>{vj.comments_count}</span></a>
                 </div>
               </div>
             ))}
             {dummySongs.slice(0, 2).map(song => (
-              <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden card-hover">
-                <div class="flex items-center gap-3 p-4 pb-0">
-                  <a href={`/user/${song.user?.username}`}>
-                    <img src={song.user?.avatar_url} alt={song.user?.display_name} class="w-10 h-10 rounded-full object-cover" />
-                  </a>
-                  <div class="flex-1 min-w-0">
-                    <div class="flex items-center gap-2">
-                      <a href={`/user/${song.user?.username}`} class="font-semibold text-sm text-gray-800 hover:text-brand-600">{song.user?.display_name}</a>
-                    </div>
-                    <p class="text-xs font-medium" style="color:#eba528"><i class="fas fa-star mr-1"></i>おすすめ ・ ココロザシソング</p>
-                  </div>
+              <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden card-hover audio-card">
+                <div class="relative">
+                  <img src={song.jacket_image_url} alt={song.title} class="w-full aspect-square object-cover" />
+                  <button id={`play-btn-srec-${song.id}`} class="absolute inset-0 w-full h-full flex items-center justify-center bg-black/30 opacity-0 hover:opacity-100 transition-opacity" onclick={`initAudioPlayer('srec-${song.id}', '')`}>
+                    <div class="w-10 h-10 rounded-full flex items-center justify-center text-white" style="background:#eba528"><i class="fas fa-play text-xs"></i></div>
+                  </button>
+                  <span class="absolute top-1.5 left-1.5 text-[10px] font-semibold px-1.5 py-0.5 rounded-full text-white" style="background:#eba528">SONG</span>
                 </div>
-                <div class="p-4">
-                  <div class="flex gap-3">
-                    <a href={`/songs/${song.id}`}><img src={song.jacket_image_url} alt={song.title} class="w-16 h-16 rounded-xl object-cover flex-shrink-0" /></a>
-                    <div class="flex-1 min-w-0">
-                      <a href={`/songs/${song.id}`}><h3 class="font-bold text-gray-800 hover:text-brand-600 line-clamp-2 mb-1">{song.title}</h3></a>
-                      <p class="text-xs text-gray-500 line-clamp-2">{song.description}</p>
-                    </div>
+                <div class="p-2.5">
+                  <a href={`/songs/${song.id}`}>
+                    <p class="font-bold text-gray-800 hover:text-brand-600 line-clamp-2 text-xs leading-snug mb-1.5">{song.title}</p>
+                  </a>
+                  <div class="flex items-center gap-1 mb-1.5">
+                    <img src={song.user?.avatar_url} alt={song.user?.display_name} class="w-4 h-4 rounded-full object-cover flex-shrink-0" />
+                    <span class="text-[10px] text-gray-500 truncate">{song.user?.display_name}</span>
+                  </div>
+                  <div class="flex items-center gap-0.5">
+                    {Object.entries(reactionLabels).slice(0, 3).map(([type, info]) => (
+                      <button onclick={`toggleReaction(this, '${type}')`} class="reaction-btn flex items-center gap-0.5 text-[10px] text-gray-500 bg-gray-50 px-1 py-0.5 rounded-full border border-gray-100">
+                        <span>{info.emoji}</span>
+                        <span class="reaction-count">{(song.reactions_count as any)?.[type] || 0}</span>
+                      </button>
+                    ))}
+                    <a href={`/songs/${song.id}`} class="ml-auto text-[10px] text-gray-400 flex items-center gap-0.5">
+                      <i class="far fa-comment"></i>
+                      <span>{song.comments_count}</span>
+                    </a>
                   </div>
                 </div>
               </div>
             ))}
+          </div>
+          <div class="text-center mt-4">
+            <a href="/voice-journals" class="btn-outline px-8 py-2.5 rounded-full text-sm font-medium inline-block">もっと見る</a>
           </div>
         </section>
 
-        {/* New VJs */}
+        {/* ── 新着ボイスジャーナル（noteスタイル・2-3列グリッド） ── */}
         <section class="mb-10">
-          <div class="flex items-center justify-between mb-6">
+          <div class="flex items-center justify-between mb-4">
             <h2 class="section-heading">新着ボイスジャーナル</h2>
-            <a href="/voice-journals" class="text-sm text-brand-600 hover:underline">すべて見る</a>
           </div>
-
-          {/* 今の気持ちを声に */}
-          <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 mb-6">
-            <h3 class="section-heading mb-2">今の気持ちを声に</h3>
-            <p class="text-sm text-gray-500 mb-4">思ったことをそのまま声で記録しよう</p>
-            <a href="/voice-journal/create" class="btn-primary w-full py-3 rounded-xl text-sm font-medium flex items-center justify-center gap-2"><i class="fas fa-microphone"></i>録音して投稿する</a>
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
             {dummyVoiceJournals.slice(0, 6).map(vj => (
-              <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden card-hover audio-card">
-                <div class="p-4">
-                  <div class="flex items-center gap-2 mb-3">
-                    <a href={`/user/${vj.user?.username}`}><img src={vj.user?.avatar_url} alt="" class="w-8 h-8 rounded-full" /></a>
-                    <div><p class="text-xs font-semibold text-gray-700">{vj.user?.display_name}</p><p class="text-xs text-gray-400">{formatRelativeDate(vj.created_at)}</p></div>
-                  </div>
-                  <a href={`/voice-journal/${vj.id}`}><h3 class="font-bold text-gray-800 hover:text-brand-600 line-clamp-2 mb-2 text-sm">{vj.title}</h3></a>
-                  <div class="bg-brand-50 rounded-xl p-2.5 flex items-center gap-2">
-                    <button id={`play-btn-${vj.id}-card`} class="w-8 h-8 rounded-full flex items-center justify-center text-white shadow-sm flex-shrink-0" style="background: #3085c7" onclick={`initAudioPlayer('${vj.id}-card', '')`}>
+              <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden card-hover audio-card">
+                <div class="relative">
+                  <div class="w-full aspect-square bg-brand-50 flex flex-col items-center justify-center relative overflow-hidden">
+                    <button id={`play-btn-${vj.id}-card`} class="w-10 h-10 rounded-full flex items-center justify-center text-white shadow-md" style="background:#3085c7" onclick={`initAudioPlayer('${vj.id}-card', '')`}>
                       <i class="fas fa-play text-xs"></i>
                     </button>
-                    <div class="flex-1">
-                      <div class="bg-white/60 rounded-full h-1"><div id={`progress-${vj.id}-card`} class="audio-player-bar h-1 rounded-full" style="width:0%"></div></div>
-                      <div class="flex justify-between text-xs text-gray-400 mt-1">
-                        <span id={`current-time-${vj.id}-card`}>0:00</span><span>{formatDuration(vj.duration_seconds)}</span>
-                      </div>
-                    </div>
+                    <div id={`progress-${vj.id}-card`} class="absolute bottom-0 left-0 h-1 rounded-full" style="width:0%;background:#3085c7"></div>
+                    <span id={`current-time-${vj.id}-card`} class="absolute bottom-1.5 right-2 text-[10px] text-brand-600">{formatDuration(vj.duration_seconds)}</span>
                   </div>
-                  <div class="flex items-center gap-1 mt-3 flex-wrap">
+                </div>
+                <div class="p-2.5">
+                  <a href={`/voice-journal/${vj.id}`}>
+                    <p class="font-bold text-gray-800 hover:text-brand-600 line-clamp-2 text-xs leading-snug mb-1.5">{vj.title}</p>
+                  </a>
+                  <div class="flex items-center gap-1 mb-1.5">
+                    <img src={vj.user?.avatar_url} alt={vj.user?.display_name} class="w-4 h-4 rounded-full object-cover flex-shrink-0" />
+                    <span class="text-[10px] text-gray-500 truncate">{vj.user?.display_name}</span>
+                    <span class="text-[10px] text-gray-400 flex-shrink-0 ml-auto">{formatRelativeDate(vj.created_at)}</span>
+                  </div>
+                  <div class="flex items-center gap-0.5">
                     {Object.entries(reactionLabels).slice(0, 3).map(([type, info]) => (
-                      <button onclick={`toggleReaction(this, '${type}')`} class="reaction-btn flex items-center gap-1 text-xs text-gray-500 bg-gray-50 px-2 py-1 rounded-full">
-                        <span>{info.emoji}</span><span class="reaction-count">{vj.reactions_count?.[type as keyof typeof vj.reactions_count] || 0}</span>
+                      <button onclick={`toggleReaction(this, '${type}')`} class="reaction-btn flex items-center gap-0.5 text-[10px] text-gray-500 bg-gray-50 px-1 py-0.5 rounded-full border border-gray-100">
+                        <span>{info.emoji}</span>
+                        <span class="reaction-count">{vj.reactions_count?.[type as keyof typeof vj.reactions_count] || 0}</span>
                       </button>
                     ))}
-                    <a href={`/voice-journal/${vj.id}`} class="ml-auto text-xs text-gray-400 hover:text-brand-600 flex items-center gap-1"><i class="far fa-comment"></i>{vj.comments_count}</a>
+                    <a href={`/voice-journal/${vj.id}`} class="ml-auto text-[10px] text-gray-400 flex items-center gap-0.5">
+                      <i class="far fa-comment"></i>
+                      <span>{vj.comments_count}</span>
+                    </a>
                   </div>
                 </div>
               </div>
             ))}
+          </div>
+          <div class="text-center mt-4">
+            <a href="/voice-journals" class="btn-outline px-8 py-2.5 rounded-full text-sm font-medium inline-block">もっと見る</a>
+          </div>
+        </section>
+
+        {/* ── 今の気持ちを声に（新着VJセクション直後） ── */}
+        <section class="bg-brand-50 rounded-2xl border border-brand-100 p-6 mb-10">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <div class="flex-1">
+              <p class="section-heading-sub mb-1">声で記録しよう</p>
+              <h3 class="section-heading">今の気持ちを声に</h3>
+              <p class="text-sm text-gray-500 mt-1">思ったことをそのまま声で記録しよう</p>
+            </div>
+            <a href="/voice-journal/create" class="btn-primary px-6 py-3 rounded-xl text-sm font-medium flex items-center gap-2 flex-shrink-0">
+              <i class="fas fa-microphone"></i>
+              録音して投稿する
+            </a>
           </div>
         </section>
 
@@ -448,7 +454,7 @@ app.get('/voice-journals', (c) => {
   const filtered = tag ? dummyVoiceJournals.filter(vj => vj.tags?.includes(tag)) : dummyVoiceJournals
 
   return c.html(
-    <Layout title="ボイスジャーナル一覧" currentUser={currentUser} unreadNotifications={unread}>
+    <Layout title="ボイスジャーナル一覧" currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
       <div class="max-w-4xl mx-auto px-4 py-8">
         <div class="flex items-center justify-between mb-6">
           <div>
@@ -529,7 +535,7 @@ app.get('/voice-journal/:id', (c) => {
   if (!vj) return c.html(<Layout title="404" currentUser={currentUser}><div class="text-center py-16"><h1 class="text-2xl font-bold">見つかりません</h1></div></Layout>)
   const comments = getCommentsForTarget('voice_journal', id)
   return c.html(
-    <Layout title={vj.title} currentUser={currentUser} unreadNotifications={unread}>
+    <Layout title={vj.title} currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
       <div class="max-w-3xl mx-auto px-4 py-8">
         <a href="/voice-journals" class="flex items-center gap-2 text-sm text-gray-500 hover:text-brand-600 mb-6"><i class="fas fa-arrow-left"></i>ボイスジャーナル一覧</a>
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
@@ -612,7 +618,7 @@ app.get('/voice-journal/:id', (c) => {
 function handleVJCreate(c: any) {
   const unread = dummyNotifications.filter(n => !n.is_read).length
   return c.html(
-    <Layout title="ボイスジャーナルを作る" currentUser={currentUser} unreadNotifications={unread}>
+    <Layout title="ボイスジャーナルを作る" currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
       <div class="max-w-2xl mx-auto px-4 py-8">
         <div class="flex items-center gap-2 mb-8">
           {[{n:1,l:'録音',a:true},{n:2,l:'設定',a:false},{n:3,l:'完了',a:false}].map((s,i) => (
@@ -753,7 +759,7 @@ function handleVJCreate(c: any) {
 app.get('/voice-journal/create/complete', (c) => {
   const unread = dummyNotifications.filter(n => !n.is_read).length
   return c.html(
-    <Layout title="投稿完了" currentUser={currentUser} unreadNotifications={unread}>
+    <Layout title="投稿完了" currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
       <div class="max-w-lg mx-auto px-4 py-16 text-center">
         <div class="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6" style="background: #3085c7"><i class="fas fa-check text-white text-3xl"></i></div>
         <h1 class="text-2xl font-bold text-gray-800 mb-2">投稿しました！</h1>
@@ -921,7 +927,7 @@ app.get('/password/reset', (c) => {
 app.get('/about', (c) => {
   const unread = dummyNotifications.filter(n => !n.is_read).length
   return c.html(
-    <Layout title="初めての方へ" currentUser={currentUser} unreadNotifications={unread}>
+    <Layout title="初めての方へ" currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
       <section class="bg-white py-16 border-b border-gray-100">
         <div class="max-w-4xl mx-auto px-4 text-center">
           <div class="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6" style="background: #3085c7"><i class="fas fa-microphone text-white text-2xl"></i></div>
@@ -957,7 +963,7 @@ app.get('/about', (c) => {
 app.get('/news', (c) => {
   const unread = dummyNotifications.filter(n => !n.is_read).length
   return c.html(
-    <Layout title="お知らせ" currentUser={currentUser} unreadNotifications={unread}>
+    <Layout title="お知らせ" currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
       <div class="max-w-3xl mx-auto px-4 py-8">
         <h1 class="section-heading text-2xl mb-6">お知らせ</h1>
         <div class="space-y-4">
@@ -987,7 +993,7 @@ app.get('/search', (c) => {
   const filteredVJs = q ? dummyVoiceJournals.filter(vj => vj.title.includes(q) || vj.description?.includes(q)) : []
   const filteredSongs = q ? dummySongs.filter(s => s.title.includes(q) || s.description?.includes(q)) : []
   return c.html(
-    <Layout title={q ? `「${q}」の検索結果` : '検索'} currentUser={currentUser} unreadNotifications={unread}>
+    <Layout title={q ? `「${q}」の検索結果` : '検索'} currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
       <div class="max-w-4xl mx-auto px-4 py-8">
         <div class="relative mb-6">
           <input type="text" value={q} placeholder="ユーザー、投稿を検索" class="w-full pl-12 pr-4 py-4 text-base border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand-300 shadow-sm" onkeydown={`if(event.key==='Enter'){window.location='/search?q='+this.value+'&tab=all'}`} />
@@ -1032,7 +1038,7 @@ app.get('/search', (c) => {
 app.get('/terms', (c) => {
   const unread = dummyNotifications.filter(n => !n.is_read).length
   return c.html(
-    <Layout title="利用規約" currentUser={currentUser} unreadNotifications={unread}>
+    <Layout title="利用規約" currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
       <div class="max-w-3xl mx-auto px-4 py-8">
         <h1 class="text-2xl font-bold text-gray-800 mb-2">利用規約</h1>
         <p class="text-sm text-gray-400 mb-8">最終更新日: 2025年1月1日</p>
@@ -1049,7 +1055,7 @@ app.get('/terms', (c) => {
 app.get('/privacy', (c) => {
   const unread = dummyNotifications.filter(n => !n.is_read).length
   return c.html(
-    <Layout title="プライバシーポリシー" currentUser={currentUser} unreadNotifications={unread}>
+    <Layout title="プライバシーポリシー" currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
       <div class="max-w-3xl mx-auto px-4 py-8">
         <h1 class="text-2xl font-bold text-gray-800 mb-2">プライバシーポリシー</h1>
         <p class="text-sm text-gray-400 mb-8">最終更新日: 2025年1月1日</p>
@@ -1066,7 +1072,7 @@ app.get('/privacy', (c) => {
 app.get('/law', (c) => {
   const unread = dummyNotifications.filter(n => !n.is_read).length
   return c.html(
-    <Layout title="特定商取引法に基づく表記" currentUser={currentUser} unreadNotifications={unread}>
+    <Layout title="特定商取引法に基づく表記" currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
       <div class="max-w-3xl mx-auto px-4 py-8">
         <h1 class="text-2xl font-bold text-gray-800 mb-8">特定商取引法に基づく表記</h1>
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
@@ -1085,7 +1091,7 @@ app.get('/law', (c) => {
 app.get('/contact', (c) => {
   const unread = dummyNotifications.filter(n => !n.is_read).length
   return c.html(
-    <Layout title="お問い合わせ" currentUser={currentUser} unreadNotifications={unread}>
+    <Layout title="お問い合わせ" currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
       <div class="max-w-2xl mx-auto px-4 py-8">
         <div class="text-center mb-8">
           <h1 class="text-2xl font-bold text-gray-800 mb-2">お問い合わせ</h1>

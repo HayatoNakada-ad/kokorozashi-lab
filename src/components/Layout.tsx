@@ -1,4 +1,5 @@
 import type { FC } from 'hono/jsx'
+import { dummyNotifications } from '../data/dummy'
 
 export const Layout: FC<{ children?: any; title?: string; description?: string; currentUser?: any; unreadNotifications?: number; notifications?: any[] }> = ({
   children,
@@ -6,8 +7,10 @@ export const Layout: FC<{ children?: any; title?: string; description?: string; 
   description = '声と歌で想いを発信するコミュニティサイト',
   currentUser,
   unreadNotifications = 0,
-  notifications = [],
+  notifications,
 }) => {
+  // notificationsが渡されない場合はdummyを使用（SSRでpropの配列渡しに問題があるため）
+  const notifData = (notifications && notifications.length > 0) ? notifications : dummyNotifications
   const isLoggedIn = !!currentUser
 
   return (
@@ -246,7 +249,7 @@ export const Layout: FC<{ children?: any; title?: string; description?: string; 
                         )}
                       </button>
 
-                      {/* フローティング通知パネル */}
+                      {/* フローティング通知パネル - JS動的レンダリング */}
                       <div
                         id="notifPanel"
                         class="hidden absolute right-0 top-12 w-[360px] max-w-[90vw] bg-white rounded-2xl shadow-2xl border border-gray-100 z-50 overflow-hidden"
@@ -257,44 +260,41 @@ export const Layout: FC<{ children?: any; title?: string; description?: string; 
                           <h3 class="font-bold text-gray-900 text-base">通知</h3>
                           <a href="/mypage/notifications" class="text-xs text-brand-600 hover:underline font-medium">すべて見る</a>
                         </div>
-
-                        {/* 通知リスト（スクロール可能） */}
-                        <div class="overflow-y-auto" style="max-height: 400px;">
-                          {notifications.length > 0 ? notifications.slice(0, 10).map((notif: any) => (
-                            <a
-                              href={notif.link || '/mypage/notifications'}
-                              class={`flex items-start gap-3 px-4 py-3 hover:bg-gray-50 transition-colors border-b border-gray-50 last:border-0 ${!notif.is_read ? 'bg-blue-50/40' : ''}`}
-                              onclick="closeNotifPanel()"
-                            >
-                              {/* アバター */}
-                              <div class="relative flex-shrink-0">
-                                <div class={`w-10 h-10 rounded-full flex items-center justify-center ${
-                                  notif.type === 'reaction' ? 'bg-red-100' :
-                                  notif.type === 'comment' ? 'bg-brand-100' :
-                                  notif.type === 'follow' ? 'bg-green-100' : 'bg-gray-100'
-                                }`}>
-                                  <i class={`fas text-sm ${
-                                    notif.type === 'reaction' ? 'fa-heart text-red-500' :
-                                    notif.type === 'comment' ? 'fa-comment text-brand-500' :
-                                    notif.type === 'follow' ? 'fa-user-plus text-green-500' :
-                                    'fa-bell text-gray-500'
-                                  }`}></i>
-                                </div>
-                                {/* 未読ドット */}
-                                {!notif.is_read && (
-                                  <span class="absolute -left-1 top-1/2 -translate-y-1/2 w-2 h-2 bg-brand-500 rounded-full"></span>
-                                )}
-                              </div>
-
-                              {/* テキスト */}
-                              <div class="flex-1 min-w-0">
-                                <p class={`text-sm leading-snug line-clamp-2 ${!notif.is_read ? 'font-semibold text-gray-900' : 'text-gray-700'}`}>
-                                  {notif.message}
-                                </p>
-                                <p class="text-xs text-gray-400 mt-1">{notif.created_at ? new Date(notif.created_at).toLocaleDateString('ja-JP', { month: 'short', day: 'numeric' }) : ''}</p>
-                              </div>
-                            </a>
-                          )) : (
+                          {/* 通知リストをSSRで直接描画 */}
+                        <div id="notifList" class="overflow-y-auto" style="max-height: 400px;">
+                          {notifData && notifData.length > 0 ? (
+                            <>
+                              {notifData.slice(0, 10).map((n: any) => {
+                                const bgMap: Record<string, string> = { reaction: '#fee2e2', comment: '#dbeafe', follow: '#dcfce7' }
+                                const iconMap: Record<string, string> = { reaction: 'fa-heart', comment: 'fa-comment', follow: 'fa-user-plus' }
+                                const colorMap: Record<string, string> = { reaction: '#ef4444', comment: '#3b82f6', follow: '#22c55e' }
+                                const bg = bgMap[n.type] || '#f3f4f6'
+                                const icon = iconMap[n.type] || 'fa-bell'
+                                const color = colorMap[n.type] || '#6b7280'
+                                const dateStr = n.created_at ? new Date(n.created_at).toLocaleDateString('ja-JP', { month: 'short', day: 'numeric' }) : ''
+                                return (
+                                  <a
+                                    href={n.link || '/mypage/notifications'}
+                                    onclick="closeNotifPanel()"
+                                    style={`display:flex;align-items:flex-start;gap:12px;padding:12px 16px;border-bottom:1px solid #f9fafb;text-decoration:none;${!n.is_read ? 'background:#eef5fc;' : ''}`}
+                                  >
+                                    <div style="position:relative;flex-shrink:0">
+                                      <div style={`width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:${bg}`}>
+                                        <i class={`fas ${icon} text-sm`} style={`color:${color}`}></i>
+                                      </div>
+                                      {!n.is_read && (
+                                        <span style="position:absolute;left:-4px;top:50%;transform:translateY(-50%);width:8px;height:8px;background:#3085c7;border-radius:50%;display:block"></span>
+                                      )}
+                                    </div>
+                                    <div style="flex:1;min-width:0">
+                                      <p style={`font-size:14px;line-height:1.4;color:${!n.is_read ? '#0f172a' : '#374151'};font-weight:${!n.is_read ? '600' : '400'};margin:0 0 2px`}>{n.message}</p>
+                                      <p style="font-size:12px;color:#9ca3af;margin:0">{dateStr}</p>
+                                    </div>
+                                  </a>
+                                )
+                              })}
+                            </>
+                          ) : (
                             <div class="py-12 text-center text-gray-400">
                               <i class="fas fa-bell text-3xl mb-3 block opacity-30"></i>
                               <p class="text-sm">通知はありません</p>
@@ -451,7 +451,6 @@ export const Layout: FC<{ children?: any; title?: string; description?: string; 
             menu.classList.toggle('hidden');
           }
 
-          // 通知フローティングパネル
           function toggleNotifPanel() {
             const panel = document.getElementById('notifPanel');
             const isHidden = panel.classList.contains('hidden');
