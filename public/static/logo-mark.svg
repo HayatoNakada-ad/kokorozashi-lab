@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 280" fill="none">
+  <!-- ヒーロー右側の大きな抽象ロゴマーク（白いカーシブ風の文字群） -->
+  <!-- 大きなループ形状1 -->
+  <path d="M80 40 C60 20, 30 30, 20 60 C10 90, 25 130, 55 150 C85 170, 120 165, 140 140 C160 115, 155 80, 130 60 C105 40, 75 45, 65 70 C55 95, 70 130, 95 140 C120 150, 150 135, 155 110" stroke="white" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <!-- 大きなループ形状2 -->
+  <path d="M160 80 C145 60, 125 65, 120 90 C115 115, 130 145, 155 155 C180 165, 210 150, 220 125 C230 100, 215 70, 195 60 C175 50, 155 60, 150 80" stroke="white" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <!-- 縦のストローク -->
+  <path d="M220 50 C220 50, 215 80, 215 120 C215 160, 218 200, 225 230 C232 260, 240 270, 248 265" stroke="white" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <!-- 小さな装飾ループ -->
+  <path d="M100 180 C90 170, 80 175, 78 190 C76 205, 85 220, 100 225 C115 230, 130 220, 132 205 C134 190, 122 178, 108 180" stroke="white" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+</svg>

@@ -924,58 +924,254 @@ app.get('/about', (c) => {
   const unread = dummyNotifications.filter(n => !n.is_read).length
   return c.html(
     <Layout title="初めての方へ" currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
-      <section class="bg-white py-16 border-b border-gray-100">
-        <div class="max-w-4xl mx-auto px-4 text-center">
-          <div class="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6" style="background: #3085c7"><i class="fas fa-microphone text-white text-2xl"></i></div>
-          <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">ココロザシラボへようこそ</h1>
-          <p class="text-lg text-gray-600 max-w-xl mx-auto leading-relaxed">声と歌で「志」を発信し、同じ想いを持つ人と繋がるコミュニティプラットフォームです。</p>
+      {/* Google Fonts + About page styles */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        @import url('https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700;900&family=Montserrat:wght@400;600;700;800&display=swap');
+        .about-jp { font-family: 'Zen Kaku Gothic New', sans-serif; }
+        .about-en { font-family: 'Montserrat', sans-serif; }
+        .about-section-label {
+          font-family: 'Montserrat', sans-serif;
+          font-size: 11px; font-weight: 700;
+          letter-spacing: 0.15em; color: #35C3F0;
+          text-transform: uppercase; display: block; margin-bottom: 6px;
+        }
+        .about-section-heading {
+          font-family: 'Zen Kaku Gothic New', sans-serif;
+          font-size: 1.75rem; font-weight: 900; color: #1a2a3a;
+          display: flex; align-items: center; gap: 10px; line-height: 1.3;
+        }
+        .about-section-heading img { width: 28px; height: 35px; flex-shrink: 0; }
+        .about-feature-card {
+          background: #fff; border-radius: 18px; border: 1px solid #e8eef5;
+          padding: 0; overflow: hidden;
+          box-shadow: 0 2px 12px rgba(48,133,199,0.06);
+          transition: transform 0.18s, box-shadow 0.18s;
+        }
+        .about-feature-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(48,133,199,0.13); }
+        .about-feature-card-img {
+          background: #f0f4f8; width: 100%; aspect-ratio: 16/9;
+          display: flex; align-items: center; justify-content: center;
+        }
+        .about-feature-card-body { padding: 20px; }
+        .about-feature-card-title { font-family: 'Zen Kaku Gothic New', sans-serif; font-size: 1rem; font-weight: 900; color: #1a2a3a; margin-bottom: 8px; }
+        .about-feature-card-desc { font-family: 'Zen Kaku Gothic New', sans-serif; font-size: 0.84rem; color: #5a6a7a; line-height: 1.7; }
+        .about-song-visual {
+          background: linear-gradient(135deg, #1a7db8 0%, #35C3F0 100%);
+          border-radius: 18px; padding: 32px;
+          display: flex; align-items: center; justify-content: center; min-height: 200px;
+        }
+        .about-cta-banner {
+          background: #35C3F0; border-radius: 20px; padding: 40px 32px;
+          display: flex; flex-direction: column; align-items: center;
+          text-align: center; gap: 16px;
+        }
+        .about-cta-title { font-family: 'Zen Kaku Gothic New', sans-serif; font-size: 1.5rem; font-weight: 900; color: #fff; }
+        .about-cta-sub { font-family: 'Zen Kaku Gothic New', sans-serif; font-size: 0.9rem; color: rgba(255,255,255,0.9); }
+        .about-cta-btn {
+          font-family: 'Montserrat', sans-serif; font-weight: 700;
+          background: #fff; color: #1a7db8; border-radius: 100px;
+          padding: 12px 36px; font-size: 0.95rem; text-decoration: none;
+          display: inline-block; transition: background 0.15s;
+        }
+        .about-cta-btn:hover { background: #e8f7fd; }
+        @media (max-width: 768px) {
+          .about-section-heading { font-size: 1.3rem; }
+          .about-hero-logo { display: none !important; }
+          .about-two-col { grid-template-columns: 1fr !important; }
+        }
+      `}} />
+
+      {/* HERO */}
+      <section style="background:#35C3F0; overflow:hidden;">
+        <div style="max-width:1100px; margin:0 auto; padding:56px 32px 48px; display:flex; align-items:center; gap:48px;">
+          <div style="flex:1; color:#fff;">
+            <span class="about-en" style="font-size:11px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; opacity:0.85; display:block; margin-bottom:12px;">
+              Welcome to Kokorozashi Lab!
+            </span>
+            <h1 class="about-jp" style="font-size:clamp(1.7rem,4vw,2.6rem); font-weight:900; line-height:1.3; margin-bottom:18px; color:#fff;">
+              声と歌で志を発信する<br />コミュニティプラットフォーム
+            </h1>
+            <p class="about-jp" style="font-size:1rem; line-height:1.8; opacity:0.92; margin-bottom:28px; max-width:420px;">
+              ここロザシラボは、声で「志」を記録・発信し、<br />同じ想いを持つ人と繋がれる場所です。
+            </p>
+            <a href="/signup" class="about-en" style="background:#fff; color:#1a7db8; font-weight:700; padding:13px 36px; border-radius:100px; text-decoration:none; font-size:0.95rem; display:inline-block;">
+              今すぐ始める →
+            </a>
+          </div>
+          <div class="about-hero-logo" style="flex-shrink:0; width:220px; opacity:0.92;">
+            <img src="/static/logo-mark.svg" alt="ここロザシラボ" style="width:100%; height:auto;" />
+          </div>
         </div>
       </section>
-      <div class="max-w-4xl mx-auto px-4 py-12">
-        <div class="grid md:grid-cols-3 gap-6 mb-16">
-          {[{icon:'🎙️',t:'ボイスジャーナル',d:'ブラウザで録音してそのまま投稿。声で日記を書くように、想いをシェアしましょう。',l:'/voice-journals',lt:'みんなの投稿を見る'},{icon:'🎵',t:'ココロザシソング',d:'あなたの志をヒアリングして、プロが楽曲化。本人歌唱の作品として永遠に残せます。',l:'/songs/about',lt:'サービスを詳しく見る'},{icon:'👥',t:'コミュニティ',d:'フォローして、コメントやリアクションで繋がろう。声と想いが人と人をつなぎます。',l:'/signup',lt:'登録して始める'}].map(f => (
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 text-center card-hover">
-              <div class="text-4xl mb-4">{f.icon}</div>
-              <h3 class="font-bold text-gray-800 text-lg mb-2">{f.t}</h3>
-              <p class="text-sm text-gray-600 leading-relaxed mb-4">{f.d}</p>
-              <a href={f.l} class="text-sm text-brand-600 font-semibold hover:underline">{f.lt} →</a>
-            </div>
-          ))}
-        </div>
-        <div class="bg-brand-50 rounded-3xl p-8 mb-16 border border-brand-100">
-          <h2 class="section-heading text-2xl mb-8 text-center">始め方</h2>
-          <div class="grid md:grid-cols-3 gap-6">
-            {[{n:'01',t:'アカウントを作る',d:'メールアドレスまたはGoogleで無料登録'},{n:'02',t:'録音して投稿する',d:'ブラウザで録音して2分以内の声日記を投稿'},{n:'03',t:'繋がろう',d:'フォローして、コメントやリアクションで交流'}].map(s => (
-              <div class="text-center"><div class="text-4xl font-bold logo-text mb-3">{s.n}</div><h3 class="font-bold text-gray-800 mb-2">{s.t}</h3><p class="text-sm text-gray-600">{s.d}</p></div>
+
+      {/* MAIN CONTENT */}
+      <div style="max-width:1000px; margin:0 auto; padding:64px 24px 80px;">
+
+        {/* Features */}
+        <section style="margin-bottom:72px;">
+          <span class="about-section-label">Features</span>
+          <h2 class="about-section-heading" style="margin-bottom:32px;">
+            <img src="/static/midashi.svg" alt="" />
+            ここロザシラボでできること
+          </h2>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:24px;">
+            {[
+              { title:'ボイスジャーナル', icon:'fa-microphone', iconColor:'#3085c7',
+                desc:'ブラウザで録音してそのまま投稿。声で日記を書くように、今日の気持ちや気づきをシェアしましょう。コメントやリアクションで仲間と繋がれます。' },
+              { title:'ここロザシソング', icon:'fa-music', iconColor:'#eba528',
+                desc:'あなたの志や想いをヒアリングして、プロのクリエイターが楽曲化。本人歌唱の作品として、世界にひとつだけの歌を永遠に残せます。' },
+              { title:'コミュニティ', icon:'fa-users', iconColor:'#35C3F0',
+                desc:'フォローして、コメントやリアクションで繋がろう。声と想いが人と人をつなぐ、温かいコミュニティがここにあります。' },
+            ].map(f => (
+              <div class="about-feature-card">
+                <div class="about-feature-card-img">
+                  <i class={`fas ${f.icon}`} style={`font-size:2.5rem; color:${f.iconColor}; opacity:0.45;`}></i>
+                </div>
+                <div class="about-feature-card-body">
+                  <p class="about-feature-card-title">{f.title}</p>
+                  <p class="about-feature-card-desc">{f.desc}</p>
+                </div>
+              </div>
             ))}
           </div>
-          <div class="text-center mt-8"><a href="/signup" class="btn-primary px-8 py-4 rounded-full font-bold text-base inline-block"><i class="fas fa-user-plus mr-2"></i>無料で始める</a></div>
+        </section>
+
+        {/* Voice Journal */}
+        <section style="margin-bottom:72px;">
+          <span class="about-section-label">Voice Journal</span>
+          <h2 class="about-section-heading" style="margin-bottom:32px;">
+            <img src="/static/midashi.svg" alt="" />
+            ボイスジャーナルとは
+          </h2>
+          <div class="about-two-col" style="display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center;">
+            <div>
+              <p class="about-jp" style="font-size:0.95rem; color:#3a4a5a; line-height:1.85; margin-bottom:20px;">
+                ボイスジャーナルは、声で緤る日記のような投稿機能です。スマートフォンやパソコンのブラウザから録音して、タイトルとハッシュタグをつけるだけで投稿完了。
+              </p>
+              <p class="about-jp" style="font-size:0.95rem; color:#3a4a5a; line-height:1.85; margin-bottom:20px;">
+                文章を書くのが苦手でも大丈夫。声なら、思ったことをそのまま、ありのままに届けられます。
+              </p>
+              <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:24px;">
+                {[
+                  { icon:'fa-microphone', text:'ブラウザから簡単録音（最大20分）' },
+                  { icon:'fa-hashtag', text:'ハッシュタグで検索・発見しやすい' },
+                  { icon:'fa-heart', text:'リアクションとコメントで交流' },
+                  { icon:'fa-lock', text:'公開範囲を選べる（全体・フォロワー・非公開）' },
+                ].map(item => (
+                  <div style="display:flex; align-items:center; gap:12px;">
+                    <div style="width:32px; height:32px; border-radius:50%; background:#eef5fc; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                      <i class={`fas ${item.icon}`} style="color:#3085c7; font-size:13px;"></i>
+                    </div>
+                    <span class="about-jp" style="font-size:0.88rem; color:#3a4a5a;">{item.text}</span>
+                  </div>
+                ))}
+              </div>
+              <a href="/voice-journals" class="about-en" style="background:#3085c7; color:#fff; font-weight:700; padding:11px 28px; border-radius:100px; text-decoration:none; font-size:0.88rem; display:inline-block;">
+                投稿を聴いてみる →
+              </a>
+            </div>
+            <div style="background:linear-gradient(135deg,#eef5fc 0%,#d4e8f7 100%); border-radius:18px; padding:40px; display:flex; flex-direction:column; align-items:center; gap:16px; min-height:220px; justify-content:center;">
+              <div style="width:72px; height:72px; border-radius:50%; background:#3085c7; display:flex; align-items:center; justify-content:center; box-shadow:0 8px 24px rgba(48,133,199,0.3);">
+                <i class="fas fa-microphone" style="color:#fff; font-size:28px;"></i>
+              </div>
+              <p class="about-jp" style="font-size:0.9rem; color:#3085c7; font-weight:700; text-align:center;">声で、今日を記録しよう</p>
+              <div style="display:flex; gap:6px; align-items:flex-end; height:40px;">
+                {[14,22,30,18,26,20,32,16,24,28].map((h: number) => (
+                  <div style={`width:6px; height:${h}px; border-radius:3px; background:#3085c7; opacity:0.55;`}></div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Song */}
+        <section style="margin-bottom:72px;">
+          <span class="about-section-label">Kokorozashi Song</span>
+          <h2 class="about-section-heading" style="margin-bottom:32px;">
+            <img src="/static/midashi.svg" alt="" />
+            ここロザシソングとは
+          </h2>
+          <div class="about-two-col" style="display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center;">
+            <div class="about-song-visual">
+              <div style="text-align:center; color:#fff;">
+                <div style="width:72px; height:72px; border-radius:50%; background:rgba(255,255,255,0.2); display:flex; align-items:center; justify-content:center; margin:0 auto 16px;">
+                  <i class="fas fa-music" style="font-size:28px;"></i>
+                </div>
+                <p class="about-jp" style="font-size:1rem; font-weight:900; margin-bottom:6px;">あなたの志が、歌になる</p>
+                <p class="about-jp" style="font-size:0.82rem; opacity:0.85;">世界でひとつだけの楽曲</p>
+              </div>
+            </div>
+            <div>
+              <p class="about-jp" style="font-size:0.95rem; color:#3a4a5a; line-height:1.85; margin-bottom:20px;">
+                ここロザシソングは、あなたの「志」や「人生の物語」を音楽にするサービスです。プロのクリエイターがヒアリングを行い、あなただけの歌詞とメロディを制作します。
+              </p>
+              <p class="about-jp" style="font-size:0.95rem; color:#3a4a5a; line-height:1.85; margin-bottom:20px;">
+                完成した楽曲はプラットフォーム上で公開・シェアでき、生涯にわたって聴き続けられる「声の記念碑」として残ります。
+              </p>
+              <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:24px;">
+                {[
+                  { icon:'fa-headset', text:'プロによる丁寧なヒアリング' },
+                  { icon:'fa-wand-magic-sparkles', text:'オリジナル楽曲・歌詞の制作' },
+                  { icon:'fa-compact-disc', text:'本人歌唱で仕上げ' },
+                  { icon:'fa-share-nodes', text:'プラットフォームで永続公開' },
+                ].map(item => (
+                  <div style="display:flex; align-items:center; gap:12px;">
+                    <div style="width:32px; height:32px; border-radius:50%; background:#fff8ec; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                      <i class={`fas ${item.icon}`} style="color:#eba528; font-size:13px;"></i>
+                    </div>
+                    <span class="about-jp" style="font-size:0.88rem; color:#3a4a5a;">{item.text}</span>
+                  </div>
+                ))}
+              </div>
+              <a href="/songs/about" class="about-en" style="background:#eba528; color:#fff; font-weight:700; padding:11px 28px; border-radius:100px; text-decoration:none; font-size:0.88rem; display:inline-block;">
+                サービスを詳しく見る →
+              </a>
+            </div>
+          </div>
+        </section>
+
+        {/* Get Started Today */}
+        <div class="about-cta-banner">
+          <span class="about-en" style="font-size:11px; font-weight:700; letter-spacing:0.18em; color:rgba(255,255,255,0.8); text-transform:uppercase;">Get Started Today</span>
+          <p class="about-cta-title">今すぐ、声を届けよう</p>
+          <p class="about-cta-sub">無料登録で、ボイスジャーナルの投稿・閲覧・コメントがすぐに始められます。</p>
+          <a href="/signup" class="about-cta-btn">無料アカウントを作成する</a>
         </div>
+
       </div>
     </Layout>
   )
 })
-
 app.get('/news', (c) => {
   const unread = dummyNotifications.filter(n => !n.is_read).length
   return c.html(
-    <Layout title="お知らせ" currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}>
-      <div class="max-w-3xl mx-auto px-4 py-8">
-        <h1 class="section-heading text-2xl mb-6">お知らせ</h1>
+    <Layout title="お知らせ" currentUser={currentUser} unreadNotifications={unread} notifications={dummyNotifications}
+      sidebar={<HomeSidebar currentPath="/news" />}
+    >
+      <div>
+        <h1 class="section-heading mb-6">お知らせ</h1>
         <div class="space-y-4">
-          {dummyNews.map(news => (
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
+          {dummyNews.map((news: any) => (
+            <article class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 hover:shadow-md transition-shadow">
               <div class="flex items-start gap-3">
                 <div class="w-2 h-2 rounded-full bg-brand-500 flex-shrink-0 mt-2"></div>
-                <div>
-                  <h2 class="font-bold text-gray-800 mb-1">{news.title}</h2>
-                  <p class="text-sm text-gray-600 mb-2">{news.body}</p>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center gap-2 mb-1 flex-wrap">
+                    <h2 class="font-bold text-gray-800">{news.title}</h2>
+                  </div>
+                  <p class="text-sm text-gray-600 mb-2 leading-relaxed">{news.body}</p>
                   <p class="text-xs text-gray-400">{formatDate(news.published_at)}</p>
                 </div>
               </div>
-            </div>
+            </article>
           ))}
         </div>
+        {dummyNews.length === 0 && (
+          <div class="text-center py-16 text-gray-400">
+            <i class="fas fa-bell text-5xl mb-4 block opacity-30"></i>
+            <p class="text-lg font-semibold">お知らせはありません</p>
+          </div>
+        )}
       </div>
     </Layout>
   )
