@@ -1,10 +1,10 @@
-# ここロザシラボ
+# ココロザシラボ
 
 声と歌で「志」を発信し、同じ想いを持つ人と繋がるコミュニティプラットフォームです。
 
 ## プロジェクト概要
 
-- **サービス名**: ここロザシラボ（Kokorozashi Lab）
+- **サービス名**: ココロザシラボ（Kokorozashi Lab）
 - **コンセプト**: ユーザーが自分の思いや志を、声や歌で表現し、他ユーザーと交流できるコミュニティサイト
 - **技術スタック**: Hono (JSX) + TypeScript + Cloudflare Pages + TailwindCSS
 
@@ -17,7 +17,7 @@
   - 一覧表示 (`/voice-journals`) - タグフィルター付き
   - 詳細表示 (`/voice-journal/:id`) - 音声プレイヤー、コメント、リアクション
   - 録音・作成 (`/voice-journal/create`) - ブラウザ録音、ファイルアップロード
-- **ここロザシソング**
+- **ココロザシソング**
   - 紹介LP (`/songs/about`) - 作例、ユーザーボイス、制作の流れ、プラン
   - 作例一覧 (`/songs/showcase`)
   - 詳細 (`/songs/:id`) - 楽曲プレイヤー、コメント、リアクション
@@ -45,9 +45,9 @@
 | `/` | トップページ |
 | `/voice-journals` | ボイスジャーナル一覧 |
 | `/voice-journal/create` | ボイスジャーナル作成（録音） |
-| `/songs/about` | ここロザシソング紹介 |
-| `/songs/create` | ここロザシソング申込 |
-| `/songs/showcase` | ここロザシソング一覧 |
+| `/songs/about` | ココロザシソング紹介 |
+| `/songs/create` | ココロザシソング申込 |
+| `/songs/showcase` | ココロザシソング一覧 |
 | `/mypage` | マイページ |
 | `/admin` | 管理画面 |
 | `/columns` | コラム一覧 |
@@ -62,12 +62,12 @@
 ### 主要モデル
 - `User` - ユーザー情報（`can_post_kokorozashi_song`フラグあり）
 - `VoiceJournal` - ボイスジャーナル（音声URL、公開範囲、タグ）
-- `KokorozashiSong` - ここロザシソング（ジャケット画像、音声）
+- `KokorozashiSong` - ココロザシソング（ジャケット画像、音声）
 - `Comment` - コメント（VJ / Song 両対応）
 - `Reaction` - リアクション（5種類: ❤️共感🫂応援📣すごい✨泣いた😢）
 - `Topic` - 今日のお題
 - `Column` - コラム記事
-- `SongOrder` - ここロザシソング申込
+- `SongOrder` - ココロザシソング申込
 
 ## デプロイ
 
@@ -84,7 +84,7 @@ npm run deploy
 
 - [ ] 今日のお題詳細ページ（`/voice-journals/topics`）
 - [ ] ハッシュタグ詳細ページ（`/voice-journals/tags`）
-- [ ] ここロザシソング投稿機能（管理者権限付与フロー）
+- [ ] ココロザシソング投稿機能（管理者権限付与フロー）
 - [ ] リアルタイム通知
 - [ ] おすすめフィード
 - [ ] 音声ファイルのクラウドストレージ（Cloudflare R2）
@@ -109,4 +109,4 @@ npm run deploy
 
 ---
 
-© 2025 ここロザシラボ
+© 2025 ココロザシラボ
